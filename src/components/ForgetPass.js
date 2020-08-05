@@ -25,19 +25,19 @@ function ForgetPass({navigation}) {
         if (phone == '') {
             return (
                 <View
-                    style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5 , {
-                        backgroundColor:'#fff'
+                    style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5 , {
+                        backgroundColor:'#bbb'
                     }]}
                 >
-                    <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('send') }</Text>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('send') }</Text>
                 </View>
             );
         }
 
         return (
             <TouchableOpacity
-                onPress={() => onConfirm()} style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5]}>
-                <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('send') }</Text>
+                onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('send') }</Text>
             </TouchableOpacity>
         );
     }
@@ -61,7 +61,7 @@ function ForgetPass({navigation}) {
     return (
         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.marginTop_60 , {marginLeft:25}]}>
                     <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform]} resizeMode={'contain'} />
@@ -75,7 +75,7 @@ function ForgetPass({navigation}) {
                         <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('phone') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('phone') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(phone) => setPhone(phone)}
                                        keyboardType={'number-pad'}

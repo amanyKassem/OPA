@@ -23,23 +23,26 @@ const styles = ({
     },
     // Style Color ConText
 
-    text_mstarda : {
-        color               : COLORS.mstarda
-    },
-    text_green : {
-        color               : COLORS.green
-    },
-    text_black : {
-        color               : COLORS.black
+    text_babyblue : {
+        color               : COLORS.babyblue
     },
     text_gray : {
         color               : COLORS.gray
     },
-    text_aqua : {
-        color               : COLORS.aqua
+    text_green : {
+        color               : COLORS.green
+    },
+    text_midGray : {
+        color               : COLORS.midGray
+    },
+    text_black : {
+        color               : COLORS.black
+    },
+    text_orange : {
+        color               : COLORS.orange
     },
     text_light_gray : {
-        color               : COLORS.light_gray
+        color               : COLORS.lightGray
     },
     text_red : {
         color               : COLORS.red
@@ -47,11 +50,8 @@ const styles = ({
     text_White : {
         color               : '#FFF'
     },
-    text_semon : {
-        color               : COLORS.semon
-    },
-    text_orange : {
-        color               : COLORS.orange
+    text_mstarda : {
+        color               : COLORS.mstarda
     },
 
     // Style Font
@@ -384,11 +384,11 @@ const styles = ({
 
     // Background Color
 
-    bg_green : {
-        backgroundColor     : COLORS.green
+    bg_gray : {
+        backgroundColor     : COLORS.gray
     },
-    bg_mstarda : {
-        backgroundColor     : COLORS.mstarda
+    bg_babyblue : {
+        backgroundColor     : COLORS.babyblue
     },
 
     bg_pink : {
@@ -1030,10 +1030,10 @@ const styles = ({
         left: -125,
         bottom: '60%',
     },
-    mstardaBtn:{
+    babyblueBtn:{
         width:'100%',
         height:45,
-        backgroundColor:COLORS.mstarda,
+        backgroundColor:COLORS.babyblue,
         justifyContent:'center',
         alignItems:'center',
     },
@@ -1067,7 +1067,7 @@ const styles = ({
         left: 7,
         paddingRight:10,
         paddingLeft:10,
-        backgroundColor: COLORS.green,
+        backgroundColor: COLORS.gray,
         alignSelf: 'flex-start',
         fontFamily: 'cairo',
         fontSize: 14,
@@ -1089,7 +1089,7 @@ const styles = ({
         textAlign           : I18nManager.isRTL ? 'right' : 'left',
         fontFamily          : 'cairo',
         fontSize            : 14,
-        borderColor         : COLORS.mstarda,
+        borderColor         : COLORS.babyblue,
         borderWidth         : .5,
         borderRightWidth    : 7,
         height              : 45
@@ -1098,7 +1098,7 @@ const styles = ({
         color               : '#fff',
         paddingRight        : 15,
         paddingLeft         : 0,
-        borderColor         : COLORS.mstarda,
+        borderColor         : COLORS.babyblue,
         borderWidth         : .5,
         borderLeftWidth    : 7,
         height              : 45
@@ -1145,7 +1145,7 @@ const styles = ({
         right                :20
     },
     chooseLang : {
-        borderColor         : COLORS.mstarda,
+        borderColor         : COLORS.babyblue,
         borderWidth         : .5,
         borderLeftWidth     : 7,
         width               : '100%',
@@ -1176,7 +1176,7 @@ const styles = ({
     },
     Active : {
         borderWidth           : 1,
-        borderColor           : COLORS.mstarda,
+        borderColor           : COLORS.babyblue,
         zIndex:-1
     },
     noActive : {
@@ -1186,6 +1186,10 @@ const styles = ({
     borderGray : {
         borderWidth           : 1,
         borderColor           : '#ddd',
+    },
+    borderbabyblue : {
+        borderWidth           : 1,
+        borderColor           : COLORS.babyblue,
     },
     borderMstarda : {
         borderWidth           : 1,
@@ -1280,7 +1284,7 @@ const styles = ({
     activeTab : {
         paddingVertical:10 ,
         paddingHorizontal      : 7,
-        backgroundColor:COLORS.mstarda,
+        backgroundColor:COLORS.babyblue,
         borderRadius:20
     },
     unActiveTab : {
@@ -1297,7 +1301,7 @@ const styles = ({
         borderTopColor:COLORS.lightGray,
         borderRightColor:COLORS.lightGray,
         borderBottomColor:COLORS.lightGray,
-        borderLeftWidth: 7,
+        borderLeftWidth: 4,
         flexDirection: 'row',
     },
     chatCard:{

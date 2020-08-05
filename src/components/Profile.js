@@ -19,7 +19,7 @@ function Profile({navigation}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('profile') }/>
 
@@ -32,15 +32,15 @@ function Profile({navigation}) {
                         <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , right:5}]}>
                             <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>
-                        <Text style={[styles.textRegular , styles.text_orange, styles.textSize_16, {marginTop:5}]}>أماني قاسم</Text>
+                        <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>أماني قاسم</Text>
                     </View>
 
 
                     <Form style={[styles.Width_80 , styles.flexCenter ,{top:-10}]}>
 
                         <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
-                            <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
+                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(advNum) => setAdvNum(advNum)}
                                    keyboardType={'number-pad'}
                                    value={advNum}
@@ -49,8 +49,8 @@ function Profile({navigation}) {
                         </Item>
 
                         <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
-                            <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
+                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(adsNum) => setAdsNum(adsNum)}
                                    keyboardType={'number-pad'}
                                    value={adsNum}
@@ -59,8 +59,8 @@ function Profile({navigation}) {
                         </Item>
 
                         <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
-                            <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
+                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(phone) => setPhone(phone)}
                                    keyboardType={'number-pad'}
                                    value={phone}
@@ -69,8 +69,8 @@ function Profile({navigation}) {
                         </Item>
 
                         <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
-                            <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
+                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(country) => setCountry(country)}
                                    value={country}
                                    disabled={true}
@@ -79,12 +79,12 @@ function Profile({navigation}) {
 
                     </Form>
 
-                    <TouchableOpacity onPress={() => navigation.push('editPass')} style={[styles.flexCenter , styles.marginBottom_10 , styles.marginTop_20]}>
-                        <Text style={[styles.textRegular , styles.text_green , styles.textDecoration , styles.textSize_17]}>{ i18n.t('changePass') }</Text>
+                    <TouchableOpacity onPress={() => navigation.push('editPass')} style={[styles.flexCenter , styles.marginBottom_30]}>
+                        <Text style={[styles.textRegular , styles.text_babyblue , styles.textDecoration , styles.textSize_17]}>{ i18n.t('changePass') }</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.push('officeDoc')}  style={[styles.flexCenter]}>
-                        <Text style={[styles.textRegular , styles.text_light_gray  , styles.textSize_16]}>{ i18n.t('officeDoc') } { i18n.t('?') }</Text>
+                    <TouchableOpacity onPress={() => navigation.push('adverInfo')}  style={[styles.babyblueBtn, styles.Width_80,styles.flexCenter]}>
+                        <Text style={[styles.textRegular , styles.text_White  , styles.textSize_16]}>{ i18n.t('adInfo') }</Text>
                     </TouchableOpacity>
 
                 </View>

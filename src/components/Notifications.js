@@ -43,7 +43,7 @@ function Notifications({navigation}) {
 
     return (
         <Container>
-            <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('notifications') }/>
 

@@ -29,7 +29,7 @@ function ActivationCode({navigation}) {
         if (code == '' ) {
             return (
                 <View
-                    style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5 , {
+                    style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5 , {
                         backgroundColor:'#fff'
                     }]}
                 >
@@ -40,7 +40,7 @@ function ActivationCode({navigation}) {
 
         return (
             <TouchableOpacity
-                onPress={() => onConfirm()} style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5]}>
+                onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5]}>
                 <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
             </TouchableOpacity>
         );
@@ -63,7 +63,7 @@ function ActivationCode({navigation}) {
     return (
         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.marginTop_60 , {marginLeft:25}]}>
                     <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform]} resizeMode={'contain'} />
@@ -77,7 +77,7 @@ function ActivationCode({navigation}) {
                         <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('code') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_babyblue]}>{ i18n.t('code') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(code) => setCode(code)}
                                        keyboardType={'number-pad'}

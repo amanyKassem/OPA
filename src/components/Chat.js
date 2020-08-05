@@ -48,7 +48,7 @@ function Chat({navigation}) {
                             <Text style={[styles.textRegular , styles.text_black , styles.textSize_12, styles.alignStart ,
                                 {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{body}</Text>
                         </View>
-                        <View style={[styles.borderMstarda, styles.icon40, styles.Radius_50 ,{borderColor: COLORS.green , marginLeft:5}]}>
+                        <View style={[styles.borderbabyblue, styles.icon40, styles.Radius_50 ,{borderColor: COLORS.green , marginLeft:5}]}>
                             <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
                         </View>
                     </View>
@@ -68,7 +68,7 @@ function Chat({navigation}) {
 
     return (
         <Container>
-            <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('chat') }/>
 
@@ -103,7 +103,7 @@ function Chat({navigation}) {
                                onChangeText={(text) => setText(text)}
                         />
                         <TouchableOpacity style={[{marginLeft:10}]}>
-                            <Image source={require('../../assets/images/send.png')} style={[styles.icon40]} resizeMode={'cover'} />
+                            {/*<Image source={require('../../assets/images/send.png')} style={[styles.icon40]} resizeMode={'cover'} />*/}
                         </TouchableOpacity>
                     </View>
 

@@ -254,8 +254,8 @@ const en = {
     '_newNotification'          : 'there is a new notification',
     'newNotification'           : 'new notification',
     'country'                   : 'Country',
-    'areas'                     : 'Areas',
-    'myLocation'                : 'My location',
+    'searchByList'              : 'Search by list',
+    'contracting'               : 'contracting companies',
     'conversations'             : 'Conversations',
     'advNum'                    : 'Advertiser number',
     'adsNum'                    : 'Ads number',
@@ -273,6 +273,14 @@ const en = {
     'leaseContracts'            : 'Lease contracts',
     'construction'              : 'Construction and contracting',
     'mortgage'                  : 'Mortgage Calculator',
+    'policy&Privacy'            : 'Policy and Privacy',
+    'addOrder'                  : 'Add order',
+    'adInfo'                    : 'Contact information in your ad',
+    'adverInfo'                 : 'Advertiser information',
+    'facebook'                  : 'Facebook',
+    'twitter'                   : 'Twitter',
+    'moreDet'                   : 'More details',
+    'addAd'                     : 'Add the advertisement',
 };
 
 export default en;

@@ -28,7 +28,7 @@ export default function CustomDrawerContent(props) {
     // }
 
     return (
-        <DrawerContentScrollView {...props} style={[styles.bg_green]}>
+        <DrawerContentScrollView {...props} style={[styles.bg_gray]}>
             <View style={[styles.paddingHorizontal_15 , styles.Width_100 , styles.paddingVertical_10 , {zIndex:-1}]}>
                 <View style={[styles.directionRow , styles.flexCenter]}>
                     <TouchableOpacity onPress={() => onChooseLang('ar')}>
@@ -44,9 +44,9 @@ export default function CustomDrawerContent(props) {
             </View>
 
             <View style={[styles.bgFullWidth,styles.bg_White, styles.paddingTop_30, styles.paddingHorizontal_10,
-                {borderTopRightRadius:50 , borderTopLeftRadius:50 , minHeight:height}]}>
+                {borderTopRightRadius:50 , borderTopLeftRadius:50 , height:height-73 }]}>
 
-                <View style={[styles.bg_green , { width:56 ,  position:'absolute',left:0 , top:0 , height:height + 50}]}/>
+                <View style={[styles.bg_gray , { width:56 ,  position:'absolute',left:0 , top:0,bottom:0}]}/>
 
                 <TouchableOpacity  onPress={() => props.navigation.navigate('tabs', {screen: 'profile'})}
                                    style={[styles.flexCenter ,{ position:'absolute' ,top:-40 , left:15}]}>
@@ -55,22 +55,22 @@ export default function CustomDrawerContent(props) {
                     <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
                         <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textRegular , styles.text_orange, styles.textSize_15, {marginTop:5}]}>أماني قاسم</Text>
+                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>أماني قاسم</Text>
                 </TouchableOpacity>
 
                 <DrawerItem
-                    style={[styles.marginTop_55 , styles.height_40 , styles.justifyCenter , {marginHorizontal:0 }]}
+                    style={[styles.marginTop_65 , styles.height_40 , styles.justifyCenter , {marginHorizontal:0 }]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('home') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('home') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/white_home.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/menu_home.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -80,11 +80,11 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
+                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('myAds') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('myAds') }</Text>
                             )
                         }
                     }
@@ -99,94 +99,18 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
+                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('ourClients') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('favourite') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/customers.png')} style={[styles.icon23]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('ourClients')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('specialOffers') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/discount.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('specialOffers')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('orders') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/file.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('orders')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('announceToday') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/time.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('announceToday')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('favourite') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/white_fav.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/menu_fav.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -194,18 +118,18 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
+                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('addUrAd') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('addUrAd') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/add.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -213,94 +137,18 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
+                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('exclusiveMarketing') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('aboutApp') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/handshake.png')} style={[styles.icon23]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('exclusiveMarketing')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('leaseContracts') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/contract.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('leaseContracts')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('construction') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/briefcase.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('construction')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('mortgage') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/calculator.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('mortgage')}
-                />
-
-                <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('aboutApp') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/information.png')} style={[styles.icon23]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/information_menu.png')} style={[styles.icon23]} resizeMode={'contain'} />
                             )
                         }
                     }
@@ -308,26 +156,25 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:0}]}
+                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
                     label={
                         ({ focused, color }) => {
                             return (
-                                <Text style={[styles.textRegular, styles.text_green , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('contactUs') }</Text>
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('contactUs') }</Text>
                             )
                         }
                     }
                     icon={
                         ({ focused, color }) => {
                             return (
-                                <Image source={require('../../assets/images/Contacts.png')} style={[styles.icon23]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/Contacts_menu_white.png')} style={[styles.icon23]} resizeMode={'contain'} />
                             )
                         }
                     }
                     onPress={() => props.navigation.navigate('contactUs')}
                 />
 
-                <TouchableOpacity style={[styles.mstardaBtn ,{
-                    backgroundColor:COLORS.green,
+                <TouchableOpacity style={[styles.babyblueBtn ,{
                     position:'absolute',
                     transform: [{ rotate: '90deg' }],
                     right:-63,

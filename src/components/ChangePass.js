@@ -31,19 +31,19 @@ function ChangePass({navigation}) {
         if (code == '' || password == '' || confirmPass == '') {
             return (
                 <View
-                    style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5 , {
-                        backgroundColor:'#fff'
+                    style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5 , {
+                        backgroundColor:'#bbb'
                     }]}
                 >
-                    <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
                 </View>
             );
         }
 
         return (
             <TouchableOpacity
-                onPress={() => onConfirm()} style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_5]}>
-                <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
             </TouchableOpacity>
         );
     }
@@ -105,7 +105,7 @@ function ChangePass({navigation}) {
     return (
         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.marginTop_60 , {marginLeft:25}]}>
                     <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform]} resizeMode={'contain'} />
@@ -119,7 +119,7 @@ function ChangePass({navigation}) {
                         <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('code') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('code') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(code) => setCode(code)}
                                        keyboardType={'number-pad'}
@@ -127,7 +127,7 @@ function ChangePass({navigation}) {
                             </Item>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('password') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('newpass') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(password) => setPassword(password)}
                                        secureTextEntry
@@ -135,7 +135,7 @@ function ChangePass({navigation}) {
                             </Item>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('confirmPass') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('confirmNewPass') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(confirmPass) => setConfirmPass(confirmPass)}
                                        secureTextEntry

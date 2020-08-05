@@ -18,7 +18,7 @@ function EditPass({navigation}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('changePass') }/>
 
@@ -33,8 +33,8 @@ function EditPass({navigation}) {
                             <View style={[styles.Width_100]}>
                                 <View style={[styles.Width_100]}>
                                     <Item style={[styles.item]}>
-                                        <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('currentPassword') }</Label>
-                                        <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                                        <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('currentPassword') }</Label>
+                                        <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                                onChangeText={(currentPassword) => setCurrentPassword(currentPassword)}
                                                secureTextEntry
                                         />
@@ -43,8 +43,8 @@ function EditPass({navigation}) {
 
                                 <View style={[styles.Width_100]}>
                                     <Item style={[styles.item]}>
-                                        <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('newpass') }</Label>
-                                        <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                                        <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('newpass') }</Label>
+                                        <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                                onChangeText={(newpass) => setNewpass(newpass)}
                                                secureTextEntry
                                         />
@@ -53,8 +53,8 @@ function EditPass({navigation}) {
 
                                 <View style={[styles.Width_100]}>
                                     <Item style={[styles.item]}>
-                                        <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('confirmNewPass') }</Label>
-                                        <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                                        <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('confirmNewPass') }</Label>
+                                        <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                                onChangeText={(confirmNewPass) => setConfirmNewPass(confirmNewPass)}
                                                secureTextEntry
                                         />
@@ -64,7 +64,7 @@ function EditPass({navigation}) {
                             </View>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.mstardaBtn , styles.Width_100, styles.marginBottom_50 , {backgroundColor:COLORS.green}]}>
+                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
                             </TouchableOpacity>
 

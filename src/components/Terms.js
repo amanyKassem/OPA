@@ -15,11 +15,11 @@ function Terms({navigation}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <View style={[styles.directionRowSpace , styles.paddingHorizontal_25, styles.paddingTop_30]}>
-                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_20]}>{ i18n.t('terms') }</Text>
-                    <Image source={require('../../assets/images/vector_one.png')} style={[styles.icon200, {top:20, right:-10}]} resizeMode={'contain'} />
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_20, {top:20}]}>{ i18n.t('terms') }</Text>
+                    <Image source={require('../../assets/images/vector_rules.png')} style={[styles.icon200, {top:20, right:10}]} resizeMode={'contain'} />
                 </View>
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_25 ,styles.bg_White,
@@ -34,10 +34,17 @@ function Terms({navigation}) {
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                     </Text>
 
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.marginTop_15]}>-- { i18n.t('policy&Privacy') }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , {lineHeight:22}]}>
+                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
+                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
+                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
+                    </Text>
+
 
                     <TouchableOpacity onPress={() => navigation.navigate('register')}
-                                      style={[styles.mstardaBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_35]}>
-                        <Text style={[styles.textRegular , styles.text_green , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                      style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_35]}>
+                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
                     </TouchableOpacity>
 
                 </View>

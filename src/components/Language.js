@@ -35,36 +35,36 @@ function Language({}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_45]}>
 
                     <Image source={require('../../assets/images/logo.png')} style={[styles.icon160 , styles.marginBottom_80 , styles.SelfCenter , styles.marginTop_60]} resizeMode={'contain'} />
 
 
                     <TouchableOpacity onPress={() => selectLang('ar')} style={[styles.chooseLang , styles.directionRowSpace , styles.marginBottom_30 , styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.bg_green , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>العربية</Text>
+                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_14 , styles.bg_gray , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>العربية</Text>
                         <Image source={require('../../assets/images/saudi_flag.png')} style={[styles.icon25 , styles.marginTop_5]} resizeMode={'contain'} />
                         {
                             lang === 'ar' ?
-                                <Image source={require('../../assets/images/right.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/right_rules.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                 :
                                 null
                         }
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => selectLang('en')} style={[styles.chooseLang , styles.directionRowSpace , styles.marginBottom_30 , styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_mstarda , styles.textSize_14 , styles.bg_green , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>English</Text>
+                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_14 , styles.bg_gray , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>English</Text>
                         <Image source={require('../../assets/images/en_flag.png')} style={[styles.icon25 , styles.marginTop_5]} resizeMode={'contain'} />
                         {
                             lang === 'en' ?
-                                <Image source={require('../../assets/images/right.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={require('../../assets/images/right_rules.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                 :
                                 null
                         }
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={onChooseLang} style={[styles.mstardaBtn , styles.Width_100]}>
-                        <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('choose') }</Text>
+                    <TouchableOpacity onPress={onChooseLang} style={[styles.babyblueBtn , styles.Width_100]}>
+                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('choose') }</Text>
                     </TouchableOpacity>
 
                 </View>

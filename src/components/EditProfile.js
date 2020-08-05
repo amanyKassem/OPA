@@ -49,7 +49,7 @@ function EditProfile({navigation}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('editProfile') }/>
 
@@ -57,11 +57,11 @@ function EditProfile({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <View style={[styles.flexCenter,styles.icon110,{top:-50 , overflow:'hidden'}]}>
+                    <View style={[styles.flexCenter,styles.icon110,{top:-40 , overflow:'hidden'}]}>
                         <View style={[styles.imgOverLay,styles.Radius_15]}/>
                         <Image source= {image != null?{uri:image} : require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull,styles.Radius_15]} resizeMode={'cover'} />
-                        <TouchableOpacity onPress={_pickImage} style={[styles.icon25,styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , top:5 , right:5 , zIndex:1}]}>
-                            <Image source={require('../../assets/images/add.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
+                        <TouchableOpacity onPress={_pickImage} style={[styles.icon25,styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , top:0 , right:0 , zIndex:1}]}>
+                            <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>
                     </View>
 
@@ -70,36 +70,36 @@ function EditProfile({navigation}) {
 
                             <View style={[styles.Width_100]}>
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('username') }</Label>
-                                    <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('username') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(username) => setUsername(username)}
                                            value={username}
                                     />
                                 </Item>
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_mstarda , styles.text_light_gray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
-                                    <Input style={[styles.input , styles.text_black , {borderColor:COLORS.light_gray}]}
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(phone) => setPhone(phone)}
                                            keyboardType={'number-pad'}
                                            value={phone}
                                     />
                                 </Item>
 
-                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.light_gray}]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_mstarda, styles.text_light_gray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
+                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
 
                                     <RNPickerSelect
                                         style={{
                                             inputAndroid: {
                                                 fontFamily: 'cairo',
-                                                color:COLORS.light_gray,
+                                                color:COLORS.text_midGray,
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,
                                             },
                                             inputIOS: {
                                                 fontFamily: 'cairo',
-                                                color:COLORS.light_gray,
+                                                color:COLORS.text_midGray,
                                                 alignSelf:'flex-start',
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,
@@ -115,7 +115,7 @@ function EditProfile({navigation}) {
                                             { label: 'اسكندرية', value: 'Alex' },
                                         ]}
                                         Icon={() => {
-                                            return <Image source={require('../../assets/images/dropdown.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18}]} resizeMode={'contain'} />
+                                            return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18}]} resizeMode={'contain'} />
                                         }}
                                         value={country}
                                     />
@@ -123,7 +123,7 @@ function EditProfile({navigation}) {
                             </View>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.mstardaBtn , styles.Width_100, styles.marginBottom_50 , {backgroundColor:COLORS.green}]}>
+                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
                             </TouchableOpacity>
 

@@ -13,12 +13,12 @@ function Header({navigation , title , _pickImage}) {
 
             <View style={[styles.directionRow]}>
                 {
-                    title === i18n.t('home') || title === i18n.t('areas') || title === i18n.t('conversations') || title === i18n.t('myLocation') ?
-                        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:10}}>
+                    title === i18n.t('home') || title === i18n.t('searchByList') || title === i18n.t('conversations') || title === i18n.t('contracting') ?
+                        <TouchableOpacity onPress={() => navigation.openDrawer()} style={{marginRight:15}}>
                             <Image source={require('../../assets/images/menu.png')} style={[styles.icon25 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight:10}}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight:15}}>
                             <Image source={require('../../assets/images/back.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
                 }
@@ -27,7 +27,7 @@ function Header({navigation , title , _pickImage}) {
             </View>
 
             {
-                title === i18n.t('home') || title === i18n.t('areas') || title === i18n.t('conversations') || title === i18n.t('myLocation') ?
+                title === i18n.t('home') || title === i18n.t('searchByList') || title === i18n.t('conversations') || title === i18n.t('contracting') ?
                     <View style={[styles.directionRow]}>
                         <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:10}}>
                             <Image source={require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
@@ -40,10 +40,10 @@ function Header({navigation , title , _pickImage}) {
                         </TouchableOpacity>
                     </View>
                     :
-                    title === i18n.t('officeDoc') ?
-                        <TouchableOpacity onPress={_pickImage} style={[styles.icon33, {right:-15}]}>
-                            <Image source={require('../../assets/images/add_pic.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'contain'} />
-                        </TouchableOpacity>                        :
+                    title === i18n.t('addOrder') ?
+                        <TouchableOpacity style={{marginRight:20}}>
+                            <Image source={require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                        </TouchableOpacity>                      :
                         null
             }
 

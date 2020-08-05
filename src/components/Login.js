@@ -85,19 +85,19 @@ function Login({navigation}) {
         if (password == '' || phone == '') {
             return (
                 <View
-                    style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_25 , styles.marginBottom_10 , {
-                        backgroundColor:'#fff'
+                    style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_25 , styles.marginBottom_10 , {
+                        backgroundColor:'#bbb'
                     }]}
                 >
-                    <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('login') }</Text>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('login') }</Text>
                 </View>
             );
         }
 
         return (
             <TouchableOpacity
-                onPress={() => onLoginPressed()} style={[styles.mstardaBtn , styles.Width_100 , styles.marginTop_25 , styles.marginBottom_10]}>
-                <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('login') }</Text>
+                onPress={() => onLoginPressed()} style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_25 , styles.marginBottom_10]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('login') }</Text>
             </TouchableOpacity>
         );
     }
@@ -115,7 +115,7 @@ function Login({navigation}) {
         if (spinner){
             return(
                 <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
-                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
                 </View>
             );
         }
@@ -124,17 +124,17 @@ function Login({navigation}) {
     return (
         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_green]}>
+            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_25]}>
 
                     <Image source={require('../../assets/images/logo.png')} style={[styles.icon160 , styles.marginBottom_80 , styles.SelfCenter , styles.marginTop_60]} resizeMode={'contain'} />
 
                    <View style={[styles.directionRowSpace]}>
-                       <KeyboardAvoidingView style={[styles.Width_85]}>
+                       <KeyboardAvoidingView style={[styles.Width_100]}>
                            <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                                <Item style={[styles.item]}>
-                                   <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('phone') }</Label>
+                                   <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('phone') }</Label>
                                    <Input style={[styles.input]}
                                           onChangeText={(phone) => setPhone(phone)}
                                           keyboardType={'number-pad'}
@@ -142,7 +142,7 @@ function Login({navigation}) {
                                </Item>
 
                                <Item style={[styles.item]}>
-                                   <Label style={[styles.label, styles.textRegular ,styles.text_mstarda]}>{ i18n.t('password') }</Label>
+                                   <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('password') }</Label>
                                    <Input style={[styles.input]}
                                           onChangeText={(password) => setPassword(password)}
                                           secureTextEntry
@@ -155,19 +155,14 @@ function Login({navigation}) {
 
                                {renderSubmit()}
 
+                               <TouchableOpacity onPress={() => navigation.push('register')} style={[styles.directionRowCenter, styles.marginTop_20]}>
+                                   <Text style={[styles.textRegular , styles.text_White , styles.textSize_14, {marginRight:5}]}>{ i18n.t('haveNoAcc') }</Text>
+                                   <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_14]}>{ i18n.t('createAcc') }</Text>
+                               </TouchableOpacity>
+
 
                            </Form>
                        </KeyboardAvoidingView>
-
-                       <TouchableOpacity onPress={() => navigation.navigate('register')} style={[styles.mstardaBtn ,{
-                           backgroundColor:'#fff',
-                           transform: [{ rotate: '90deg' }],
-                           right:'29%',
-                           width:'75.5%',
-                           top:-5,
-                       }]}>
-                           <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('register') }</Text>
-                       </TouchableOpacity>
                    </View>
 
                </View>
