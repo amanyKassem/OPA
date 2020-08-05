@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7f101180-1951-4d0e-82bb-87b00fe5ccb8" name="salaty" url="http://host.aait-sa.com">
+        <fileTransfer host="host.aait-sa.com" port="1289" rootFolder="/home/sltiiaa1/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="1289" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="bed435ff-7d76-4733-8f12-39793b7adba5" name="msara" url="http://masarah.aait-sa.com">
+        <fileTransfer host="masarah.aait-sa.com" port="1289" rootFolder="/home/masaraha/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="1289" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
