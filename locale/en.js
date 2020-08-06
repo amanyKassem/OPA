@@ -281,6 +281,18 @@ const en = {
     'twitter'                   : 'Twitter',
     'moreDet'                   : 'More details',
     'addAd'                     : 'Add the advertisement',
+    'adTerms'                   : 'Advertisement terms',
+    'adCondi'                   : 'Conditions for adding an advertisement',
+    'buildingLoc'               : 'Building location',
+    'locateAd'                  : 'Locate the ad',
+    'continue'                  : 'Continue',
+    'buildType'                 : 'Build type',
+    'accType'                   : 'Accommodation type',
+    'lounges'                   : 'Lounges',
+    'washrooms'                 : 'Washrooms',
+    'rooms'                     : 'Rooms',
+    'buildAge'                  : 'Build age',
+    'uploadAdImgs'              : 'Upload Ad images',
 };
 
 export default en;

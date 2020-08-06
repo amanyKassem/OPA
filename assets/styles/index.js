@@ -554,6 +554,9 @@ const styles = ({
         height              : null,
         flex                : 1,
     },
+    Width_48 : {
+        width               : '48%'
+    },
     Width_50 : {
         width               : '50%'
     },
@@ -1096,7 +1099,7 @@ const styles = ({
     },
     inputPicker : {
         color               : '#fff',
-        paddingRight        : 15,
+        paddingRight        : 17,
         paddingLeft         : 0,
         borderColor         : COLORS.babyblue,
         borderWidth         : .5,

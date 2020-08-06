@@ -282,6 +282,18 @@ const ar = {
     'twitter'                   : 'تويتر',
     'moreDet'                   : 'تفاصيل اكثر',
     'addAd'                     : 'اضافة الاعلان',
+    'adTerms'                   : 'شروط الاعلان',
+    'adCondi'                   : 'شروط اضافة اعلان',
+    'buildingLoc'               : 'موقع العقار',
+    'locateAd'                  : 'تحديد موقع الاعلان',
+    'continue'                  : 'استمرار',
+    'buildType'                 : 'نوع العقار',
+    'accType'                   : 'نوع السكن',
+    'lounges'                   : 'الصالات',
+    'washrooms'                 : 'دورات المياه',
+    'rooms'                     : 'الغرف',
+    'buildAge'                  : 'عمر العقار',
+    'uploadAdImgs'              : 'رفع صور الاعلان',
 };
 
 export default ar;

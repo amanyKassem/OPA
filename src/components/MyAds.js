@@ -50,7 +50,7 @@ function MyAds({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <TouchableOpacity style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
                     </TouchableOpacity>
 

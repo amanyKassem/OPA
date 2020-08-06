@@ -93,13 +93,13 @@ function EditProfile({navigation}) {
                                         style={{
                                             inputAndroid: {
                                                 fontFamily: 'cairo',
-                                                color:COLORS.text_midGray,
+                                                color:COLORS.midGray,
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,
                                             },
                                             inputIOS: {
                                                 fontFamily: 'cairo',
-                                                color:COLORS.text_midGray,
+                                                color:COLORS.midGray,
                                                 alignSelf:'flex-start',
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,

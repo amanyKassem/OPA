@@ -133,7 +133,7 @@ export default function CustomDrawerContent(props) {
                             )
                         }
                     }
-                    onPress={() => props.navigation.navigate('addUrAd')}
+                    onPress={() => props.navigation.navigate('addAdTerms')}
                 />
 
                 <DrawerItem
