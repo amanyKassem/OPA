@@ -203,6 +203,9 @@ const styles = ({
     marginTop_5 : {
         marginTop      : 5
     },
+    marginTop_7 : {
+        marginTop      : 7
+    },
     marginTop_10 : {
         marginTop      : 10
     },
@@ -391,8 +394,8 @@ const styles = ({
         backgroundColor     : COLORS.babyblue
     },
 
-    bg_pink : {
-        backgroundColor     : '#E873B1'
+    bg_mstarda : {
+        backgroundColor     : COLORS.mstarda
     },
     bg_overlay : {
         backgroundColor     : "rgba(250, 218, 208, 0.9)"
@@ -581,6 +584,9 @@ const styles = ({
     Width_95 : {
         width               : '95%'
     },
+    Width_97 : {
+        width               : '97%'
+    },
     Width_100 : {
         width               : '100%'
     },
@@ -749,6 +755,10 @@ const styles = ({
     icon160 : {
         width               : 160,
         height              : 160,
+    },
+    icon170 : {
+        width               : 170,
+        height              : 170,
     },
     icon25 : {
         width               : 25,
@@ -973,10 +983,30 @@ const styles = ({
         flex:1,
         paddingVertical:5
     },
+    eventdoteStyle:{
+        backgroundColor:'#ccc',
+        borderRadius: 3,
+        width: 15,
+        height: 4,
+        bottom:15
+    },
+    eventactiveDot:{
+        borderRadius: 3,
+        borderColor: COLORS.babyblue,
+        backgroundColor: COLORS.babyblue,
+        width: 23,
+        height: 4,
+        bottom:15
+    },
+    eventswiper:{
+        width: '100%',
+        height: 200,
+        borderRadius:50,
+        overflow:'hidden'
+    },
     swiperImg:{
         height:'100%' ,
         width:'100%' ,
-        zIndex:-1
     },
     imgOverLay:{
         backgroundColor     : "rgba(0, 0, 0, 0.5)",
@@ -1107,14 +1137,16 @@ const styles = ({
         height              : 45
     },
     inputSearch : {
-        color               : COLORS.gray,
+        color               : COLORS.lightGray,
         paddingRight        : 20,
         paddingLeft         : 20,
         textAlign           : I18nManager.isRTL ? 'right' : 'left',
         fontFamily          : 'cairo',
         fontSize            : 14,
-        borderRadius        :5,
-        height              :35,
+        borderRadius        :30,
+        borderWidth         :1 ,
+        borderColor         :'#ddd',
+        height              :45,
         marginRight         :15
     },
     searchInput : {
@@ -1198,6 +1230,10 @@ const styles = ({
         borderWidth           : 1,
         borderColor           : COLORS.mstarda,
     },
+    borderGreen : {
+        borderWidth           : 1,
+        borderColor           : COLORS.green,
+    },
     borderBottomGray : {
         borderBottomWidth           : 1,
         borderColor           : '#ddd',
@@ -1254,12 +1290,16 @@ const styles = ({
         borderRadius:5
     },
     touchFav: {
-        backgroundColor:'#fff',
-        width:35,
-        height:35,
-        borderRadius:50,
-        alignSelf:'flex-end',
-        margin:10
+        backgroundColor:COLORS.babyblue,
+        width:30,
+        height:50,
+        borderRadius:13,
+        position:'absolute',
+        top:-20,
+        right:5,
+        alignItems:'center',
+        justifyContent:"flex-end",
+        paddingBottom:10
     },
     discountMark: {
         position:'absolute',
@@ -1298,7 +1338,7 @@ const styles = ({
     },
     notiCard:{
         borderRadius: 20,
-        height: 100,
+        // height: 100,
         overflow:'hidden',
         borderWidth:1,
         borderTopColor:COLORS.lightGray,
@@ -1362,12 +1402,12 @@ const styles = ({
         borderWidth:0
     },
     checkbox:{
-        color:COLORS.yellow,
+        paddingRight:2,
     },
     line:{
         borderWidth:.5,
-        borderColor:COLORS.lightGray,
-        width:'72%',
+        borderColor:'#ddd',
+        width:'100%',
         alignSelf:'center'
     },
 });

@@ -6,7 +6,7 @@ import i18n from "../../locale/i18n";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , _pickImage}) {
+function Header({navigation , title , toggleModal}) {
 
     return (
         <View style={[styles.marginTop_35 , styles.marginHorizontal_15 , styles.directionRowSpace , styles.marginBottom_20]}>
@@ -41,10 +41,27 @@ function Header({navigation , title , _pickImage}) {
                     </View>
                     :
                     title === i18n.t('addOrder') ?
-                        <TouchableOpacity style={{marginRight:20}}>
+                        <TouchableOpacity onPress={() => navigation.navigate('orders')} style={{marginRight:20}}>
                             <Image source={require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                        </TouchableOpacity>                      :
-                        null
+                        </TouchableOpacity>
+                        :
+                        title === i18n.t('adDetails') ?
+                            <View style={[styles.directionRow]}>
+                                <TouchableOpacity onPress={toggleModal} style={{marginRight:10}}>
+                                    <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigation.navigate('editAd')} >
+                                    <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                </TouchableOpacity>
+                            </View>
+                            :
+
+                            title === i18n.t('orders') ?
+                                <TouchableOpacity onPress={() => navigation.navigate('addOrder')} style={{right:-15}}>
+                                    <Image source={require('../../assets/images/plus_circle.png')} style={[styles.icon35]} resizeMode={'contain'} />
+                                </TouchableOpacity>
+                                :
+                                null
             }
 
         </View>

@@ -30,10 +30,10 @@ function ActivationCode({navigation}) {
             return (
                 <View
                     style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5 , {
-                        backgroundColor:'#fff'
+                        backgroundColor:'#bbb'
                     }]}
                 >
-                    <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
                 </View>
             );
         }
@@ -41,7 +41,7 @@ function ActivationCode({navigation}) {
         return (
             <TouchableOpacity
                 onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100 , styles.marginTop_5]}>
-                <Text style={[styles.textRegular , styles.text_green , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
             </TouchableOpacity>
         );
     }

@@ -23,18 +23,18 @@ function Notifications({navigation}) {
 
     function Item({ title ,body , time , id, index }) {
         return (
-            <TouchableOpacity style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
+            <TouchableOpacity style={[styles.notiCard ,styles.marginBottom_10 , styles.paddingVertical_15,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
                 <View style={[styles.paddingHorizontal_15 , styles.directionColumnC, {flex:1}]}>
                     <TouchableOpacity style={[styles.paddingVertical_5 , styles.paddingHorizontal_5, styles.Radius_50
                         , {backgroundColor: index % 2 === 0 ? COLORS.green : COLORS.orange
-                            , position:'absolute' , right:7 , top:7}]}>
+                            , position:'absolute' , right:7 , top:-7}]}>
                         <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
                     <Text style={[styles.textBold , styles.text_gray , styles.textSize_14,styles.marginBottom_5]}>{ title }</Text>
                     <View style={[styles.directionRowSpace]}>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart ,
                             {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{body}</Text>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , styles.width_40 ]}>{ time }</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , styles.width_40 , {alignSelf:'flex-end'} ]}>{ time }</Text>
                     </View>
                 </View>
             </TouchableOpacity>

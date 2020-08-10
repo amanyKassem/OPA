@@ -91,7 +91,7 @@ function AdImgs({navigation}) {
                         {renderUploadImgs()}
                     </View>
 
-                    <TouchableOpacity style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('detailsAdded')} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
                     </TouchableOpacity>
                 </View>

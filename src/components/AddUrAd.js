@@ -24,6 +24,7 @@ function AddUrAd({navigation,route}) {
     const [lounges, setLounges] = useState('');
     const [washrooms, setWashrooms] = useState('');
     const [rooms, setRooms] = useState('');
+    const [floor, setFloor] = useState('');
     const [buildAge, setBuildAge] = useState('');
     const [serviceType, setServiceType] = useState('');
     const [mapRegion, setMapRegion] = useState({
@@ -72,7 +73,7 @@ function AddUrAd({navigation,route}) {
 
 
     function navToLocation () {
-        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude})
+        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'addUrAd'})
     };
 
     return (
@@ -254,6 +255,38 @@ function AddUrAd({navigation,route}) {
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
+
+                            <RNPickerSelect
+                                style={{
+                                    inputAndroid: {
+                                        fontFamily: 'cairo',
+                                        color:COLORS.midGray,
+                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                        fontSize            : 14,
+                                    },
+                                    inputIOS: {
+                                        fontFamily: 'cairo',
+                                        color:COLORS.midGray,
+                                        alignSelf:'flex-start',
+                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                        fontSize            : 14,
+                                    },
+                                }}
+                                placeholder={{
+                                    label: '' ,
+                                }}
+                                onValueChange={(floor) => setFloor(floor)}
+                                items={[
+                                    { label: '2', value: '2' },
+                                    { label: '3', value: '3' },
+                                ]}
+                                Icon={() => {
+                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
+                                }}
+                            />
+                        </View>
+                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
 
                             <RNPickerSelect
@@ -319,7 +352,7 @@ function AddUrAd({navigation,route}) {
                         </View>
 
                         <TouchableOpacity onPress={() => navigation.navigate('adImgs')}
-                                          style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
+                                          style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
                         </TouchableOpacity>
 

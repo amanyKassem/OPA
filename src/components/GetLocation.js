@@ -16,6 +16,7 @@ const isIOS = Platform.OS === 'ios';
 
 function GetLocation({navigation, route}) {
 
+    const pathName = route.params.pathName;
     let mapRef = useRef(null);
     const [city, setCity] = useState('');
     const [mapRegion, setMapRegion] = useState({
@@ -90,10 +91,18 @@ function GetLocation({navigation, route}) {
     function getLoc(){
         console.log("mapRegion button" ,mapRegion);
         console.log("city3 " , city);
-        navigation.navigate('myDrawer', {
-            screen: 'addUrAd',
-            params: { cityName:city , mapRegion},
-        })
+        if(pathName === 'addOrder'){
+            navigation.navigate('tabs', {
+                screen: 'addOrder',
+                params: { cityName:city , mapRegion},
+            })
+        }else {
+            navigation.navigate('MainStack', {
+                screen:pathName,
+                params: { cityName:city , mapRegion},
+            })
+        }
+
     }
     return (
         <Container>

@@ -16,17 +16,17 @@ const isIOS = Platform.OS === 'ios';
 const latitudeDelta = 0.0922;
 const longitudeDelta = 0.0421;
 
-function AddOrder({navigation,route}) {
+function EditAd({navigation,route}) {
 
     const [cityName, setCityName] = useState('');
-    const [buildType, setBuildType] = useState('');
-    const [accType, setAccType] = useState('');
-    const [lounges, setLounges] = useState('');
-    const [washrooms, setWashrooms] = useState('');
-    const [rooms, setRooms] = useState('');
-    const [floor, setFloor] = useState('');
-    const [buildAge, setBuildAge] = useState('');
-    const [serviceType, setServiceType] = useState('');
+    const [buildType, setBuildType] = useState('home');
+    const [accType, setAccType] = useState('families');
+    const [lounges, setLounges] = useState('2');
+    const [washrooms, setWashrooms] = useState('3');
+    const [rooms, setRooms] = useState('3');
+    const [floor, setFloor] = useState('2');
+    const [buildAge, setBuildAge] = useState('3');
+    const [serviceType, setServiceType] = useState('owner');
     const [mapRegion, setMapRegion] = useState({
         latitude: 31.2587 ,
         longitude:32.2988,
@@ -73,14 +73,14 @@ function AddOrder({navigation,route}) {
 
 
     function navToLocation () {
-        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'addOrder'})
+        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'editAd'})
     };
 
     return (
         <Container>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('addOrder') }/>
+                <Header navigation={navigation} title={ i18n.t('editAd') }/>
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_30,
@@ -124,6 +124,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={buildType}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -156,6 +157,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={accType}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -188,6 +190,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={lounges}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -220,6 +223,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={washrooms}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -252,6 +256,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={rooms}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -284,6 +289,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={floor}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -316,6 +322,7 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={buildAge}
                             />
                         </View>
                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
@@ -348,10 +355,11 @@ function AddOrder({navigation,route}) {
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
+                                value={serviceType}
                             />
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('newAddedDetails')}
+                        <TouchableOpacity onPress={() => navigation.navigate('adImgs')}
                                           style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
                         </TouchableOpacity>
@@ -365,6 +373,6 @@ function AddOrder({navigation,route}) {
     );
 }
 
-export default AddOrder;
+export default EditAd;
 
 

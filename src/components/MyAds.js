@@ -23,9 +23,9 @@ function MyAds({navigation}) {
 
     function Item({ title ,location , price , img , space , desc , id, index }) {
         return (
-            <TouchableOpacity style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
-                <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.height_100,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
-                <View style={[styles.paddingHorizontal_10,styles.paddingVertical_5, {flex:1}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('adDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
+                <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
+                <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
                         <Text style={[styles.textRegular , styles.text_green , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_orange , styles.textSize_12 ]}>{ price }</Text>
@@ -42,7 +42,7 @@ function MyAds({navigation}) {
 
     return (
         <Container>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
+            <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('myAds') }/>
 
