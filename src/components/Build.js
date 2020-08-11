@@ -17,7 +17,7 @@ function Build({navigation , data , onToggleFavorite , isFav}) {
                     <View style={[styles.directionRow]}>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12, {marginRight:40} ]}>{ data.price }</Text>
                         <TouchableOpacity onPress = {() => onToggleFavorite()} style={[styles.touchFav]}>
-                            <Icon style={[isFav ? styles.text_red : styles.text_gray, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
+                            <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
                         </TouchableOpacity>
                     </View>
                 </View>

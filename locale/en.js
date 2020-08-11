@@ -21,6 +21,7 @@ const en = {
     'loginNow'                  : 'Login now',
     'username'                  : 'Username',
     'email'                     : 'Email',
+    'mail'                      : 'Email',
     'activationCode'            : 'Activation code',
     'language'                  : 'Language',
     'chooseLang'                : 'Choose your favourite language',
@@ -325,6 +326,15 @@ const en = {
     "noNotifications"           : "You have no prior alerts",
     "minimum"                   : "Minimum",
     "sendNoti"                  : "Send notification when your request is available",
+    "similarAds"                : "Similar ads",
+    "advertiserDetails"         : "Advertiser details",
+    "adsOwner"                  : "Ads of the owner of the advertisement",
+    "contServ"                  : "Contracting services companies near you",
+    "newCities"                 : "New cities companies announcements",
+    "faq"                       : "FAQ",
+    "userManual"                : "User manual",
+    "address"                   : "Address",
+    "complaintText"             : "Complaint's text",
 };
 
 export default en;

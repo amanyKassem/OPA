@@ -248,6 +248,9 @@ const styles = ({
     marginHorizontal_5 : {
         marginHorizontal    : 5
     },
+    marginHorizontal_7 : {
+        marginHorizontal    : 7
+    },
     marginHorizontal_10 : {
         marginHorizontal    : 10
     },
@@ -292,6 +295,9 @@ const styles = ({
     },
     paddingTop_20 : {
         paddingTop      : 20
+    },
+    paddingTop_10 : {
+        paddingTop      : 10
     },
 
     // Padding Space Horizontal
@@ -665,8 +671,14 @@ const styles = ({
     height_120 : {
         height              : 120
     },
+    height_130 : {
+        height              : 130
+    },
     height_150 : {
         height              : 150
+    },
+    height_160 : {
+        height              : 160
     },
     height_200 : {
         height              : 200
@@ -692,6 +704,10 @@ const styles = ({
 
     // Style Img Logo
 
+    icon130 : {
+        width               : 130,
+        height              : 130,
+    },
     icon150 : {
         width               : 150,
         height              : 150,
@@ -748,10 +764,6 @@ const styles = ({
         width               : 110,
         height              : 110,
     },
-    icon130 : {
-        width               : 130,
-        height              : 130,
-    },
     icon160 : {
         width               : 160,
         height              : 160,
@@ -767,7 +779,6 @@ const styles = ({
     icon35 : {
         width               : 35,
         height              : 35,
-        resizeMode          : 'contain'
     },
     icon40 : {
         width               : 40,
@@ -1127,6 +1138,14 @@ const styles = ({
         borderRightWidth    : 7,
         height              : 45
     },
+    viewInput : {
+        paddingRight        : 15,
+        paddingLeft         : 15,
+        borderColor         : COLORS.midGray,
+        borderWidth         : .5,
+        borderLeftWidth    : 7,
+        height              : 45
+    },
     inputPicker : {
         color               : '#fff',
         paddingRight        : 17,
@@ -1138,7 +1157,7 @@ const styles = ({
     },
     inputSearch : {
         color               : COLORS.lightGray,
-        paddingRight        : 20,
+        paddingRight        : 80,
         paddingLeft         : 20,
         textAlign           : I18nManager.isRTL ? 'right' : 'left',
         fontFamily          : 'cairo',
@@ -1297,6 +1316,15 @@ const styles = ({
         position:'absolute',
         top:-20,
         right:5,
+        alignItems:'center',
+        justifyContent:"flex-end",
+        paddingBottom:10
+    },
+    touchBlue: {
+        backgroundColor:'#1cd6c98c',
+        width:30,
+        height:50,
+        borderRadius:13,
         alignItems:'center',
         justifyContent:"flex-end",
         paddingBottom:10

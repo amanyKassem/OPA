@@ -21,6 +21,7 @@ const ar = {
     'loginNow'                  : 'دخول الآن',
     'username'                  : 'اسم المستخدم',
     'email'                     : 'الايميل',
+    'mail'                      : 'البريد الالكتروني',
     'activationCode'            : 'كود التفعيل',
     'language'                  : 'اللغة',
     'chooseLang'                : 'اختر اللغة المفضلة لديك',
@@ -48,7 +49,7 @@ const ar = {
     'space'                     : 'المساحة',
     'person'                    : 'فرد',
     'socialMedia'               : 'وسائل الاتصال',
-    'socialMedia2'              : 'وسائل التواصل الاجتماعي',
+    'socialMedia2'              : 'وسائل التواصل',
     'hallLocation'              : 'موقع القاعة',
     'reservation'               : 'حجز',
     'payment'                   : 'الدفع',
@@ -326,6 +327,15 @@ const ar = {
     "noNotifications"           : "لا يوجد لديك تنبيهات مسبقة",
     "minimum"                   : "الحد الأدني",
     "sendNoti"                  : "ارسال اشعار عند وجود طلبك",
+    "similarAds"                : "الاعلانات المشابهه",
+    "advertiserDetails"         : "تفاصيل المعلن",
+    "adsOwner"                  : "اعلانات صاحب الاعلان",
+    "contServ"                  : "شركات خدمات المقاولات القريبة منك",
+    "newCities"                 : "اعلانات شركات المدن الجديده",
+    "faq"                       : "اسئلة شائعة",
+    "userManual"                : "دليل استخدام",
+    "address"                   : "العنوان",
+    "complaintText"             : "نص الشكوي",
 };
 
 export default ar;

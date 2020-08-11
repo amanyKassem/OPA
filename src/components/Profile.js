@@ -42,7 +42,6 @@ function Profile({navigation}) {
                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(advNum) => setAdvNum(advNum)}
-                                   keyboardType={'number-pad'}
                                    value={advNum}
                                    disabled={true}
                             />
@@ -52,7 +51,6 @@ function Profile({navigation}) {
                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(adsNum) => setAdsNum(adsNum)}
-                                   keyboardType={'number-pad'}
                                    value={adsNum}
                                    disabled={true}
                             />
@@ -62,7 +60,6 @@ function Profile({navigation}) {
                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(phone) => setPhone(phone)}
-                                   keyboardType={'number-pad'}
                                    value={phone}
                                    disabled={true}
                             />

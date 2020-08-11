@@ -35,12 +35,12 @@ function SearchByList({navigation}) {
 
     function Item({ title ,location , price , img , space , desc , id, index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('adDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.mstarda : COLORS.orange}]}>
                 <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                 <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
-                        <Text style={[styles.textRegular , styles.text_green , styles.textSize_13]}>{ title }</Text>
-                        <Text style={[styles.textRegular , styles.text_orange , styles.textSize_12 ]}>{ price }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ title }</Text>
+                        <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
@@ -58,7 +58,7 @@ function SearchByList({navigation}) {
                 <Header navigation={navigation} title={ i18n.t('searchByList') }/>
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                    styles.Width_100, styles.paddingTop_30,
+                    styles.Width_100, styles.paddingTop_10,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                    <View>
@@ -68,9 +68,19 @@ function SearchByList({navigation}) {
                               onChangeText={(search) => setSearch(search)}
                               value={search}
                        />
+
+                       <View style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
+                           <TouchableOpacity>
+                               <Image source={require("../../assets/images/search.png")} style={[styles.icon20]} resizeMode={'cover'} />
+                           </TouchableOpacity>
+                           <View style={[styles.height_20 ,styles.marginHorizontal_7 , {width:.5 ,  backgroundColor: COLORS.midGray}]}/>
+                           <TouchableOpacity>
+                               <Image source={require("../../assets/images/filter.png")} style={[styles.icon20]} resizeMode={'cover'} />
+                           </TouchableOpacity>
+                       </View>
                    </View>
 
-                    <View style={[{height:height - 250} , styles.marginTop_10]}>
+                    <View style={[{height:height - 220} , styles.marginTop_10]}>
 
                         <FlatList
                             data={ads}
