@@ -1,16 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {
-    View,
-    Text,
-    Image,
-    TouchableOpacity,
-    Dimensions,
-    ScrollView,
-    Vibration,
-    I18nManager,
-    FlatList
-} from "react-native";
-import {Container, Content, Card, Input} from 'native-base'
+import React , {useEffect} from "react";
+import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager, FlatList} from "react-native";
+import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useSelector} from "react-redux";
@@ -20,9 +10,7 @@ import COLORS from "../consts/colors";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function SearchByList({navigation}) {
-
-    const [search, setSearch] = useState('');
+function SearchResults({navigation}) {
 
     const ads = [
         {id:'0' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
@@ -35,7 +23,7 @@ function SearchByList({navigation}) {
 
     function Item({ title ,location , price , img , space , desc , id, index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.mstarda : COLORS.orange}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
                 <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                 <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
@@ -51,36 +39,17 @@ function SearchByList({navigation}) {
         );
     }
 
+
     return (
         <Container>
             <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ i18n.t('searchByList') }/>
+                <Header navigation={navigation} title={ i18n.t('searchResults') }/>
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                    styles.Width_100, styles.paddingTop_10,
+                    styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
-
-                   <View>
-                       <Input style={[styles.inputSearch , styles.Width_100, styles.bg_White , {flex:0}]}
-                              placeholder={i18n.t('search')}
-                              placeholderTextColor={COLORS.lightGray}
-                              onChangeText={(search) => setSearch(search)}
-                              value={search}
-                       />
-
-                       <View style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                           <TouchableOpacity>
-                               <Image source={require("../../assets/images/search.png")} style={[styles.icon20]} resizeMode={'cover'} />
-                           </TouchableOpacity>
-                           <View style={[styles.height_20 ,styles.marginHorizontal_7 , {width:.5 ,  backgroundColor: COLORS.midGray}]}/>
-                           <TouchableOpacity onPress={() => navigation.navigate('advancedSearch')}>
-                               <Image source={require("../../assets/images/filter.png")} style={[styles.icon20]} resizeMode={'cover'} />
-                           </TouchableOpacity>
-                       </View>
-                   </View>
-
-                    <View style={[{height:height - 220} , styles.marginTop_10]}>
+                    <View style={[{height:height - 100}]}>
 
                         <FlatList
                             data={ads}
@@ -98,8 +67,6 @@ function SearchByList({navigation}) {
                         />
 
                     </View>
-
-
                 </View>
 
             </Content>
@@ -107,6 +74,6 @@ function SearchByList({navigation}) {
     );
 }
 
-export default SearchByList;
+export default SearchResults;
 
 

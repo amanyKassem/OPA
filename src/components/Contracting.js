@@ -53,13 +53,13 @@ function Contracting({navigation}) {
 
                     <View style={[styles.directionRowSpace]}>
                         <Text style={[styles.textBold , styles.text_black , styles.textSize_14 ]}>{ i18n.t('contServ') }</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('allContracting')}>
                             <Text style={[styles.textBold , styles.text_babyblue , styles.textSize_14 , styles.textDecoration ]}>{ i18n.t('all') }</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={[styles.directionRowSpace , styles.marginTop_15, styles.Width_100]}>
-                        <TouchableOpacity style={[styles.Width_48, styles.height_130]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} style={[styles.Width_48, styles.height_130]}>
                             <View style={[styles.imgOverLay]}/>
                             <View style={[styles.flexCenter,{position:'absolute' , top :'35%',zIndex:1}]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>شركات العقارات</Text>
@@ -67,7 +67,7 @@ function Contracting({navigation}) {
                             </View>
                             <Image source={require("../../assets/images/build1.jpg")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.Width_48, styles.height_130]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} style={[styles.Width_48, styles.height_130]}>
                             <View style={[styles.imgOverLay]}/>
                             <View style={[styles.flexCenter,{position:'absolute' , top :'35%',zIndex:1}]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>شركات العقارات</Text>

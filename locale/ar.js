@@ -336,6 +336,18 @@ const ar = {
     "userManual"                : "دليل استخدام",
     "address"                   : "العنوان",
     "complaintText"             : "نص الشكوي",
+    "advancedSearch"            : "بحث متقدم",
+    "areaOfBuild"               : "مساحة العقار",
+    "budgetFrom"                : "ميزانيتك من",
+    "budgetTo"                  : "ميزانيتك الي",
+    "searchResults"             : "نتائج البحث",
+    "allContracting"            : "جميع المقاولات",
+    "realEstateComp"            : "شركات العقار",
+    'companySpec'               : 'مواصفات الشركة',
+    'companyLoca'               : 'موقع الشركة',
+    'website'                   : 'الموقع الالكتروني',
+    'companyData'               : 'بيانات الشركه',
+    'preJob'                    : 'سابقة اعمال',
 };
 
 export default ar;

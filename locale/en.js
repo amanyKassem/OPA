@@ -335,6 +335,18 @@ const en = {
     "userManual"                : "User manual",
     "address"                   : "Address",
     "complaintText"             : "Complaint's text",
+    "advancedSearch"            : "Advanced search",
+    "areaOfBuild"               : "Area of building",
+    "budgetFrom"                : "Your budget from",
+    "budgetTo"                  : "Your budget to",
+    "searchResults"             : "Search results",
+    "allContracting"            : "All contracting",
+    "realEstateComp"            : "Real estate companies",
+    'companySpec'               : 'Company specifications',
+    'companyLoca'               : 'Company location',
+    'website'                   : 'Website',
+    'companyData'               : 'Company data',
+    'preJob'                    : 'previous jobs',
 };
 
 export default en;

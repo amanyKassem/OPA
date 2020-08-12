@@ -1438,6 +1438,24 @@ const styles = ({
         width:'100%',
         alignSelf:'center'
     },
+    controlBar: {
+        position: 'absolute',
+        bottom: '40%',
+        left: 0,
+        right: 0,
+        height: 45,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: "transparent",
+    },
+    slide: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
+        overflow: 'hidden',
+    },
 });
 
 export default styles;
