@@ -22,13 +22,13 @@ function UserManual({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5]}>-- القائمة الخاصة بالتطبيق</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, {lineHeight:22}]}>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- القائمة الخاصة بالتطبيق</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart, {lineHeight:22}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                     </Text>
                     <View style={[styles.directionBasicRow,styles.marginTop_10, styles.Width_100 , styles.marginBottom_10]}>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, {lineHeight:22 , flex:1}]}>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart, {lineHeight:22 , flex:1}]}>
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
@@ -36,14 +36,14 @@ function UserManual({navigation}) {
                         <Image source={require("../../assets/images/pic_one.png")} style={[styles.width_100 , styles.height_160,{marginLeft:10}]} resizeMode={'contain'} />
                     </View>
 
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5]}>-- الصفحة الرئيسية الخاصة بالتطبيق</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, {lineHeight:22}]}>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- الصفحة الرئيسية الخاصة بالتطبيق</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart, {lineHeight:22}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                     </Text>
                     <View style={[styles.directionBasicRow,styles.marginTop_10, styles.Width_100]}>
                         <Image source={require("../../assets/images/pic_two.png")} style={[styles.width_100 , styles.height_160,{marginRight:10}]} resizeMode={'contain'} />
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, {lineHeight:22 , flex:1}]}>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart, {lineHeight:22 , flex:1}]}>
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال

@@ -21,8 +21,8 @@ function Build({navigation , data , onToggleFavorite , isFav}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ data.space }</Text>
-                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ data.desc }</Text>
+                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ data.space }</Text>
+                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ data.desc }</Text>
                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                     {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{data.location}</Text>
             </View>

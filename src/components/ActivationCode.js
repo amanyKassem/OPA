@@ -77,7 +77,7 @@ function ActivationCode({navigation}) {
                         <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_babyblue]}>{ i18n.t('code') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('code') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(code) => setCode(code)}
                                        keyboardType={'number-pad'}

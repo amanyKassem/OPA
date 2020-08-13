@@ -296,7 +296,7 @@ const en = {
     'buildAge'                  : 'Build age',
     'uploadAdImgs'              : 'Upload Ad images',
     'adDetails'                 : 'Ad details',
-    'buildData'                 : 'Build data',
+    'buildData'                 : 'Building data',
     'advertiserData'            : 'Ad data',
     'advertisingStats'          : 'Ad stats',
     'category'                  : 'Category',

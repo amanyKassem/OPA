@@ -111,10 +111,10 @@ function RealEstateDet({navigation,route}) {
 
 
     const images = [
-        {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjHe_dRMl9Rb8CJiOfsrKo8Oure5s_rxRsPw&usqp=CAU'},
-        {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-_f0-hBUvZr6R35AnqOkGmk9mO_fG6eXh7A&usqp=CAU'},
-        {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6wQn_6OzmPnVrNwcYP_mqGy5hFEMyhnWATw&usqp=CAU'},
-        {url: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'},
+        {id:'0',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjHe_dRMl9Rb8CJiOfsrKo8Oure5s_rxRsPw&usqp=CAU'},
+        {id:'1',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-_f0-hBUvZr6R35AnqOkGmk9mO_fG6eXh7A&usqp=CAU'},
+        {id:'2',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6wQn_6OzmPnVrNwcYP_mqGy5hFEMyhnWATw&usqp=CAU'},
+        {id:'3',url: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'},
     ]
 
     function Item({url, index }) {
@@ -162,29 +162,28 @@ function RealEstateDet({navigation,route}) {
             return(
                 <View style={[{top:-30}]}>
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14]}>{ i18n.t('companySpec') }</Text>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.marginBottom_10,{lineHeight:20}]}>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14, styles.alignStart]}>{ i18n.t('companySpec') }</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.marginBottom_10, styles.alignStart,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                         </Text>
 
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14,styles.marginBottom_10]}>{ i18n.t('companyLoca') }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14,styles.marginBottom_10, styles.alignStart]}>{ i18n.t('companyLoca') }</Text>
                         {
                             !initMap && mapRegion.latitude != null? (
-                                <TouchableOpacity onPress={()=> _linkGoogleMap( mapRegion.latitude , mapRegion.longitude)}>
-                                    <MapView
-                                        ref={mapRef}
-                                        style={{ width: '100%', height: 200 , flex:1 }}
-                                        initialRegion={mapRegion}>
-                                        <MapView.Marker
-                                            // draggable
-                                            coordinate={mapRegion}
-                                            // onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
-                                        >
-                                            <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
-                                        </MapView.Marker>
-                                    </MapView>
-                                </TouchableOpacity>
+                                <MapView
+                                    ref={mapRef}
+                                    style={{ width: '100%', height: 200 , flex:1 }}
+                                    initialRegion={mapRegion}>
+                                    <MapView.Marker
+                                        // draggable
+                                        coordinate={mapRegion}
+                                        onPress={()=> _linkGoogleMap( mapRegion.latitude , mapRegion.longitude)}
+                                        // onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
+                                    >
+                                        <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
+                                    </MapView.Marker>
+                                </MapView>
                             ) : (<View />)
                         }
                     </View>
@@ -193,7 +192,7 @@ function RealEstateDet({navigation,route}) {
         } else if(tabType === '1'){
             return(
                 <View style={[{top:-15}, styles.paddingHorizontal_15]}>
-                    <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14]}>{ i18n.t('socialMedia2') }</Text>
+                    <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14, styles.alignStart]}>{ i18n.t('socialMedia2') }</Text>
                     <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/phone_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>012365648569</Text>
@@ -207,7 +206,7 @@ function RealEstateDet({navigation,route}) {
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>twitter\aait</Text>
                     </TouchableOpacity>
 
-                    <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14,styles.marginTop_5]}>{ i18n.t('website') }</Text>
+                    <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14,styles.marginTop_5, styles.alignStart]}>{ i18n.t('website') }</Text>
                     <TouchableOpacity onPress={() => Linking.openURL('https://www.moawlat.com')} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/global_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>www.moawlat.com</Text>
@@ -263,7 +262,7 @@ function RealEstateDet({navigation,route}) {
                         </Swiper>
 
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 ]}>اسم شركة المقاولات</Text>
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, styles.alignStart ]}>اسم شركة المقاولات</Text>
                             <View style={[styles.directionRow]}>
                                 <Image source={require("../../assets/images/global_gray.png")} style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'} />
                                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.textCenter ]}>www.moawlat.com</Text>
@@ -309,13 +308,13 @@ function RealEstateDet({navigation,route}) {
                     }
 
                     <Modal
-                        onBackdropPress                 ={() => {setShowModal(!showModal);setImgUri(null);setMute(true);setShouldPlay(false)}}
-                        onBackButtonPress               = {() => {setShowModal(!showModal);setImgUri(null);setMute(true);setShouldPlay(false)}}
+                        onBackdropPress                 ={() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
+                        onBackButtonPress               = {() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
                         isVisible                       = {showModal}
                         // style                        = {styles.bgModel}
                         avoidKeyboard                   = {true}
                     >
-                        <TouchableOpacity onPress={()=> {setShowModal(false);setImgUri(null);setMute(true);setShouldPlay(false)}}
+                        <TouchableOpacity onPress={()=> {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}}
                             style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
                                 {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
                             <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
@@ -352,7 +351,7 @@ function RealEstateDet({navigation,route}) {
                                     </View>
                                 ) :
                                 (
-                                    <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModal(false);setImgUri(null);setMute(true);setShouldPlay(false)}} enableSwipeDown={true} imageUrls={imgArr}/>
+                                    <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}} enableSwipeDown={true} imageUrls={imgArr}/>
                                 )
 
                         }

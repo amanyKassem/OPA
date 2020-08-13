@@ -59,7 +59,7 @@ export default function CustomDrawerContent(props) {
                 </TouchableOpacity>
 
                 <DrawerItem
-                    style={[styles.marginTop_65 , styles.height_40 , styles.justifyCenter , {marginHorizontal:0 }]}
+                    style={[styles.marginTop_65 , styles.justifyCenter , {marginHorizontal:0 }]}
                     label={
                         ({ focused, color }) => {
                             return (
@@ -80,7 +80,7 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
+                    style={[ styles.justifyCenter ,{marginHorizontal:0}]}
                     label={
                         ({ focused, color }) => {
                             return (
@@ -99,7 +99,7 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
+                    style={[ styles.justifyCenter ,{marginHorizontal:0}]}
                     label={
                         ({ focused, color }) => {
                             return (
@@ -118,7 +118,7 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
+                    style={[styles.justifyCenter ,{marginHorizontal:0}]}
                     label={
                         ({ focused, color }) => {
                             return (
@@ -137,7 +137,7 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
+                    style={[styles.justifyCenter ,{marginHorizontal:0}]}
                     label={
                         ({ focused, color }) => {
                             return (
@@ -156,7 +156,7 @@ export default function CustomDrawerContent(props) {
                 />
 
                 <DrawerItem
-                    style={[styles.height_40 , styles.justifyCenter ,{marginHorizontal:0 , marginTop:10}]}
+                    style={[styles.justifyCenter ,{marginHorizontal:0}]}
                     label={
                         ({ focused, color }) => {
                             return (

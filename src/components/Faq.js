@@ -22,15 +22,15 @@ function Faq({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5]}>-- الاسئلة المتداولة ؟</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10 , {lineHeight:22}]}>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- الاسئلة المتداولة ؟</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10, styles.alignStart , {lineHeight:22}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                     </Text>
 
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5]}>-- الاسئلة المتداولة ؟</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10 , {lineHeight:22}]}>
+                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- الاسئلة المتداولة ؟</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10, styles.alignStart , {lineHeight:22}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال

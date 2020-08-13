@@ -34,18 +34,22 @@ function AdFee({navigation}) {
                     <View style={[styles.Width_100 , styles.directionColumnSpace ,{flex:1}]}>
 
                         <View>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5]}>-- الخيارالاول (مناسب للملاك)</Text>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10 , {lineHeight:22}]}>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- الخيارالاول (مناسب للملاك)</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_5, styles.alignStart , {lineHeight:22}]}>
                                 رسوم التأجير : 95 ريال
+                            </Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10, styles.alignStart , {lineHeight:22}]}>
                                 رسوم البيع : 120 ريال
                             </Text>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5]}>-- الخيارالاول (مناسب للمكاتب و المسوقين)</Text>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14  , styles.marginBottom_10, {lineHeight:22}]}>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- الخيارالاول (مناسب للمكاتب و المسوقين)</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_5, styles.alignStart , {lineHeight:22}]}>
                                 رسوم التأجير : 95 ريال
+                            </Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10, styles.alignStart , {lineHeight:22}]}>
                                 رسوم البيع : 120 ريال
                             </Text>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5]}>-- النقاط التوضيحية</Text>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , {lineHeight:22}]}>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- النقاط التوضيحية</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart , {lineHeight:22}]}>
                                 هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                                 هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                                 هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال

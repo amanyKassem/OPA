@@ -69,8 +69,8 @@ function ListDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ space }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
@@ -92,8 +92,8 @@ function ListDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ space }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
@@ -167,8 +167,8 @@ function ListDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>1235</Text>
                     </View>
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('apartSpec') }</Text>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,{lineHeight:20}]}>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                         </Text>
@@ -183,24 +183,24 @@ function ListDetails({navigation}) {
                             <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
                         </View>
                         <View style={[{marginLeft:10}]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('advertiserName') }</Text>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('advertiserName') }</Text>
                             <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)}>
                                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart]}>012365648569</Text>
                             </TouchableOpacity>
-                            <View style={[styles.width_80, styles.marginTop_5]}>
-                                <StarRating
-                                    disabled={true}
-                                    maxStars={5}
-                                    rating={3}
-                                    fullStarColor={COLORS.mstarda}
-                                    starSize={14}
-                                    starStyle={styles.starStyle}
-                                />
-                            </View>
+                            {/*<View style={[styles.width_80, styles.marginTop_5]}>*/}
+                                {/*<StarRating*/}
+                                    {/*disabled={true}*/}
+                                    {/*maxStars={5}*/}
+                                    {/*rating={3}*/}
+                                    {/*fullStarColor={COLORS.mstarda}*/}
+                                    {/*starSize={14}*/}
+                                    {/*starStyle={styles.starStyle}*/}
+                                {/*/>*/}
+                            {/*</View>*/}
                         </View>
                     </TouchableOpacity>
                     <View style={[styles.paddingHorizontal_15 , styles.marginTop_10]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('LocAndServices') }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('LocAndServices') }</Text>
 
                         <View style={[styles.marginTop_20]}>
 

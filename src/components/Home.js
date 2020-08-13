@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, Vibration} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, Vibration, I18nManager} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -20,10 +20,10 @@ const longitudeDelta = 0.521;
 function Home({navigation,route}) {
 
     const [search, setSearch] = useState('');
+    const [showAd, setShowAd] = useState(false);
 
     let mapRef = useRef(null);
     let mapMarkerRef = useRef(null);
-    let markerRefs = []
 
     const [city, setCity] = useState('');
 
@@ -123,6 +123,10 @@ function Home({navigation,route}) {
         }
     }
 
+    function showAdPop() {
+        setShowAd(true)
+    }
+
     return (
         <Container>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
@@ -156,37 +160,65 @@ function Home({navigation,route}) {
                             <MapView
                                 ref={mapRef}
                                 style={{ width: '100%', height: '100%' , flex:1 }}
-                                // onRegionChangeComplete={() => mapMarkerRef.current.showCallout()}
+                                // onRegionChange={() => mapMarkerRef.current.showCallout()}
                                 initialRegion={mapRegion}>
                                 <MapView.Marker
-                                    // draggable
                                     coordinate={mapRegion}
                                     // title={city}
                                     // description={'my location'}
-                                    // onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
                                 >
-                                    <Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
+                                    <Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>
 
                                 </MapView.Marker>
 
-                                {markers.map(marker => (
+                                {markers.map((marker,i) => (
                                     <MapView.Marker
                                         // ref={mapMarkerRef}
                                         key={marker.id}
                                         coordinate={marker.coordinates}
                                         // title={marker.title}
+                                        onPress={() => showAdPop()}
                                     >
-                                        <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
-                                        <MapView.Callout tooltip={true} style={[styles.width_100,styles.bg_gray, styles.paddingHorizontal_15]} >
-                                            <View style={[{flex:1}]}>
-                                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12]}>{marker.title}</Text>
+                                        <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                        <MapView.Callout tooltip={true} style={[styles.flexCenter]} >
+                                            <View style={[styles.Radius_15,styles.flexCenter ,styles.bg_gray ,styles.paddingVertical_5 , styles.paddingHorizontal_5,{minWidth:80}]}>
+                                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_11]}>{marker.title}</Text>
                                             </View>
+                                            <View style={[styles.talkBubbleTriangle]}/>
                                         </MapView.Callout>
                                     </MapView.Marker>
                                 ))}
                             </MapView>
                         ) : (<View />)
                     }
+
+                    {
+                        showAd?
+                            <View style={[styles.paddingHorizontal_15, styles.Width_100 , {position:'absolute' , bottom:75 , zIndex:1}]}>
+                                <TouchableOpacity onPress={() => setShowAd(false)} style={[styles.bg_gray,styles.centerContext , styles.Radius_50,styles.alignEnd,styles.icon25]}>
+                                    <Image source={require("../../assets/images/close.png")} style={[styles.icon10]} resizeMode={'contain'} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.popCard , styles.bg_White,
+                                    { borderLeftColor: COLORS.gray}]}>
+                                    <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
+                                    <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
+                                        <View style={[styles.directionRowSpace , styles.Width_100]}>
+                                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>شقة ايجار</Text>
+                                            <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>100 رس</Text>
+                                        </View>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ,styles.alignStart]}>100 متر</Text>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>4 غرف - صالة</Text>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
+                                            {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>السعودية - الرياض</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={[styles.talkTriangle]}/>
+
+                            </View>
+                            :
+                            null
+                    }
+
 
 
                 </View>

@@ -30,8 +30,8 @@ function AdvertiserDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ space }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
@@ -58,16 +58,16 @@ function AdvertiserDetails({navigation}) {
                             <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)}>
                                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart]}>012365648569</Text>
                             </TouchableOpacity>
-                            <View style={[styles.width_80, styles.marginTop_5]}>
-                                <StarRating
-                                    disabled={true}
-                                    maxStars={5}
-                                    rating={3}
-                                    fullStarColor={COLORS.mstarda}
-                                    starSize={14}
-                                    starStyle={styles.starStyle}
-                                />
-                            </View>
+                            {/*<View style={[styles.width_80, styles.marginTop_5]}>*/}
+                                {/*<StarRating*/}
+                                    {/*disabled={true}*/}
+                                    {/*maxStars={5}*/}
+                                    {/*rating={3}*/}
+                                    {/*fullStarColor={COLORS.mstarda}*/}
+                                    {/*starSize={14}*/}
+                                    {/*starStyle={styles.starStyle}*/}
+                                {/*/>*/}
+                            {/*</View>*/}
                             <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)} style={[styles.directionRow , styles.marginTop_5]}>
                                 <Image source={require('../../assets/images/phone_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
                                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14]}>012365648569</Text>

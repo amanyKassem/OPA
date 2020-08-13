@@ -52,8 +52,8 @@ function AdDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ space }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ desc }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
@@ -63,7 +63,7 @@ function AdDetails({navigation}) {
 
     const conversations = [
         {id:'0' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00' , count:'2'},
-        {id:'1' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق تم العثور علي طلب مطابقتم العثور علي طلب مطابق' , time:'03:00' , count:'2'},
+        {id:'1' , title:'اوامر الشبكة' , body:'we found app we found app  we found app we found app we found app ' , time:'03:00' , count:'2'},
         {id:'2' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00' , count:'2'},
         {id:'3' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00' , count:'2'},
     ];
@@ -76,16 +76,16 @@ function AdDetails({navigation}) {
                         <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull, styles.Radius_50]} resizeMode={'cover'} />
                         <View style={[styles.bg_mstarda ,styles.width_20 , styles.height_10, styles.Radius_5,styles.centerContext
                             ,{position:'absolute' , top:0 , zIndex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_green , styles.textSize_10]}>{ count }</Text>
+                            <Text style={[styles.textRegular , styles.text_green , styles.textSize_10, {lineHeight:isIOS ?14 : 18}]}>{ count }</Text>
                         </View>
                     </View>
                     <View style={[styles.directionColumnC, {flex:1, marginLeft:10}]}>
                         <View style={[styles.directionRowSpace]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart ,
-                                {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{title}</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart]}>{title}</Text>
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 , styles.width_40 ]}>{ time }</Text>
                         </View>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12]}>{ body }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_12,styles.alignStart,
+                            {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{ body }</Text>
                     </View>
                 </View>
                 <View style={[styles.line, styles.marginTop_10]}/>
@@ -158,8 +158,9 @@ function AdDetails({navigation}) {
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>1235</Text>
                     </View>
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('apartSpec') }</Text>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,{lineHeight:20}]}>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart,
+                            {lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                             نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                         </Text>
@@ -174,7 +175,7 @@ function AdDetails({navigation}) {
                             <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
                         </View>
                         <View style={[{marginLeft:10}]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('advertiserName') }</Text>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('advertiserName') }</Text>
                             <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)}>
                                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart]}>012365648569</Text>
                             </TouchableOpacity>
@@ -204,7 +205,7 @@ function AdDetails({navigation}) {
                     </View>
                     <View style={[styles.line , styles.marginVertical_20]}/>
                     <View style={[styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('LocAndServices') }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('LocAndServices') }</Text>
 
                         <View style={[styles.marginTop_20]}>
 
@@ -232,13 +233,13 @@ function AdDetails({navigation}) {
                 <View style={[{top:-30}, styles.marginTop_15,styles.paddingHorizontal_15]}>
                     <View style={[styles.directionRow,styles.marginBottom_15]}>
                         <View style={{flex:1}}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('rateShow') }</Text>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,{lineHeight:20}]}>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('rateShow') }</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart,{lineHeight:20, writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' }]}>
                                 نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                                  نص نص نص نص نص نص نص نص نص نص نص نص نص
                             </Text>
                         </View>
-                        <Image source={require('../../assets/images/statistic.png')} style={[styles.icon100, {marginLeft:10}]} resizeMode={'contain'} />
+                        <Image source={require('../../assets/images/statistic.png')} style={[styles.transform,styles.icon100, {marginLeft:10}]} resizeMode={'contain'} />
                     </View>
                     <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('peopleAd') }</Text>
                     <View style={[styles.marginTop_15]}>
@@ -285,7 +286,7 @@ function AdDetails({navigation}) {
                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>شقة ايجار</Text>
                                <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>17 الف ريال</Text>
                            </View>
-                           <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>شارع البطحاء  - الرياض</Text>
+                           <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>شارع البطحاء  - الرياض</Text>
                        </Card>
 
                    </View>

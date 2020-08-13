@@ -156,7 +156,7 @@ function Register({navigation}) {
                                             },
                                         }}
                                         placeholder={{
-                                            label: '' ,
+                                            label: i18n.t('country') ,
                                         }}
                                         onValueChange={(country) => setCountry(country)}
                                         // items={cities ?
@@ -197,7 +197,7 @@ function Register({navigation}) {
                                 {renderSubmit()}
 
                                 <TouchableOpacity onPress={() => navigation.navigate('terms')}
-                                                  style={[styles.marginBottom_20 , styles.marginTop_5  , styles.directionRowCenter, styles.alignStart]}>
+                                                  style={[styles.marginBottom_20 , styles.marginTop_5  , styles.directionRowCenter, styles.alignStart,{left:-8}]}>
                                     <CheckBox style={[styles.checkBox]} onPress={() => setIsChecked(!isChecked)} checked={isChecked} color={COLORS.babyblue}/>
                                     <Text style={[styles.textRegular , styles.text_White , styles.textDecoration , styles.textSize_14]}>{ i18n.t('agreeTo') }</Text>
                                 </TouchableOpacity>

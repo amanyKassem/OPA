@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, ScrollView, Vibration} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager, Vibration} from "react-native";
 import {Container, Content, Card, CheckBox, Form} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -25,20 +25,20 @@ function AddAdTerms({navigation}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                     <View style={[{flex:1}]}>
-                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_10]}>-- { i18n.t('adCondi') }</Text>
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10, {lineHeight:22}]}>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_10, styles.alignStart]}>-- { i18n.t('adCondi') }</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10, {lineHeight:22,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         </Text>
 
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10 , {lineHeight:22}]}>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , styles.marginBottom_10 , {lineHeight:22,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                             هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         </Text>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('terms')}
+                        <TouchableOpacity onPress={() => navigation.navigate('terms',{pathname:'terms'})}
                                           style={[styles.Width_100 , styles.marginTop_5  , styles.directionRow]}>
                             <CheckBox style={[styles.checkBox, {marginRight:15 , left:0}]} onPress={() => setIsChecked(!isChecked)} checked={isChecked} color={COLORS.babyblue}/>
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textDecoration , styles.textSize_14]}>{ i18n.t('agreeTo') }</Text>

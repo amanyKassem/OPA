@@ -1,5 +1,5 @@
 import React , {useEffect} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions} from "react-native";
+import {View, Text, Image, I18nManager, Dimensions} from "react-native";
 import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -23,14 +23,14 @@ function AboutApp({navigation}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                     <Image source={require('../../assets/images/logo.png')} style={[styles.icon130 , styles.marginBottom_20 , styles.SelfCenter ]} resizeMode={'contain'} />
-                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10]}>-- { i18n.t('aboutApp') }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10 , {lineHeight:22}]}>
+                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10, styles.alignStart]}>-- { i18n.t('aboutApp') }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.marginBottom_10 , {lineHeight:22,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                     </Text>
-                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10]}>-- { i18n.t('aboutApp') }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , {lineHeight:22}]}>
+                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10, styles.alignStart]}>-- { i18n.t('aboutApp') }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 , {lineHeight:22,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
                         هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال

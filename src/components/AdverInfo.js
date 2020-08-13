@@ -29,7 +29,7 @@ function AdverInfo({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, styles.marginBottom_20]}>{ i18n.t('socialMedia') }</Text>
+                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, styles.marginBottom_20, styles.alignStart]}>{ i18n.t('socialMedia') }</Text>
 
                     <KeyboardAvoidingView style={[styles.Width_100, styles.flexCenter , {flex:1}]}>
                         <Form style={[styles.Width_100 , styles.directionColumnSpace , {flex:1}]}>

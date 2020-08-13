@@ -16,7 +16,7 @@ function Contracting({navigation}) {
         for (let i = 0; i < 3; i++) {
             if(i === 0){
                 cities.push(
-                    <TouchableOpacity style={[styles.Width_100, styles.height_150 , styles.marginBottom_25]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} key={i} style={[styles.Width_100, styles.height_150 , styles.marginBottom_25]}>
                         <View style={[styles.imgOverLay]}/>
                         <View style={[styles.alignStart,{position:'absolute' , bottom :10 ,left:15,zIndex:1}]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>9/7/2019</Text>
@@ -27,7 +27,7 @@ function Contracting({navigation}) {
                 )
             }else{
                 cities.push(
-                    <TouchableOpacity style={[styles.Width_48, styles.height_250]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} key={i} style={[styles.Width_48, styles.height_250]}>
                         <View style={[styles.imgOverLay]}/>
                         <View style={[styles.alignStart,{position:'absolute' , bottom :10 ,left:15,zIndex:1}]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>9/7/2019</Text>
@@ -79,7 +79,7 @@ function Contracting({navigation}) {
 
                     <View style={[styles.directionRowSpace , styles.marginTop_15]}>
                         <Text style={[styles.textBold , styles.text_black , styles.textSize_14 ]}>{ i18n.t('newCities') }</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('allContracting')}>
                             <Text style={[styles.textBold , styles.text_babyblue , styles.textSize_14 , styles.textDecoration ]}>{ i18n.t('all') }</Text>
                         </TouchableOpacity>
                     </View>

@@ -14,7 +14,7 @@ function Notifications({navigation}) {
 
     const notifications = [
         {id:'0' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-        {id:'1' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق تم العثور علي طلب مطابق تم العثور علي طلب مطابق' , time:'03:00'},
+        {id:'1' , title:'اوامر الشبكة' , body:'we found app we found app  we found app we found app we found app ' , time:'03:00'},
         {id:'2' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
         {id:'3' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
         {id:'4' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
@@ -30,7 +30,7 @@ function Notifications({navigation}) {
                             , position:'absolute' , right:7 , top:-7}]}>
                         <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_14,styles.marginBottom_5]}>{ title }</Text>
+                    <Text style={[styles.textBold , styles.text_gray , styles.textSize_14,styles.marginBottom_5, styles.alignStart ]}>{ title }</Text>
                     <View style={[styles.directionRowSpace]}>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart ,
                             {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{body}</Text>

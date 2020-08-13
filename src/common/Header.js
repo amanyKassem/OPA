@@ -57,7 +57,7 @@ function Header({navigation , title , toggleModal}) {
                             :
 
                             title === i18n.t('orders') ?
-                                <TouchableOpacity onPress={() => navigation.navigate('addOrder')} style={{right:-15}}>
+                                <TouchableOpacity onPress={() => navigation.navigate('addOrder')} style={[styles.transform,{right:-15}]}>
                                     <Image source={require('../../assets/images/plus_circle.png')} style={[styles.icon35]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                                 :

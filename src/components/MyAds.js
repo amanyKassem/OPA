@@ -30,8 +30,8 @@ function MyAds({navigation}) {
                         <Text style={[styles.textRegular , styles.text_green , styles.textSize_13]}>{ title }</Text>
                         <Text style={[styles.textRegular , styles.text_orange , styles.textSize_12 ]}>{ price }</Text>
                     </View>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ space }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ desc }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>

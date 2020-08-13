@@ -1,8 +1,9 @@
-import {Dimensions , I18nManager} from "react-native";
+import {Dimensions , I18nManager , Platform} from "react-native";
 import COLORS from '../../src/consts/colors'
 
 const width     = Dimensions.get('window').width;
 const height    = Dimensions.get('window').height;
+const isIOS      = Platform.OS === 'ios';
 
 const styles = ({
 
@@ -423,10 +424,10 @@ const styles = ({
     // Style Search
 
     checkBox : {
-        paddingLeft             : 0,
+        paddingLeft             : I18nManager.isRTL ? 0 : 2,
         paddingBottom           : 0,
         borderRadius            : 5,
-        paddingRight            : 2,
+        paddingRight            : I18nManager.isRTL ? 2 : 0,
         marginRight             :20,
     },
 
@@ -731,6 +732,10 @@ const styles = ({
     icon23 : {
         width               : 23,
         height              : 23,
+    },
+    icon10 : {
+        width               : 10,
+        height              : 10,
     },
     icon15 : {
         width               : 15,
@@ -1135,7 +1140,8 @@ const styles = ({
         fontSize            : 14,
         borderColor         : COLORS.babyblue,
         borderWidth         : .5,
-        borderRightWidth    : 7,
+        borderRightWidth    : I18nManager.isRTL ? isIOS ? .5 : 7 :.5,
+        borderLeftWidth     : I18nManager.isRTL ? isIOS ? 7 : .5 :7,
         height              : 45
     },
     viewInput : {
@@ -1149,10 +1155,10 @@ const styles = ({
     inputPicker : {
         color               : '#fff',
         paddingRight        : 17,
-        paddingLeft         : 0,
+        paddingLeft         : isIOS ? 10 : 0,
         borderColor         : COLORS.babyblue,
         borderWidth         : .5,
-        borderLeftWidth    : 7,
+        borderLeftWidth     : 7,
         height              : 45
     },
     inputSearch : {
@@ -1375,6 +1381,16 @@ const styles = ({
         borderLeftWidth: 4,
         flexDirection: 'row',
     },
+    popCard:{
+        borderRadius: 20,
+        overflow:'hidden',
+        borderWidth:1,
+        borderTopColor:'#fff',
+        borderRightColor:'#fff',
+        borderBottomColor:'#fff',
+        borderLeftWidth: 4,
+        flexDirection: 'row',
+    },
     chatCard:{
         borderRadius: 20,
         padding:10,
@@ -1456,6 +1472,40 @@ const styles = ({
         backgroundColor: '#000',
         overflow: 'hidden',
     },
+    talkBubbleTriangle: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderRightWidth: 10,
+        borderTopWidth: 10,
+        borderRightColor: 'transparent',
+        borderTopColor: COLORS.gray,
+        transform: [
+            {rotate: I18nManager.isRTL ?'270deg':'-270deg'}
+        ],
+        // position:'absolute',
+        bottom:0,
+        left:-10
+    },
+    talkTriangle: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderLeftWidth: 10,
+        borderRightWidth: 10,
+        borderBottomWidth: 10,
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: '#fff',
+        transform: [
+            {rotate: '180deg'}
+        ],
+        position:'absolute',
+        bottom:-10,
+        right:103
+    }
 });
 
 export default styles;

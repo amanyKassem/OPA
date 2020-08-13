@@ -22,14 +22,14 @@ function AdImgs({navigation}) {
        for (let i = 0; i < 7; i++) {
            if(i === 0){
               imgBlock.push(
-                  <TouchableOpacity onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
+                  <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
                       <Image source= {photos[i]?{uri:photos[i]} : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i]? styles.heightFull:null]} resizeMode={photos[i]?'cover':'contain'} />
                       <Text style={[styles.textRegular , styles.text_White , styles.textSize_13]}>{ i18n.t('uploadAdImgs') }</Text>
                   </TouchableOpacity>
               )
            }else{
                imgBlock.push(
-                   <TouchableOpacity onPress={() => _pickImage(i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
+                   <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
                        <Image source= {photos[i]?{uri:photos[i]} : require('../../assets/images/upload_gray.png')} style={[photos[i]? styles.Width_100 : styles.icon50  , photos[i]? styles.heightFull:null]} resizeMode={photos[i]?'cover':'contain'} />
                    </TouchableOpacity>

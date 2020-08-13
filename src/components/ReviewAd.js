@@ -49,7 +49,7 @@ function ReviewAd({navigation}) {
                                 <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>شقة ايجار</Text>
                                 <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>17 الف ريال</Text>
                             </View>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>شارع البطحاء  - الرياض</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>شارع البطحاء  - الرياض</Text>
                         </Card>
 
                     </View>
@@ -111,8 +111,9 @@ function ReviewAd({navigation}) {
                             <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>1235</Text>
                         </View>
                         <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{ i18n.t('apartSpec') }</Text>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,{lineHeight:20}]}>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart
+                                ,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                                 نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                                 نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
                             </Text>
