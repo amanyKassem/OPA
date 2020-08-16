@@ -4,8 +4,13 @@ import {Container, Content, Form, Input, Item, Label, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import {useDispatch, useSelector} from "react-redux";
+import {resetPassword} from "../actions";
 
-function ChangePass({navigation}) {
+function ChangePass({navigation,route}) {
+    const { activeCode, id } = route.params;
+    const lang      = useSelector(state => state.lang.lang);
+    const dispatch  = useDispatch();
 
     const [code, setCode] = useState('');
     const [password, setPassword] = useState('');
@@ -13,9 +18,9 @@ function ChangePass({navigation}) {
     const [spinner, setSpinner] = useState(false);
 
 
-    // useEffect(() => {
-    //     alert('activation code : ' + activeCode)
-    // }, []);
+    useEffect(() => {
+        alert('activation code : ' + activeCode)
+    }, []);
 
 
     useEffect(() => {
@@ -75,8 +80,7 @@ function ChangePass({navigation}) {
                 });
                 return false
             } else {
-                // dispatch(resetPassword(id, password, lang, navigation));
-                navigation.navigate('login');
+                dispatch(resetPassword(id, password, lang, navigation));
             }
         } else {
             Toast.show({

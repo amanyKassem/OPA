@@ -12,7 +12,7 @@ import {Notifications} from 'expo'
 function Login({navigation}) {
 
     const lang = useSelector(state => state.lang.lang);
-    // const auth = useSelector(state => state.auth);
+    const auth = useSelector(state => state.auth);
 
     const dispatch = useDispatch()
 
@@ -50,9 +50,9 @@ function Login({navigation}) {
         getDeviceId()
     }, []);
 
-    // useEffect(() => {
-    //     setTimeout(() => setSpinner(false), 500);
-    // }, [auth]);
+    useEffect(() => {
+        setTimeout(() => setSpinner(false), 500);
+    }, [auth]);
 
 
     function validate() {
@@ -107,7 +107,7 @@ function Login({navigation}) {
 
         if (!err){
             setSpinner(true);
-            // dispatch(userLogin(phone, password, deviceId , lang , navigation));
+            dispatch(userLogin(phone, password, deviceId , lang , navigation));
         }
     }
 

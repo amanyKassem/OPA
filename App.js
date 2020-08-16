@@ -18,7 +18,7 @@ function App({navigation}) {
 	useEffect( () => {
 
 		// I18nManager.forceRTL(true);
-		// AsyncStorage.clear()
+		// AsyncStorage.clear();
 
 		if (Platform.OS === 'android') {
 			Notifications.createChannelAndroidAsync('orders', {

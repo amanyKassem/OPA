@@ -6,26 +6,30 @@ import styles from "../../assets/styles";
 import {Dimensions, I18nManager, Image, Text, TouchableOpacity, View} from "react-native";
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import {logout, tempAuth} from '../actions';
+
+
 const height = Dimensions.get('window').height;
 
 export default function CustomDrawerContent(props) {
 
     const lang  = useSelector(state => state.lang.lang);
 
+
     function onChooseLang(language){
         if(language !== lang){
             dispatch(chooseLang(language))
         }
     }
-    // const auth = useSelector(state => state.auth);
-    // const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const auth = useSelector(state => state.auth);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
     const dispatch  = useDispatch();
-    //
-    // function logoutFunc(){
-    //     dispatch(logout(lang , token));
-    //     dispatch(tempAuth(token));
-    // }
+
+    function logoutFunc(){
+        dispatch(logout(lang , token));
+        dispatch(tempAuth(token));
+    }
 
     return (
         <DrawerContentScrollView {...props} style={[styles.bg_gray]}>
@@ -50,12 +54,12 @@ export default function CustomDrawerContent(props) {
 
                 <TouchableOpacity  onPress={() => props.navigation.navigate('tabs', {screen: 'profile'})}
                                    style={[styles.flexCenter ,{ position:'absolute' ,top:-40 , left:15}]}>
-                    <Image source={require('../../assets/images/pic_profile.png')}
+                    <Image source={{uri:auth.user ? auth.user.data.avatar : ''}}
                            style={[styles.icon80,styles.Radius_15 ,{ borderWidth:5 , borderColor:'#fff'}]} resizeMode={'cover'} />
                     <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
                         <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>أماني قاسم</Text>
+                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>{auth.user.data.name}</Text>
                 </TouchableOpacity>
 
                 <DrawerItem
@@ -180,7 +184,9 @@ export default function CustomDrawerContent(props) {
                     right:-63,
                     width:'50%',
                     bottom:62,
-                }]}>
+                }]}
+                  onPress={() => logoutFunc()}
+                >
                     <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('logout') }</Text>
                 </TouchableOpacity>
 

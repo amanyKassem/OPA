@@ -4,20 +4,46 @@ import {Container, Content, Textarea, Item, Label, Input, Form} from 'native-bas
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import Header from '../common/Header';
-import RNPickerSelect from "./EditProfile";
+import {getUserData, updateUserSocial} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function AdverInfo({navigation}) {
 
-    const [facebook, setFacebook] = useState('');
-    const [twitter, setTwitter] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [details, setDetails] = useState('');
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+
+    const userData = useSelector(state => state.userData.userData);
+    const userDataLoader = useSelector(state => state.userData.loader);
+
+
+    const [facebook, setFacebook] = useState(userData.facebook);
+    const [twitter, setTwitter] = useState(userData.twitter);
+    const [phone, setPhone] = useState(userData.contact_phone);
+    const [email, setEmail] = useState(userData.contact_email);
+    const [details, setDetails] = useState(userData.detailes);
+
+    const dispatch = useDispatch();
+
+
+    function fetchData(){
+        dispatch(getUserData(lang, token))
+    }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+        return unsubscribe;
+    }, [navigation , userDataLoader]);
+
+    function onEdit(){
+        dispatch(updateUserSocial(lang , facebook , twitter , phone , email , details , token , navigation));
+    }
 
     return (
         <Container>
@@ -80,7 +106,7 @@ function AdverInfo({navigation}) {
                             </View>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_30 ]}>
+                            <TouchableOpacity onPress={() => onEdit()} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_30 ]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('agree') }</Text>
                             </TouchableOpacity>
 

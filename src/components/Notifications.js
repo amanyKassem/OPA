@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager ,FlatList} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager ,FlatList , ActivityIndicator} from "react-native";
 import {Container, Content, Card, Item, Label, Input, Form, Icon} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getNotifications , deleteNoti} from '../actions';
 import Header from '../common/Header';
 
 const height = Dimensions.get('window').height;
@@ -12,20 +13,64 @@ const isIOS = Platform.OS === 'ios';
 
 function Notifications({navigation}) {
 
-    const notifications = [
-        {id:'0' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-        {id:'1' , title:'اوامر الشبكة' , body:'we found app we found app  we found app we found app we found app ' , time:'03:00'},
-        {id:'2' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-        {id:'3' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-        {id:'4' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-        {id:'5' , title:'اوامر الشبكة' , body:'تم العثور علي طلب مطابق' , time:'03:00'},
-    ];
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const notifications = useSelector(state => state.notifications.notifications);
+    const notificationsLoader = useSelector(state => state.notifications.loader);
+    const [screenLoader , setScreenLoader ] = useState(true);
+
+    const dispatch = useDispatch();
+
+    function fetchData(){
+        setScreenLoader(true)
+        dispatch(getNotifications(lang, token))
+    }
+    function deleteNotify(id){
+        dispatch(deleteNoti(lang , id, token))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , notificationsLoader]);
+
+    useEffect(() => {
+        setScreenLoader(false)
+    }, [notifications]);
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {backgroundColor:'#fff'}]}>
+                    <ActivityIndicator size="large" color={COLORS.mstarda} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
+    function renderNoData() {
+        if (notifications && (notifications).length <= 0) {
+            return (
+                <View style={[styles.directionColumnCenter , styles.Width_100, styles.marginTop_25]}>
+                    <Image source={require('../../assets/images/note.png')} resizeMode={'contain'}
+                           style={{alignSelf: 'center', width: 200, height: 200}}/>
+                </View>
+            );
+        }
+
+        return null
+    }
+
 
     function Item({ title ,body , time , id, index }) {
         return (
             <TouchableOpacity style={[styles.notiCard ,styles.marginBottom_10 , styles.paddingVertical_15,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
                 <View style={[styles.paddingHorizontal_15 , styles.directionColumnC, {flex:1}]}>
-                    <TouchableOpacity style={[styles.paddingVertical_5 , styles.paddingHorizontal_5, styles.Radius_50
+                    <TouchableOpacity onPress = {() => deleteNotify(id)} style={[styles.paddingVertical_5 , styles.paddingHorizontal_5, styles.Radius_50
                         , {backgroundColor: index % 2 === 0 ? COLORS.green : COLORS.orange
                             , position:'absolute' , right:7 , top:-7}]}>
                         <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
@@ -43,6 +88,8 @@ function Notifications({navigation}) {
 
     return (
         <Container>
+
+            {renderLoader()}
             <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('notifications') }/>
@@ -50,6 +97,8 @@ function Notifications({navigation}) {
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_20,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+
+                    {renderNoData()}
 
                     <View style={[{height:height - 115}]}>
 
@@ -59,7 +108,7 @@ function Notifications({navigation}) {
                             renderItem={({ item , index}) => <Item
                                 title={item.title}
                                 body={item.body}
-                                time={item.time}
+                                time={item.created_at}
                                 id={item.id}
                                 index={index}
                             />}

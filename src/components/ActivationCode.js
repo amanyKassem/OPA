@@ -4,16 +4,22 @@ import {Container, Content, Form, Input, Item, Label, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import { useDispatch, useSelector } from 'react-redux'
+import {activeAccount} from "../actions";
 
-function ActivationCode({navigation}) {
+function ActivationCode({navigation,route}) {
+
+    const { sentCode, userId } = route.params;
+    const lang = useSelector(state => state.lang.lang);
+    const dispatch = useDispatch();
 
     const [code, setCode] = useState('');
     const [spinner, setSpinner] = useState(false);
 
 
-    // useEffect(() => {
-    //     alert('activation code : ' + activeCode)
-    // }, []);
+    useEffect(() => {
+        alert('activation code : ' + sentCode)
+    }, []);
 
 
     useEffect(() => {
@@ -47,7 +53,22 @@ function ActivationCode({navigation}) {
     }
 
     function onConfirm() {
-        // navigation.navigate('login');
+        if (code == sentCode) {
+            setSpinner(true);
+            dispatch(activeAccount(userId, lang, navigation));
+        }
+        else {
+            Toast.show({
+                text        	: i18n.t('codeNotMatch'),
+                type			: "danger",
+                duration    	: 3000,
+                textStyle   	: {
+                    color       	: "white",
+                    fontFamily  	: 'cairo',
+                    textAlign   	: 'center'
+                }
+            });
+        }
     }
 
     function renderLoader(){

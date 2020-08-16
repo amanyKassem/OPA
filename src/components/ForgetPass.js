@@ -4,10 +4,13 @@ import {Container, Content, Form, Input, Item, Label, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
+import { useDispatch, useSelector } from 'react-redux'
+import {checkPhone} from "../actions";
 
 function ForgetPass({navigation}) {
 
-
+    const lang = useSelector(state => state.lang.lang);
+    const dispatch = useDispatch();
     const [phone, setPhone] = useState('');
     const [spinner, setSpinner] = useState(false);
 
@@ -44,8 +47,8 @@ function ForgetPass({navigation}) {
 
     function onConfirm() {
         // setSpinner(true);
-        // dispatch(checkPhone(phone, lang, navigation));
-        navigation.navigate('changePass');
+        dispatch(checkPhone(phone, lang, navigation));
+        // navigation.navigate('changePass');
     }
 
     function renderLoader(){

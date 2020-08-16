@@ -1,12 +1,17 @@
-import React , {useEffect} from "react";
+import React from "react";
 import {View, Text, Image, TouchableOpacity, Dimensions} from "react-native";
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
+import {useSelector} from "react-redux";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function Header({navigation , title , toggleModal}) {
+
+    const lang          = useSelector(state => state.lang.lang);
+    const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const user          = useSelector(state => state.auth.user ? state.auth.user.data :  {avatar: null});
 
     return (
         <View style={[styles.marginTop_35 , styles.marginHorizontal_15 , styles.directionRowSpace , styles.marginBottom_20]}>
@@ -36,7 +41,7 @@ function Header({navigation , title , toggleModal}) {
                             screen: 'profile'
                         })}
                                           style={[styles.borderMstarda , styles.Radius_50, styles.icon40 ,{overflow:'hidden'}]}>
-                            <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
+                            <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
                         </TouchableOpacity>
                     </View>
                     :

@@ -17,19 +17,19 @@ export const profile = (token) => {
     }
 };
 
-export const updateProfile = (lang , name , phone ,city_id , token , navigation , authType) => {
+export const updateProfile = (lang , name , phone ,country_id , avatar , token , navigation ) => {
     return (dispatch) => {
         axios({
             url: CONST.url + 'UpdateProfile',
             method      : 'POST',
             headers     : {Authorization: token },
-            data        : { lang ,name , phone ,city_id }
+            data        : { lang ,name , phone ,country_id , avatar }
         }).then(response => {
 
             dispatch({type: 'update_profile', data:response.data.data});
 
             if (response.data.success) {
-                navigation.navigate('profile' , {authType});
+                navigation.navigate('profile');
             }
 
             Toast.show({

@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager ,KeyboardAvoidingView} from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    Dimensions,
+    I18nManager,
+    KeyboardAvoidingView,
+    ActivityIndicator
+} from "react-native";
 import {Container, Content, Card, Item, Label, Input, Form} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -7,7 +16,8 @@ import COLORS from "../consts/colors";
 import RNPickerSelect from 'react-native-picker-select';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {updateProfile , getCountries} from '../actions';
 import Header from '../common/Header';
 
 const height = Dimensions.get('window').height;
@@ -15,11 +25,65 @@ const isIOS = Platform.OS === 'ios';
 
 function EditProfile({navigation}) {
 
-    const [username, setUsername] = useState('أماني قاسم');
-    const [phone, setPhone] = useState('01023456789');
-    const [country, setCountry] = useState('Mansoura');
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const user = useSelector(state => state.auth.user.data);
+    const countries = useSelector(state => state.countries.countries);
+    const countriesLoader = useSelector(state => state.countries.loader);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const [username, setUsername] = useState(user.name);
+    const [phone, setPhone] = useState(user.phone);
+    const [country, setCountry] = useState(user.country_id);
     const [userImage, setUserImage] = useState(null);
     const [base64, setBase64] = useState('');
+
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsSubmitted(false)
+    }, [isSubmitted]);
+
+
+    useEffect(() => {
+        dispatch(getCountries(lang))
+    }, [countriesLoader]);
+
+    function renderSubmit() {
+        if (username == '' || phone == '' || country == null) {
+            return (
+                <View
+                    style={[styles.babyblueBtn , styles.Width_100 , styles.marginBottom_50 , {
+                        backgroundColor:'#bbb'
+                    }]}
+                >
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                </View>
+            );
+        }
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_50]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity onPress={() => onEdit()} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    function onEdit(){
+        setIsSubmitted(true)
+        dispatch(updateProfile(lang , username , phone , country , base64 , token , navigation));
+    }
+
+
 
 
     const askPermissionsAsync = async () => {
@@ -59,7 +123,7 @@ function EditProfile({navigation}) {
 
                     <View style={[styles.flexCenter,styles.icon110,{top:-40 , overflow:'hidden'}]}>
                         <View style={[styles.imgOverLay,styles.Radius_15]}/>
-                        <Image source= {image != null?{uri:image} : require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull,styles.Radius_15]} resizeMode={'cover'} />
+                        <Image source= {image != null?{uri:image} : {uri:user.avatar}} style={[styles.Width_100 , styles.heightFull,styles.Radius_15]} resizeMode={'cover'} />
                         <TouchableOpacity onPress={_pickImage} style={[styles.icon25,styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , top:0 , right:0 , zIndex:1}]}>
                             <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>
@@ -106,14 +170,17 @@ function EditProfile({navigation}) {
                                             },
                                         }}
                                         placeholder={{
-                                            label: '' ,
+                                            label: i18n.t('country') ,
                                         }}
                                         onValueChange={(country) => setCountry(country)}
-                                        items={[
-                                            { label: 'قاهره', value: 'cairo' },
-                                            { label: 'منصورة', value: 'Mansoura' },
-                                            { label: 'اسكندرية', value: 'Alex' },
-                                        ]}
+                                        items={countries ?
+                                            countries.map((country, i) => {
+                                                    return (
+                                                        { label: country.name, value: country.id , key: country.id}
+                                                    )
+                                                }
+                                            )
+                                            :  [] }
                                         Icon={() => {
                                             return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18}]} resizeMode={'contain'} />
                                         }}
@@ -123,9 +190,7 @@ function EditProfile({navigation}) {
                             </View>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
-                            </TouchableOpacity>
+                            {renderSubmit()}
 
                         </Form>
                     </KeyboardAvoidingView>

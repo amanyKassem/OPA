@@ -1,3 +1,3 @@
 export default {
-    url: 'http://sltii.aait-sa.com/api/',
+    url: 'https://opaapp.aait-sa.com/api/',
 };

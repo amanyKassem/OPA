@@ -23,7 +23,6 @@ function Home({navigation,route}) {
     const [showAd, setShowAd] = useState(false);
 
     let mapRef = useRef(null);
-    let mapMarkerRef = useRef(null);
 
     const [city, setCity] = useState('');
 

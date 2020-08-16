@@ -200,7 +200,7 @@ function ListDetails({navigation}) {
                         </View>
                     </TouchableOpacity>
                     <View style={[styles.paddingHorizontal_15 , styles.marginTop_10]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('LocAndServices') }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('myAds') }</Text>
 
                         <View style={[styles.marginTop_20]}>
 

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager ,KeyboardAvoidingView} from "react-native";
-import {Container, Content, Card, Item, Label, Input, Form} from 'native-base'
+import {View, Text, Image, TouchableOpacity, Dimensions, ActivityIndicator ,KeyboardAvoidingView} from "react-native";
+import {Container, Content, Card, Item, Label, Input, Form, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {changePass} from '../actions';
 import Header from '../common/Header';
 
 const height = Dimensions.get('window').height;
@@ -12,9 +13,78 @@ const isIOS = Platform.OS === 'ios';
 
 function EditPass({navigation}) {
 
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newpass, setNewpass] = useState('');
     const [confirmNewPass, setConfirmNewPass] = useState('');
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsSubmitted(false)
+    }, [isSubmitted]);
+
+    function renderConfirm(){
+        if (currentPassword == '' || newpass == '' || confirmNewPass == ''){
+            return (
+                <View style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50, {
+                    backgroundColor:'#bbb'
+                } ]}>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+                </View>
+            );
+        }
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_50]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
+            </TouchableOpacity>
+
+        );
+    }
+
+    function onConfirm(){
+
+        if (confirmNewPass.length < 6){
+            Toast.show({
+                text        : i18n.t('passreq'),
+                type        : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'cairo',
+                    textAlign   : 'center'
+                }
+            });
+            return false
+        }else if(newpass !== confirmNewPass){
+            Toast.show({
+                text        : i18n.t('passError'),
+                type        : "danger",
+                duration    : 3000,
+                textStyle   : {
+                    color       : "white",
+                    fontFamily  : 'cairo',
+                    textAlign   : 'center'
+                }
+            });
+            return false
+        } else {
+            setIsSubmitted(true)
+            dispatch(changePass(lang , currentPassword , confirmNewPass , token , navigation));
+        }
+    }
+
 
     return (
         <Container>
@@ -64,9 +134,7 @@ function EditPass({navigation}) {
                             </View>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('profile')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('confirm') }</Text>
-                            </TouchableOpacity>
+                            {renderConfirm()}
 
                         </Form>
                     </KeyboardAvoidingView>

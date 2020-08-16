@@ -4,18 +4,40 @@ import {Container, Content, Card, Item, Label, Input, Form} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import Header from '../common/Header';
+import {getUserData} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function Profile({navigation}) {
 
-    const [advNum, setAdvNum] = useState('0000000');
-    const [adsNum, setAdsNum] = useState('50');
-    const [phone, setPhone] = useState('01023456789');
-    const [country, setCountry] = useState('المنصورة');
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+
+    const userData = useSelector(state => state.userData.userData);
+    const userDataLoader = useSelector(state => state.userData.loader);
+
+    const dispatch = useDispatch();
+
+    const [advNum, setAdvNum] = useState(userData.phone);
+    const [adsNum, setAdsNum] = useState(userData.ads);
+    const [phone, setPhone] = useState(userData.phone);
+    const [country, setCountry] = useState(userData.country);
+
+    function fetchData(){
+        dispatch(getUserData(lang, token))
+    }
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+        return unsubscribe;
+    }, [navigation , userDataLoader]);
+
 
     return (
         <Container>
@@ -28,11 +50,11 @@ function Profile({navigation}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                     <View style={[styles.flexCenter ,{top:-50}]}>
-                        <Image source={require('../../assets/images/pic_profile.png')} style={[styles.icon110,styles.Radius_15 ]} resizeMode={'cover'} />
+                        <Image source={{uri : userData.avatar}} style={[styles.icon110,styles.Radius_15 ]} resizeMode={'cover'} />
                         <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , right:5}]}>
                             <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>
-                        <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>أماني قاسم</Text>
+                        <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>{userData.name}</Text>
                     </View>
 
 

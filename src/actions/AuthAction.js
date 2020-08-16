@@ -27,11 +27,11 @@ export const register = (data, navigation) => {
 				url: CONST.url + 'register',
 				method: 'POST',
 				data: {
-					name			    : data.fullName,
+					name			    : data.username,
 					phone			    : data.phone,
-					// email			    : data.email,
-					city_id			    : data.city,
+					country_id			: data.country,
 					password		    : data.password,
+					avatar		    	: data.base64,
 					lang 			    : data.lang,
 					device_id
 				}
@@ -39,7 +39,7 @@ export const register = (data, navigation) => {
 				dispatch({type: 'register', payload: response.data});
 				if (response.data.success){
 					navigation.navigate('activationCode', {
-						code			: response.data.data.code,
+						sentCode			: response.data.data.code,
 						userId			: response.data.data.user_id,
 					});
 				}
@@ -181,7 +181,7 @@ const loginSuccess = (dispatch, data , navigation) => {
 const loginFailed = (dispatch, error , navigation) => {
 	if(error.data.code) {
 		navigation.navigate('activationCode', {
-			code			: error.data.code,
+			sentCode			: error.data.code,
 			userId			: error.data.user_id,
 		});
 	}
