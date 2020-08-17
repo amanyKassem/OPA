@@ -1,9 +1,10 @@
 import React , {useEffect} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions,I18nManager} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager, ActivityIndicator} from "react-native";
 import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
+import {getTerms} from '../actions';
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 
@@ -12,11 +13,41 @@ const isIOS = Platform.OS === 'ios';
 
 function Terms({navigation , route}) {
 
-    const pathname = route.params ? route.params.pathname : null
+    const pathname = route.params ? route.params.pathname : null;
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const terms = useSelector(state => state.terms.terms)
+    const loader = useSelector(state => state.terms.loader)
+
+    const dispatch = useDispatch()
+
+    function fetchData(){
+        dispatch(getTerms(lang))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , loader]);
+
+    function renderLoader(){
+        if (loader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.blue} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
 
 
     return (
         <Container>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <View style={[styles.directionRowSpace , styles.paddingHorizontal_25, styles.paddingTop_30]}>
@@ -30,18 +61,15 @@ function Terms({navigation , route}) {
                     <Image source={require('../../assets/images/selected.png')} style={[styles.icon35, {top:-18 , left:20}]} resizeMode={'contain'} />
 
                     <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5,styles.alignStart]}>-- { i18n.t('terms') }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14,styles.alignStart , {lineHeight:22}]}>
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                    </Text>
 
-                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5,styles.alignStart, styles.marginTop_15]}>-- { i18n.t('policy&Privacy') }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14,styles.alignStart , {lineHeight:22}]}>
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                        هذا نص مثال هذا نص مثال هذا نص مثال هذا نص مثال
-                    </Text>
+                    {
+                        terms?
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14,styles.alignStart , {lineHeight:22}]}>
+                                {terms.terms}
+                            </Text>
+                            :
+                            null
+                    }
 
 
                     <TouchableOpacity onPress={() => navigation.navigate(route && pathname ==='terms'?'addAdTerms':'register')}

@@ -4,13 +4,14 @@ import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import { Notifications } from 'expo'
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import Header from '../common/Header';
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import axios from "axios";
 import MapView from 'react-native-maps';
 import COLORS from "../consts/colors";
+import {getHomeAds} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -20,38 +21,44 @@ const longitudeDelta = 0.521;
 function Home({navigation,route}) {
 
     const [search, setSearch] = useState('');
+    const [popInfo, setPopInfo] = useState(null);
     const [showAd, setShowAd] = useState(false);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const homeAds = useSelector(state => state.homeAds.homeAds);
+    const homeAdsLoader = useSelector(state => state.homeAds.loader);
 
+    const dispatch = useDispatch()
     let mapRef = useRef(null);
 
     const [city, setCity] = useState('');
 
-    const markers =[
-        {id:'0',
-        title: '1.7 مليون',
-        coordinates: {
-            latitude: 31.327,
-            longitude:31.499,
-            latitudeDelta ,
-            longitudeDelta
-        },},
-        {id:'1',
-        title: '2 مليون',
-        coordinates: {
-            latitude: 31.255,
-            longitude:31.255,
-            latitudeDelta ,
-            longitudeDelta
-        },},
-        {id:'2',
-        title: '3 مليون',
-        coordinates: {
-            latitude: 30.900,
-            longitude:31.555,
-            latitudeDelta ,
-            longitudeDelta
-        },}
-    ];
+    // const markers =[
+    //     {id:'0',
+    //     title: '1.7 مليون',
+    //     coordinates: {
+    //         latitude: 31.327,
+    //         longitude:31.499,
+    //         // latitudeDelta ,
+    //         // longitudeDelta
+    //     },},
+    //     {id:'1',
+    //     title: '2 مليون',
+    //     coordinates: {
+    //         latitude: 31.255,
+    //         longitude:31.255,
+    //         // latitudeDelta ,
+    //         // longitudeDelta
+    //     },},
+    //     {id:'2',
+    //     title: '3 مليون',
+    //     coordinates: {
+    //         latitude: 30.900,
+    //         longitude:31.555,
+    //         // latitudeDelta ,
+    //         // longitudeDelta
+    //     },}
+    // ];
 
     const [mapRegion, setMapRegion] = useState({
         latitude: 31.2587 ,
@@ -63,6 +70,7 @@ function Home({navigation,route}) {
     const [initMap, setInitMap] = useState(true);
 
     const fetchData = async () => {
+
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         let userLocation = {};
         if (status !== 'granted') {
@@ -71,8 +79,10 @@ function Home({navigation,route}) {
             const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
             if (route.params && route.params.latitude){
                 userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
+                dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude , token))
             } else {
                 userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
+                dispatch(getHomeAds(lang , latitude ,longitude , token))
             }
             setInitMap(false);
             setMapRegion(userLocation);
@@ -99,7 +109,7 @@ function Home({navigation,route}) {
         });
 
         return unsubscribe;
-    }, [navigation]);
+    }, [navigation , homeAdsLoader]);
 
 
 
@@ -122,8 +132,9 @@ function Home({navigation,route}) {
         }
     }
 
-    function showAdPop() {
+    function showAdPop(markerInfo) {
         setShowAd(true)
+        setPopInfo(markerInfo)
     }
 
     return (
@@ -144,7 +155,7 @@ function Home({navigation,route}) {
                         />
 
                         <View style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})}>
                                 <Image source={require("../../assets/images/search.png")} style={[styles.icon20]} resizeMode={'cover'} />
                             </TouchableOpacity>
                             <View style={[styles.height_20 ,styles.marginHorizontal_7 , {width:.5 ,  backgroundColor: COLORS.midGray}]}/>
@@ -170,45 +181,50 @@ function Home({navigation,route}) {
 
                                 </MapView.Marker>
 
-                                {markers.map((marker,i) => (
-                                    <MapView.Marker
-                                        // ref={mapMarkerRef}
-                                        key={marker.id}
-                                        coordinate={marker.coordinates}
-                                        // title={marker.title}
-                                        onPress={() => showAdPop()}
-                                    >
-                                        <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
-                                        <MapView.Callout tooltip={true} style={[styles.flexCenter]} >
-                                            <View style={[styles.Radius_15,styles.flexCenter ,styles.bg_gray ,styles.paddingVertical_5 , styles.paddingHorizontal_5,{minWidth:80}]}>
-                                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_11]}>{marker.title}</Text>
-                                            </View>
-                                            <View style={[styles.talkBubbleTriangle]}/>
-                                        </MapView.Callout>
-                                    </MapView.Marker>
-                                ))}
+                                {
+                                    homeAds ?
+                                        homeAds.map((marker,i) => (
+                                            <MapView.Marker
+                                                // ref={mapMarkerRef}
+                                                key={marker.id}
+                                                coordinate={marker.coordinates}
+                                                // title={marker.title}
+                                                onPress={() => showAdPop(marker)}
+                                            >
+                                                <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                                <MapView.Callout tooltip={true} style={[styles.flexCenter]} >
+                                                    <View style={[styles.Radius_15,styles.flexCenter ,styles.bg_gray ,styles.paddingVertical_5 , styles.paddingHorizontal_5,{minWidth:80}]}>
+                                                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_11]}>{marker.price}</Text>
+                                                    </View>
+                                                    <View style={[styles.talkBubbleTriangle]}/>
+                                                </MapView.Callout>
+                                            </MapView.Marker>
+                                        ))
+                                        :
+                                        null
+                                        }
                             </MapView>
                         ) : (<View />)
                     }
 
                     {
-                        showAd?
+                        showAd && popInfo?
                             <View style={[styles.paddingHorizontal_15, styles.Width_100 , {position:'absolute' , bottom:75 , zIndex:1}]}>
                                 <TouchableOpacity onPress={() => setShowAd(false)} style={[styles.bg_gray,styles.centerContext , styles.Radius_50,styles.alignEnd,styles.icon25]}>
                                     <Image source={require("../../assets/images/close.png")} style={[styles.icon10]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.popCard , styles.bg_White,
                                     { borderLeftColor: COLORS.gray}]}>
-                                    <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
+                                    <Image source={{uri:popInfo.image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                                     <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                                         <View style={[styles.directionRowSpace , styles.Width_100]}>
-                                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>شقة ايجار</Text>
-                                            <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>100 رس</Text>
+                                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{popInfo.title}</Text>
+                                            <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{popInfo.price}</Text>
                                         </View>
-                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ,styles.alignStart]}>100 متر</Text>
-                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>4 غرف - صالة</Text>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ,styles.alignStart]}>{popInfo.space}</Text>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{popInfo.rooms} - {popInfo.hall} - {popInfo.bathroom}</Text>
                                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
-                                            {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>السعودية - الرياض</Text>
+                                            {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{popInfo.address}</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <View style={[styles.talkTriangle]}/>

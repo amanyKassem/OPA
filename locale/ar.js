@@ -338,6 +338,8 @@ const ar = {
     "complaintText"             : "نص الشكوي",
     "advancedSearch"            : "بحث متقدم",
     "areaOfBuild"               : "مساحة العقار",
+    "minSpace"                  : "اقل مساحة",
+    "maxSpace"                  : "اكبر مساحة",
     "budgetFrom"                : "ميزانيتك من",
     "budgetTo"                  : "ميزانيتك الي",
     "searchResults"             : "نتائج البحث",

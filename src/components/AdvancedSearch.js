@@ -3,13 +3,14 @@ import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager} from "reac
 import {Container, Content, Card, Label, Form, Item, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import axios from "axios";
 import RNPickerSelect from 'react-native-picker-select';
+import {getCategories , getRents} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -18,10 +19,22 @@ const longitudeDelta = 0.0421;
 
 function AdvancedSearch({navigation,route}) {
 
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const categories = useSelector(state => state.categories.categories);
+    const categoriesLoader = useSelector(state => state.categories.loader);
+    const rents = useSelector(state => state.rents.rents);
+    const rentsLoader = useSelector(state => state.rents.loader);
+
+
+    const dispatch = useDispatch()
+
+
     const [cityName, setCityName] = useState('');
     const [buildType, setBuildType] = useState('');
     const [serviceType, setServiceType] = useState('');
     const [areaOfBuild, setAreaOfBuild] = useState('');
+    const [maxSpace, setMaxSpace] = useState('');
     const [budgetFrom, setBudgetFrom] = useState('');
     const [budgetTo, setBudgetTo] = useState('');
 
@@ -34,6 +47,8 @@ function AdvancedSearch({navigation,route}) {
 
 
     const fetchData = async () => {
+        dispatch(getCategories(lang , token));
+        dispatch(getRents(lang , token));
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         let userLocation = {};
         if (status !== 'granted') {
@@ -67,7 +82,7 @@ function AdvancedSearch({navigation,route}) {
         });
 
         return unsubscribe;
-    }, [navigation , route.params?.cityName]);
+    }, [navigation , route.params?.cityName , categoriesLoader , rentsLoader]);
 
 
     function navToLocation () {
@@ -112,13 +127,17 @@ function AdvancedSearch({navigation,route}) {
                                     },
                                 }}
                                 placeholder={{
-                                    label: '' ,
+                                    label: i18n.t('buildType') ,
                                 }}
                                 onValueChange={(buildType) => setBuildType(buildType)}
-                                items={[
-                                    { label: 'شقة', value: 'home' },
-                                    { label: 'سوبر ماركت', value: 'super market' },
-                                ]}
+                                items={categories ?
+                                    categories.map((cat, i) => {
+                                            return (
+                                                { label: cat.name, value: cat.id , key: cat.id}
+                                            )
+                                        }
+                                    )
+                                    :  [] }
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
@@ -145,13 +164,17 @@ function AdvancedSearch({navigation,route}) {
                                     },
                                 }}
                                 placeholder={{
-                                    label: '' ,
+                                    label: i18n.t('serviceType') ,
                                 }}
                                 onValueChange={(serviceType) => setServiceType(serviceType)}
-                                items={[
-                                    { label: 'ايجار', value: 'rent' },
-                                    { label: 'ملك', value: 'owner' },
-                                ]}
+                                items={rents ?
+                                    rents.map((rent, i) => {
+                                            return (
+                                                { label: rent.name, value: rent.id , key: rent.id}
+                                            )
+                                        }
+                                    )
+                                    :  [] }
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
@@ -159,10 +182,18 @@ function AdvancedSearch({navigation,route}) {
                         </View>
 
                         <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('areaOfBuild') }</Label>
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('minSpace') }</Label>
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(areaOfBuild) => setAreaOfBuild(areaOfBuild)}
                                    value={areaOfBuild}
+                            />
+                        </Item>
+
+                        <Item style={[styles.item]}>
+                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('maxSpace') }</Label>
+                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                   onChangeText={(maxSpace) => setMaxSpace(maxSpace)}
+                                   value={maxSpace}
                             />
                         </Item>
 
@@ -185,7 +216,17 @@ function AdvancedSearch({navigation,route}) {
                         </Item>
 
 
-                        <TouchableOpacity onPress={() => navigation.navigate('searchResults')}
+                        <TouchableOpacity onPress={() => navigation.push('searchResults' ,
+                            {
+                                Latitude:mapRegion.latitude,
+                                Longitude:mapRegion.longitude,
+                                category_id:buildType,
+                                rent_id:serviceType,
+                                min_space:areaOfBuild,
+                                max_space:maxSpace,
+                                min_price:budgetFrom,
+                                max_price:budgetTo,
+                            })}
                                           style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('search') }</Text>
                         </TouchableOpacity>

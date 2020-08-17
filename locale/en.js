@@ -337,6 +337,8 @@ const en = {
     "complaintText"             : "Complaint's text",
     "advancedSearch"            : "Advanced search",
     "areaOfBuild"               : "Area of building",
+    "minSpace"                  : "Minimum space",
+    "maxSpace"                  : "Maximum space",
     "budgetFrom"                : "Your budget from",
     "budgetTo"                  : "Your budget to",
     "searchResults"             : "Search results",
