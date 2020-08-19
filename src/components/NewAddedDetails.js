@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     Dimensions, I18nManager
 } from "react-native";
-import {Container, Content, CheckBox, Form, Label} from 'native-base'
+import {Container, Content, CheckBox, Form, Label, Input, Item} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Header from '../common/Header';
@@ -18,13 +18,23 @@ import {getFeatures} from "../actions";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function NewAddedDetails({navigation}) {
+function NewAddedDetails({navigation , route}) {
 
-    const [selectedID, setSelectedID] = useState(false);
+    const category_id = route.params.category_id;
+    const rent_id = route.params.rent_id;
+    const type_id = route.params.type_id;
+    const Latitude = route.params.Latitude;
+    const Longitude = route.params.Longitude;
+    const rooms = route.params.rooms;
+    const hall = route.params.hall;
+    const bathroom = route.params.bathroom;
+    const floor = route.params.floor;
+    const age = route.params.age;
+
+
+    const [basicDetails, setBasicDetails] = useState('');
     const [checkedArr, setCheckedArr] = useState([]);
-    // const checkedArr = [];
     const [isChecked, setIsChecked] = useState(false);
-    const [minimum, setMinimum] = useState('');
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const features = useSelector(state => state.features.features);
@@ -42,10 +52,10 @@ function NewAddedDetails({navigation}) {
         }else{
             const index = checkedArr.indexOf(id);
             if (index > -1) {
-                setCheckedArr(checkedArr.splice(index, 1));
+                checkedArr.splice(index, 1)
+                setCheckedArr([...checkedArr]);
             }
         }
-        console.log(checkedArr)
     }
 
     useEffect(() => {
@@ -74,7 +84,7 @@ function NewAddedDetails({navigation}) {
                                 features ?
                                     features.map((feat, i) => {
                                             return (
-                                                <View key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
+                                                <TouchableOpacity onPress={() => checkArr(feat.id)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
                                                     {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
                                                     <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
                                                     <CheckBox
@@ -83,7 +93,7 @@ function NewAddedDetails({navigation}) {
                                                         onPress={() => checkArr(feat.id)}
                                                         style={styles.checkbox}
                                                     />
-                                                </View>
+                                                </TouchableOpacity>
                                             )
                                         }
                                     )
@@ -92,40 +102,15 @@ function NewAddedDetails({navigation}) {
 
 
                             <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_16,styles.marginBottom_25, styles.alignStart]}>{ i18n.t('basicDetails') }</Text>
-                            <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('minimum') }</Label>
 
-                                <RNPickerSelect
-                                    style={{
-                                        inputAndroid: {
-                                            fontFamily: 'cairo',
-                                            color:COLORS.midGray,
-                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                            fontSize            : 14,
-                                        },
-                                        inputIOS: {
-                                            fontFamily: 'cairo',
-                                            color:COLORS.midGray,
-                                            alignSelf:'flex-start',
-                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                            fontSize            : 14,
-                                        },
-                                    }}
-                                    placeholder={{
-                                        label: '' ,
-                                    }}
-                                    onValueChange={(minimum) => setMinimum(minimum)}
-                                    items={[
-                                        { label: '1', value: '1' },
-                                        { label: '2', value: '2' },
-                                        { label: '3', value: '3' },
-                                    ]}
-                                    Icon={() => {
-                                        return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18 , right:-8}]} resizeMode={'contain'} />
-                                    }}
-                                    value={minimum}
+                            <Item style={[styles.item]}>
+                                {/*<Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('details') }</Label>*/}
+                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                       onChangeText={(basicDetails) => setBasicDetails(basicDetails)}
+                                       value={basicDetails}
                                 />
-                            </View>
+                            </Item>
+
                             <TouchableOpacity onPress={() => setIsChecked(!isChecked)}
                                               style={[styles.marginBottom_30 , styles.marginTop_5  , styles.directionRowCenter, styles.alignStart]}>
                                 <CheckBox style={[styles.checkBox, {marginLeft:-10}]} onPress={() => setIsChecked(!isChecked)} checked={isChecked} color={COLORS.babyblue}/>
