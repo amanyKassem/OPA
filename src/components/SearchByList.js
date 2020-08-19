@@ -70,7 +70,7 @@ function SearchByList({navigation}) {
 
     function Item({ title ,location , price , img , space , hall , rooms , bathroom , image , id, index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.mstarda : COLORS.orange}]}>
+            <TouchableOpacity onPress={() => navigation.navigate('listDetails', {ad_id:id})} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.mstarda : COLORS.orange, minHeight:100}]}>
                 <Image source={{uri:image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                 <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
@@ -78,7 +78,12 @@ function SearchByList({navigation}) {
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 , styles.alignStart]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 , styles.alignStart]}>{rooms} - {hall} - {bathroom}</Text>
+                    {
+                        rooms && hall && bathroom ?
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}> { rooms ? rooms + ' -' : null} {hall ? hall + ' -' : null} {bathroom}</Text>
+                            :
+                            null
+                    }
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>

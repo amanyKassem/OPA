@@ -8,23 +8,22 @@ import {
     ScrollView,
     Linking,
     I18nManager,
-    FlatList
+    FlatList, ActivityIndicator
 } from "react-native";
 import {Container, Content, Card, Icon} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
 import Header from '../common/Header';
 import Swiper from 'react-native-swiper';
 import COLORS from "../consts/colors";
 import Communications from 'react-native-communications';
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
 import axios from "axios";
 import MapView from 'react-native-maps';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import  Modal  from "react-native-modal";
 import { Video } from 'expo-av';
+import {useDispatch, useSelector} from "react-redux";
+import CONST from "../consts";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -37,6 +36,71 @@ function RealEstateDet({navigation,route}) {
     const [mute, setMute] = useState(true);
     const [shouldPlay, setShouldPlay] = useState(false);
     const [imgUri, setImgUri] = useState(null);
+
+    const id = route.params.id;
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+    const constructionDetailes = useSelector(state => state.constructionDetailes.constructionDetailes);
+    const constructionDetailesLoader = useSelector(state => state.constructionDetailes.loader);
+    const [screenLoader , setScreenLoader ] = useState(true);
+
+    const dispatch = useDispatch();
+
+    const fetchData = async () => {
+
+        axios({
+            url         : CONST.url + 'constructionDetailes',
+            method      : 'POST',
+            data        : {lang , id},
+            headers     : {Authorization: token}
+        }).then(response => {
+            dispatch({type: 'getConstructionDetailes', payload: response.data});
+            let userLocation = { latitude :constructionDetailes.Latitude, longitude : constructionDetailes.Longitude , latitudeDelta , longitudeDelta};
+            setInitMap(false);
+            setMapRegion(userLocation);
+            isIOS ? mapRef.current.animateToRegion(userLocation, 1000) : false;
+            let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+            getCity    += userLocation.latitude + ',' + userLocation.longitude;
+            getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
+            console.log("getCity  " , getCity)
+            // ReactotronConfig.log(getCity);
+            try {
+                const { data } =  axios.get(getCity);
+                setCity(data.results[0].formatted_address)
+            } catch (e) {
+                console.log(e);
+            }
+            setScreenLoader(false)
+        });
+
+
+    };
+
+    useEffect(  () => {
+    }, [city , mapRegion ]);
+
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , constructionDetailesLoader]);
+
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%' , backgroundColor:'#fff'}]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
 
     function handlePlayAndPause(){
         setShouldPlay(!shouldPlay)
@@ -60,41 +124,6 @@ function RealEstateDet({navigation,route}) {
 
     const [initMap, setInitMap] = useState(true);
 
-    const fetchData = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        let userLocation = {};
-        if (status !== 'granted') {
-            alert('صلاحيات تحديد موقعك الحالي ملغاه');
-        }else {
-            const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
-            if (route.params && route.params.latitude){
-                userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
-            } else {
-                userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
-            }
-            setInitMap(false);
-            setMapRegion(userLocation);
-            isIOS ? mapRef.current.animateToRegion(userLocation, 1000) : false;
-        }
-        let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-        getCity    += userLocation.latitude + ',' + userLocation.longitude;
-        getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
-        console.log("getCity  " , getCity)
-        // ReactotronConfig.log(getCity);
-        try {
-            const { data } = await axios.get(getCity);
-            setCity(data.results[0].formatted_address)
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    useEffect(  () => {
-        fetchData();
-    }, []);
-
-    useEffect(  () => {
-    }, [city , mapRegion ]);
 
     function _linkGoogleMap(lat, lng){
         const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
@@ -108,14 +137,6 @@ function RealEstateDet({navigation,route}) {
 
         Linking.openURL(url);
     }
-
-
-    const images = [
-        {id:'0',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRjHe_dRMl9Rb8CJiOfsrKo8Oure5s_rxRsPw&usqp=CAU'},
-        {id:'1',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR-_f0-hBUvZr6R35AnqOkGmk9mO_fG6eXh7A&usqp=CAU'},
-        {id:'2',url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ6wQn_6OzmPnVrNwcYP_mqGy5hFEMyhnWATw&usqp=CAU'},
-        {id:'3',url: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'},
-    ]
 
     function Item({url, index }) {
         let myUrl  = url;
@@ -151,6 +172,18 @@ function RealEstateDet({navigation,route}) {
         }
     }
 
+    function renderNoData() {
+        if (constructionDetailes.predecessors && (constructionDetailes.predecessors).length <= 0) {
+            return (
+                <View style={[styles.directionColumnCenter , styles.Width_100]}>
+                    <Image source={require('../../assets/images/note.png')} resizeMode={'contain'}
+                           style={{alignSelf: 'center', width: 200, height: 200}}/>
+                </View>
+            );
+        }
+
+        return null
+    }
 
 
     function changeTab(type){
@@ -164,13 +197,12 @@ function RealEstateDet({navigation,route}) {
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14, styles.alignStart]}>{ i18n.t('companySpec') }</Text>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.marginBottom_10, styles.alignStart,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
-                            نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
-                            نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
+                            {constructionDetailes.description}
                         </Text>
 
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14,styles.marginBottom_10, styles.alignStart]}>{ i18n.t('companyLoca') }</Text>
                         {
-                            !initMap && mapRegion.latitude != null? (
+                            constructionDetailes && !initMap && mapRegion.latitude != null? (
                                 <MapView
                                     ref={mapRef}
                                     style={{ width: '100%', height: 200 , flex:1 }}
@@ -193,36 +225,37 @@ function RealEstateDet({navigation,route}) {
             return(
                 <View style={[{top:-15}, styles.paddingHorizontal_15]}>
                     <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14, styles.alignStart]}>{ i18n.t('socialMedia2') }</Text>
-                    <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)} style={[styles.directionRow , styles.marginTop_5]}>
+                    <TouchableOpacity onPress={() => Communications.phonecall(constructionDetailes.phone, true)} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/phone_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>012365648569</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>{constructionDetailes.phone}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => Communications.email(['amany@gmail.com'],null,null,'My Subject','My body text')} style={[styles.directionRow , styles.marginTop_5]}>
+                    <TouchableOpacity onPress={() => Communications.email([constructionDetailes.email],null,null,'My Subject','My body text')} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/mail_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>amany@gmail.com</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>{constructionDetailes.email}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => Linking.openURL('https://twitter.com')} style={[styles.directionRow , styles.marginTop_5]}>
+                    <TouchableOpacity onPress={() => Linking.openURL(constructionDetailes.twitter)} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/twitter_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>twitter\aait</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>{constructionDetailes.twitter}</Text>
                     </TouchableOpacity>
 
                     <Text style={[styles.textRegular, styles.text_midGray, styles.textSize_14,styles.marginTop_5, styles.alignStart]}>{ i18n.t('website') }</Text>
-                    <TouchableOpacity onPress={() => Linking.openURL('https://www.moawlat.com')} style={[styles.directionRow , styles.marginTop_5]}>
+                    <TouchableOpacity onPress={() => Linking.openURL(constructionDetailes.website)} style={[styles.directionRow , styles.marginTop_5]}>
                         <Image source={require('../../assets/images/global_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>www.moawlat.com</Text>
+                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13]}>{constructionDetailes.website}</Text>
                     </TouchableOpacity>
                 </View>
             )
         } else {
             return(
                 <View style={[{top:-15},styles.paddingHorizontal_15]}>
+                    {renderNoData()}
                     <FlatList
-                        data={images}
+                        data={constructionDetailes.predecessors}
                         horizontal={false}
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item , index}) => <Item
-                            url={item.url}
+                            url={item.image}
                             index={index}
                         />}
                         keyExtractor={item => item.id}
@@ -244,9 +277,10 @@ function RealEstateDet({navigation,route}) {
 
     return (
         <Container>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ 'اسم المبني' }/>
+                <Header navigation={navigation} title={constructionDetailes.title}/>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White,
                     styles.Width_100,
@@ -256,16 +290,21 @@ function RealEstateDet({navigation,route}) {
                         <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
                             backgroundColor: COLORS.mstarda}]}
                                 containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
-                            <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
-                            <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
-                            <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
+                            {
+                                constructionDetailes.images.map((img, i) => {
+                                    return (
+                                        <Image key={img.id}source={{uri:img.image}}
+                                               style={styles.swiperImg} resizeMode={'cover'}/>
+                                    )
+                                })
+                            }
                         </Swiper>
 
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, styles.alignStart ]}>اسم شركة المقاولات</Text>
+                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, styles.alignStart ]}>{constructionDetailes.title}</Text>
                             <View style={[styles.directionRow]}>
                                 <Image source={require("../../assets/images/global_gray.png")} style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'} />
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.textCenter ]}>www.moawlat.com</Text>
+                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.textCenter ]}>{constructionDetailes.website}</Text>
                             </View>
                         </Card>
 

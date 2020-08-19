@@ -1,48 +1,58 @@
 import React , {useEffect} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, ActivityIndicator, I18nManager} from "react-native";
 import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getContractingCategories , getCityContracting} from "../actions";
 import Header from '../common/Header';
+import COLORS from "../consts/colors";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function Contracting({navigation}) {
 
-    function renderCities() {
-        let cities = [];
-        for (let i = 0; i < 3; i++) {
-            if(i === 0){
-                cities.push(
-                    <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} key={i} style={[styles.Width_100, styles.height_150 , styles.marginBottom_25]}>
-                        <View style={[styles.imgOverLay]}/>
-                        <View style={[styles.alignStart,{position:'absolute' , bottom :10 ,left:15,zIndex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>9/7/2019</Text>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_12, styles.alignStart]}>شركات العقارات</Text>
-                        </View>
-                        <Image source={require("../../assets/images/arch1.jpg")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
-                    </TouchableOpacity>
-                )
-            }else{
-                cities.push(
-                    <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} key={i} style={[styles.Width_48, styles.height_250]}>
-                        <View style={[styles.imgOverLay]}/>
-                        <View style={[styles.alignStart,{position:'absolute' , bottom :10 ,left:15,zIndex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>9/7/2019</Text>
-                            <Text style={[styles.textBold , styles.text_White , styles.textSize_12, styles.alignStart]}>شركات العقارات</Text>
-                        </View>
-                        <Image source={require("../../assets/images/arch2.jpg")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
-                    </TouchableOpacity>
-                )
-            }
-        }
-        return cities
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+    const contractingCat = useSelector(state => state.contractingCat.contractingCat);
+    const contractingCatLoader = useSelector(state => state.contractingCat.loader);
+
+    const cityContracting = useSelector(state => state.cityContracting.cityContracting);
+    const cityContractingLoader = useSelector(state => state.cityContracting.loader);
+
+
+    const dispatch = useDispatch();
+
+    function fetchData(){
+        dispatch(getContractingCategories(lang , 2, token));
+        dispatch(getCityContracting(lang , 3, token));
     }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , contractingCatLoader , cityContractingLoader]);
+
+    function renderLoader(){
+        if (contractingCatLoader === false || cityContractingLoader === false){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%'}]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
 
     return (
         <Container>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('contracting') }/>
@@ -59,22 +69,24 @@ function Contracting({navigation}) {
                     </View>
 
                     <View style={[styles.directionRowSpace , styles.marginTop_15, styles.Width_100]}>
-                        <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} style={[styles.Width_48, styles.height_130]}>
-                            <View style={[styles.imgOverLay]}/>
-                            <View style={[styles.flexCenter,{position:'absolute' , top :'35%',zIndex:1}]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>شركات العقارات</Text>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>اكثر من 100 شركه</Text>
-                            </View>
-                            <Image source={require("../../assets/images/build1.jpg")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('realEstateComp')} style={[styles.Width_48, styles.height_130]}>
-                            <View style={[styles.imgOverLay]}/>
-                            <View style={[styles.flexCenter,{position:'absolute' , top :'35%',zIndex:1}]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>شركات العقارات</Text>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>اكثر من 100 شركه</Text>
-                            </View>
-                            <Image source={require("../../assets/images/build2.jpg")} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
-                        </TouchableOpacity>
+                        {
+                            contractingCat ?
+                            contractingCat.map((contrCat, i) => {
+                                return (
+                                    <TouchableOpacity key={i} onPress={() => navigation.navigate('realEstateComp',{category_id:contrCat.id , type:contrCat.type , title:contrCat.title})} style={[styles.Width_48, styles.height_130]}>
+                                        <View style={[styles.imgOverLay]}/>
+                                        <View style={[styles.flexCenter , styles.heightFull,{position:'absolute' , top :0,zIndex:1}]}>
+                                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>{contrCat.title}</Text>
+                                            {/*<Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>اكثر من 100 شركه</Text>*/}
+                                        </View>
+                                        <Image source={{uri:contrCat.icon}} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
+                                    </TouchableOpacity>
+                                )
+                            })
+                            :
+                            null
+                        }
+
                     </View>
 
                     <View style={[styles.directionRowSpace , styles.marginTop_15]}>
@@ -84,8 +96,38 @@ function Contracting({navigation}) {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={[styles.rowGroup  , styles.marginBottom_80]}>
-                        {renderCities()}
+                    <View style={[styles.rowGroup , styles.marginBottom_80]}>
+                        {cityContracting ?
+                            cityContracting.map((city, i) => {
+                                if(i < 1) {
+                                    return (
+                                        <TouchableOpacity key={i} onPress={() => navigation.navigate('realEstateComp',{category_id:city.id , type:city.type, title:city.title})}style={[styles.Width_100, styles.height_150 , styles.marginBottom_25]}>
+                                            <View style={[styles.imgOverLay]}/>
+                                            <View style={[styles.alignStart , styles.paddingHorizontal_15,{position:'absolute' , bottom :10 ,left:0,zIndex:1}]}>
+                                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>{city.date}</Text>
+                                                <Text style={[styles.textBold , styles.text_White , styles.textSize_12, styles.alignStart,
+                                                    {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{city.title}</Text>
+                                            </View>
+                                            <Image source={{uri : city.icon}} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
+                                        </TouchableOpacity>
+                                    )
+                                }else{
+                                    return (
+                                        <TouchableOpacity key={i} onPress={() => navigation.navigate('realEstateComp',{category_id:city.id , type:city.type, title:city.title})} style={[styles.Width_48, styles.height_250]}>
+                                            <View style={[styles.imgOverLay]}/>
+                                            <View style={[styles.alignStart, styles.paddingHorizontal_15,{position:'absolute' , bottom :10 ,left:0,zIndex:1}]}>
+                                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.alignStart]}>{city.date}</Text>
+                                                <Text style={[styles.textBold , styles.text_White , styles.textSize_12, styles.alignStart,
+                                                    {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{city.title}</Text>
+                                            </View>
+                                            <Image source={{uri : city.icon}} style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'} />
+                                        </TouchableOpacity>
+                                    )
+                                }
+                            })
+                            :
+                            null
+                        }
                     </View>
 
                 </View>

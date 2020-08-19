@@ -17,6 +17,15 @@ import homeAds from './HomeAdsReducer';
 import search from './SearchReducer';
 import categories from './CategoriesReducer';
 import rents from './RentsReducer';
+import adDetails from './AdDetailsReducer';
+import ordersResults from './OrdersResultsReducer';
+import userAds from './UserAdsReducer';
+import contractingCat from './ContractingCategoriesReducer';
+import cityContracting from './CityContractingReducer';
+import categoryConstructions from './CategoryConstructionsReducer';
+import constructionDetailes from './ConstructionDetailesReducer';
+import types from './TypesReducer';
+import features from './FeaturesReducer';
 
 export default combineReducers({
     lang,
@@ -37,4 +46,13 @@ export default combineReducers({
     search,
     categories,
     rents,
+    adDetails,
+    ordersResults,
+    userAds,
+    contractingCat,
+    cityContracting,
+    categoryConstructions,
+    constructionDetailes,
+    types,
+    features,
 });

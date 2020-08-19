@@ -9,7 +9,7 @@ function Build({navigation , data , onToggleFavorite , isFav}) {
 
     // const user          = useSelector(state => state.auth.user ? state.auth.user.data :  {name: null});
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('adDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: data.index % 2 === 0 ? COLORS.mstarda : COLORS.orange}]}>
+        <TouchableOpacity onPress={() => navigation.navigate('listDetails', {ad_id:data.id})} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: data.index % 2 === 0 ? COLORS.mstarda : COLORS.orange}]}>
             <Image source={{uri:data.image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
             <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                 <View style={[styles.directionRowSpace , styles.Width_100]}>
@@ -22,7 +22,7 @@ function Build({navigation , data , onToggleFavorite , isFav}) {
                     </View>
                 </View>
                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ data.space }</Text>
-                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ data.desc }</Text>
+                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ data.desc.substr(0,30) }..</Text>
                 <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                     {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{data.location}</Text>
             </View>

@@ -8,30 +8,96 @@ import {
     ScrollView,
     Share,
     I18nManager,
-    FlatList
+    FlatList, ActivityIndicator
 } from "react-native";
-import {Container, Content, Card, Icon} from 'native-base'
+import {Container, Content, Card, Icon, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
 import Header from '../common/Header';
 import Swiper from 'react-native-swiper';
 import COLORS from "../consts/colors";
-import StarRating from "react-native-star-rating";
 import Communications from 'react-native-communications';
-import  Modal  from "react-native-modal";
+import {useDispatch, useSelector} from "react-redux";
+import {getFavourite} from "../actions";
+import axios from "axios";
+import CONST from "../consts";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function ListDetails({navigation}) {
+function ListDetails({navigation , route}) {
     const [tabType, setTabType] = useState('0');
 
-    const [isFav, setIsFav] = useState(false);
+    const ad_id = route.params.ad_id;
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
-    function onToggleFavorite(id) {
-        setIsFav(!isFav)
+
+    const adDetails = useSelector(state => state.adDetails.adDetails);
+    const adDetailsLoader = useSelector(state => state.adDetails.loader);
+
+    const [isFav , setFav ] = useState(false);
+    const [screenLoader , setScreenLoader ] = useState(true);
+
+    const dispatch = useDispatch();
+    function fetchData(){
+        axios({
+            url         : CONST.url + 'adDetailes',
+            method      : 'POST',
+            data        : {lang , ad_id},
+            headers     : {Authorization: token}
+        }).then(response => {
+            dispatch({type: 'getAdDetails', payload: response.data});
+            if(response.data.success){
+                setFav(adDetails.detailes.isFav);
+                setScreenLoader(false)
+            }
+
+        });
     }
+
+    function onToggleFavorite (id){
+        axios({
+            url         : CONST.url + 'favAndUnFavAd',
+            method      : 'POST',
+            headers     : { Authorization: token },
+            data        : {lang ,ad_id :id }
+        }).then(response => {
+            setFav(!isFav);
+            Toast.show({
+                text        : response.data.message,
+                type        : response.data.success ? "success" : "danger",
+                duration    : 3000,
+                textStyle       : {
+                    color           : "white",
+                    fontFamily      : 'cairo',
+                    textAlign       : 'center'
+                }
+            });
+        });
+
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation , adDetailsLoader , isFav]);
+
+
+    function renderLoader(){
+        if (screenLoader){
+            return(
+                <View style={[styles.loading, styles.flexCenter, {height:'100%' , backgroundColor:'#fff'}]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            );
+        }
+    }
+
 
     const onShare = async () => {
         try {
@@ -54,54 +120,45 @@ function ListDetails({navigation}) {
         }
     };
 
-    const ads = [
-        {id:'0' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-        {id:'1' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-        {id:'2' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-    ];
-
-    function Item({ title ,location , price , img , space , desc , id, index }) {
+    function Item({ title ,location , price , image , space , rooms , bathroom , hall , id, index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.push('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
-                <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
+            <TouchableOpacity onPress={() => navigation.push('adDetails', {ad_id:id})} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange , minHeight:100}]}>
+                <Image source={{uri:image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                 <View style={[styles.paddingHorizontal_10,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
-                        <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
+                        <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title.substr(0,15) }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc }</Text>
+                    {
+                        rooms && hall && bathroom ?
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}> { rooms ? rooms + ' -' : null} {hall ? hall + ' -' : null} {bathroom}</Text>
+                            :
+                            null
+                    }
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
             </TouchableOpacity>
         );
     }
-    const similarAds = [
-        {id:'0' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-        {id:'1' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-        {id:'2' , title:'اوامر الشبكة' , location:'السعودية - الرياض -  شارع التخصصي' , space:"100 م" , desc:"4 غرف - صالة - 2 حمام", price:'10 ر.س', img:'require("../../assets/images/homeImg.png")'},
-    ];
-
-    function ItemSimilarAds({ title ,location , price , img , space , desc , id, index }) {
+    function ItemSimilarAds({ title ,location , price , image , space , desc , id, index }) {
         return (
-            <TouchableOpacity onPress={() => navigation.push('listDetails')} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
-                <Image source={require("../../assets/images/homeImg.png")} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
+            <TouchableOpacity onPress={() => navigation.push('listDetails', {ad_id:id})} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
+                <Image source={{uri:image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                 <View style={[styles.paddingHorizontal_10,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
-                        <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title }</Text>
+                        <Text style={[styles.textRegular , styles.text_black , styles.textSize_13]}>{ title.substr(0,15) }</Text>
                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{ price }</Text>
                     </View>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ space }</Text>
-                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc }</Text>
+                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}>{ desc.substr(0,30) }..</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                         {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{location}</Text>
                 </View>
             </TouchableOpacity>
         );
     }
-
-
 
     function changeTab(type){
         setTabType(type);
@@ -111,66 +168,40 @@ function ListDetails({navigation}) {
         if(tabType === '0'){
             return(
                 <View style={[{top:-30}]}>
-                    <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,styles.marginTop_5,
-                        styles.Width_100,{backgroundColor:'#f1f1f1', padding:5}]}>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('category') }</Text>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>عوائل</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('floor') }</Text>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>علوي</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('age') }</Text>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>5 سنين</Text>
-                        </View>
+
+                    <View style={[styles.rowGroup, styles.paddingHorizontal_15, styles.marginTop_5,
+                        styles.Width_100, {padding: 5}]}>
+                        {
+                            adDetails.features.map((feature, i) => {
+                                return (
+
+                                    <View key={i} style={[styles.directionRow , styles.marginBottom_10 , {width:'26%'}]}>
+                                        <Text
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature.name}</Text>
+                                        {
+                                            feature.icon ?
+                                                <Image source={{uri:feature.icon}}
+                                                       style={[styles.icon20, {marginRight: 5}]} resizeMode={'contain'}/>
+                                                :
+                                                null
+                                        }
+
+                                        <Text
+                                            style={[styles.textRegular, styles.text_midGray, styles.textSize_13]}>{feature.number}</Text>
+                                    </View>
+                                )
+                            })
+                        }
                     </View>
-                    <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,styles.marginTop_5,
-                        styles.Width_100,{padding:5}]}>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('rooms') }</Text>
-                            <Image source={require('../../assets/images/bed.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>2</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('lounge') }</Text>
-                            <Image source={require('../../assets/images/chair.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>1</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('bathroom') }</Text>
-                            <Image source={require('../../assets/images/bathtub.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>1</Text>
-                        </View>
-                    </View>
-                    <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,styles.marginTop_5,
-                        styles.Width_100,{backgroundColor:'#f1f1f1', padding:5}]}>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('conditioner') }</Text>
-                            <Image source={require('../../assets/images/air_conditioner.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>2</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('kitchen') }</Text>
-                            <Image source={require('../../assets/images/chef.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>1</Text>
-                        </View>
-                        <View style={[styles.directionRow, {flex:1}]}>
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('elevator') }</Text>
-                            <Image source={require('../../assets/images/elevator_ray.png')} style={[styles.icon20, {marginRight:5}]} resizeMode={'contain'} />
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13 ]}>1</Text>
-                        </View>
-                    </View>
+
                     <View style={[styles.directionRow, styles.marginTop_10, styles.paddingHorizontal_15]}>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('adNumber') }</Text>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>1235</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{adDetails.detailes.id}</Text>
                     </View>
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
-                            نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
-                            نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص
+                            {adDetails.detailes.description}
                         </Text>
                     </View>
                 </View>
@@ -178,14 +209,14 @@ function ListDetails({navigation}) {
         } else if(tabType === '1'){
             return(
                 <View style={[{top:-15}]}>
-                    <TouchableOpacity onPress={() => navigation.navigate('advertiserDetails')} style={[styles.directionBasicRow,styles.paddingHorizontal_15 , styles.Width_100]}>
+                    <TouchableOpacity onPress={() => navigation.navigate('advertiserDetails' , {user_id:adDetails.detailes.user.id})} style={[styles.directionBasicRow,styles.paddingHorizontal_15 , styles.Width_100]}>
                         <View style={[styles.borderGreen , styles.Radius_50, styles.icon50 ,{overflow:'hidden'}]}>
-                            <Image source={require('../../assets/images/pic_profile.png')} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
+                            <Image source={{uri:adDetails.detailes.user.avatar}} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
                         </View>
                         <View style={[{marginLeft:10}]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{ i18n.t('advertiserName') }</Text>
-                            <TouchableOpacity onPress={() => Communications.phonecall('012365648569', true)}>
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart]}>012365648569</Text>
+                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13,styles.alignStart]}>{adDetails.detailes.user.name}</Text>
+                            <TouchableOpacity onPress={() => Communications.phonecall(adDetails.detailes.user.phone, true)}>
+                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, styles.alignStart]}>{adDetails.detailes.user.phone}</Text>
                             </TouchableOpacity>
                             {/*<View style={[styles.width_80, styles.marginTop_5]}>*/}
                                 {/*<StarRating*/}
@@ -205,14 +236,17 @@ function ListDetails({navigation}) {
                         <View style={[styles.marginTop_20]}>
 
                             <FlatList
-                                data={ads}
+                                data={adDetails.userAds}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item , index}) => <Item
-                                    title={item.title}
-                                    location={item.location}
+                                    title={item.category}
+                                    location={item.address}
                                     price={item.price}
                                     space={item.space}
-                                    desc={item.desc}
+                                    rooms={item.rooms}
+                                    bathroom={item.bathroom}
+                                    hall={item.hall}
+                                    image={item.image}
                                     id={item.id}
                                     index={index}
                                 />}
@@ -227,14 +261,15 @@ function ListDetails({navigation}) {
             return(
                 <View style={[{top:-15},styles.paddingHorizontal_15]}>
                         <FlatList
-                            data={similarAds}
+                            data={adDetails.similerAds}
                             showsVerticalScrollIndicator={false}
                             renderItem={({ item , index}) => <ItemSimilarAds
                                 title={item.title}
-                                location={item.location}
+                                location={item.address}
                                 price={item.price}
                                 space={item.space}
-                                desc={item.desc}
+                                desc={item.description}
+                                image={item.image}
                                 id={item.id}
                                 index={index}
                             />}
@@ -247,9 +282,10 @@ function ListDetails({navigation}) {
 
     return (
         <Container>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={ 'اسم المبني' }/>
+                <Header navigation={navigation} title={adDetails.detailes.title}/>
 
                 <View style={[styles.bgFullWidth ,styles.bg_White,
                     styles.Width_100,
@@ -259,51 +295,37 @@ function ListDetails({navigation}) {
                         <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
                             backgroundColor: COLORS.mstarda}]}
                                 containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
-                            <View>
-                                <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
-                                <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
-                                    <TouchableOpacity onPress = {() => onToggleFavorite()} style={[styles.touchBlue]}>
-                                        <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
-                                        <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <View>
-                                <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
-                                <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
-                                    <TouchableOpacity onPress = {() => onToggleFavorite()} style={[styles.touchBlue]}>
-                                        <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
-                                        <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <View>
-                                <Image source={require("../../assets/images/homeImg.png")}  style={styles.swiperImg} resizeMode={'cover'}/>
-                                <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
-                                    <TouchableOpacity onPress = {() => onToggleFavorite()} style={[styles.touchBlue]}>
-                                        <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress = {() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
-                                        <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+
+                            {
+                                adDetails.detailes.images.map((img, i) => {
+                                    return (
+                                        <View key={img.id}>
+                                            <Image source={{uri:img.image}} style={styles.swiperImg} resizeMode={'cover'}/>
+                                            <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
+                                                <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
+                                                    <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
+                                                </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
+                                                    <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    )
+                                })
+                            }
+
                         </Swiper>
 
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
                             <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>شقة ايجار</Text>
-                                <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_15 ]}>17 الف ريال</Text>
+                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>{adDetails.detailes.title}</Text>
+                                <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>
                             </View>
                             <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>شارع البطحاء  - الرياض</Text>
+                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.address}</Text>
                                 <View style={[styles.directionRow]}>
                                     <Image source={require("../../assets/images/seen.png")}  style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'}/>
-                                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>555</Text>
+                                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.views}</Text>
                                 </View>
                             </View>
                         </Card>

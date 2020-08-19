@@ -33,32 +33,6 @@ function Home({navigation,route}) {
 
     const [city, setCity] = useState('');
 
-    // const markers =[
-    //     {id:'0',
-    //     title: '1.7 مليون',
-    //     coordinates: {
-    //         latitude: 31.327,
-    //         longitude:31.499,
-    //         // latitudeDelta ,
-    //         // longitudeDelta
-    //     },},
-    //     {id:'1',
-    //     title: '2 مليون',
-    //     coordinates: {
-    //         latitude: 31.255,
-    //         longitude:31.255,
-    //         // latitudeDelta ,
-    //         // longitudeDelta
-    //     },},
-    //     {id:'2',
-    //     title: '3 مليون',
-    //     coordinates: {
-    //         latitude: 30.900,
-    //         longitude:31.555,
-    //         // latitudeDelta ,
-    //         // longitudeDelta
-    //     },}
-    // ];
 
     const [mapRegion, setMapRegion] = useState({
         latitude: 31.2587 ,
@@ -213,16 +187,21 @@ function Home({navigation,route}) {
                                 <TouchableOpacity onPress={() => setShowAd(false)} style={[styles.bg_gray,styles.centerContext , styles.Radius_50,styles.alignEnd,styles.icon25]}>
                                     <Image source={require("../../assets/images/close.png")} style={[styles.icon10]} resizeMode={'contain'} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('listDetails')} style={[styles.popCard , styles.bg_White,
-                                    { borderLeftColor: COLORS.gray}]}>
+                                <TouchableOpacity onPress={() => navigation.navigate('listDetails', {ad_id:popInfo.id})} style={[styles.popCard , styles.bg_White,
+                                    { borderLeftColor: COLORS.gray, minHeight:100}]}>
                                     <Image source={{uri:popInfo.image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                                     <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                                         <View style={[styles.directionRowSpace , styles.Width_100]}>
-                                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{popInfo.title}</Text>
+                                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{popInfo.title.substr(0,15)}</Text>
                                             <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_12 ]}>{popInfo.price}</Text>
                                         </View>
                                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12 ,styles.alignStart]}>{popInfo.space}</Text>
-                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{popInfo.rooms} - {popInfo.hall} - {popInfo.bathroom}</Text>
+                                        {
+                                            popInfo.rooms && popInfo.hall && popInfo.bathroom ?
+                                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ]}> { popInfo.rooms ? popInfo.rooms + ' -' : null} {popInfo.hall ? popInfo.hall + ' -' : null} {popInfo.bathroom}</Text>
+                                                :
+                                                null
+                                        }
                                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart ,
                                             {flexWrap:'wrap', writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' , flex:1}]}>{popInfo.address}</Text>
                                     </View>
