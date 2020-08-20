@@ -12,16 +12,33 @@ import {
 import {Container, Content, CheckBox, Form} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function DetailsAdded({navigation}) {
+function DetailsAdded({navigation , route}) {
 
-    const [isSelected, setSelection] = useState(false);
+    const featuers = route.params.featuers;
+    const [checkedArr, setCheckedArr] = useState([]);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+
+
+    function checkArr(id){
+        if(!checkedArr.includes(id)){
+            setCheckedArr([...checkedArr,id])
+        }else{
+            const index = checkedArr.indexOf(id);
+            if (index > -1) {
+                checkedArr.splice(index, 1)
+                setCheckedArr([...checkedArr]);
+            }
+        }
+    }
+
 
     return (
         <Container>
@@ -35,71 +52,27 @@ function DetailsAdded({navigation}) {
 
                     <View style={[styles.Width_100 , styles.directionColumnSpace ,{flex:1}]}>
                         <View style={[styles.Width_100]}>
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>مؤقتة</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
 
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>مطبخ</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
+                            {
+                                featuers ?
+                                    featuers.map((feat, i) => {
+                                            return (
+                                                <TouchableOpacity onPress={() => checkArr(feat.id)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
+                                                    {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
+                                                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
+                                                    <CheckBox
+                                                        checked={checkedArr.indexOf(feat.id) !== -1}
+                                                        color={COLORS.midGray}
+                                                        onPress={() => checkArr(feat.id)}
+                                                        style={styles.checkbox}
+                                                    />
+                                                </TouchableOpacity>
+                                            )
+                                        }
+                                    )
+                                    :  []
+                            }
 
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>ملحق</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
-
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>مدخل سياره</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
-
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>مصعد</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
-
-                            <View style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_85,styles.SelfCenter,
-                                {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>مكيف</Text>
-                                <CheckBox
-                                    checked={isSelected}
-                                    color={COLORS.midGray}
-                                    onPress={() => setSelection(!isSelected)}
-                                    style={styles.checkbox}
-                                />
-                            </View>
 
                         </View>
 

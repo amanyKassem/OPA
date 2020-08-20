@@ -26,3 +26,5 @@ export * from './CityContractingAction';
 export * from './CategoryConstructionsAction';
 export * from './TypesAction';
 export * from './FeaturesAction';
+export * from './AddAdOrderAction';
+export * from './SingleCategoryAction';

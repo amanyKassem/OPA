@@ -285,91 +285,98 @@ function ListDetails({navigation , route}) {
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={adDetails.detailes.title}/>
+                <Header navigation={navigation} title={adDetails ? adDetails.detailes.title: ''}/>
 
-                <View style={[styles.bgFullWidth ,styles.bg_White,
-                    styles.Width_100,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                {
+                    adDetails ?
+                        <View style={[styles.bgFullWidth ,styles.bg_White,
+                            styles.Width_100,
+                            {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
-                        <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
-                            backgroundColor: COLORS.mstarda}]}
-                                containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+                            <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
+                                <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
+                                    backgroundColor: COLORS.mstarda}]}
+                                        containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+
+                                    {
+                                        adDetails.detailes.images.map((img, i) => {
+                                            return (
+                                                <View key={img.id}>
+                                                    <Image source={{uri:img.image}} style={styles.swiperImg} resizeMode={'cover'}/>
+                                                    <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
+                                                        <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
+                                                            <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
+                                                            <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                </View>
+                                            )
+                                        })
+                                    }
+
+                                </Swiper>
+
+                                <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
+                                    <View style={[styles.directionRowSpace]}>
+                                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>{adDetails.detailes.title}</Text>
+                                        <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>
+                                    </View>
+                                    <View style={[styles.directionRowSpace]}>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.address}</Text>
+                                        <View style={[styles.directionRow]}>
+                                            <Image source={require("../../assets/images/seen.png")}  style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'}/>
+                                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.views}</Text>
+                                        </View>
+                                    </View>
+                                </Card>
+
+                            </View>
+
+                            <Card style={[styles.Width_97,styles.flexCenter , styles.Radius_10,{padding:5,top:-30}]}>
+                                <ScrollView style={{}} contentContainerStyle={[styles.directionRowSpace , styles.Width_100 ]} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='0' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('0')}>
+                                        <Image source={tabType === '0'? require('../../assets/images/white_info.png') : require('../../assets/images/gray_info.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '0'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('buildData') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='1' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('1')} >
+                                        <Image source={tabType === '1'? require('../../assets/images/user_white.png'): require('../../assets/images/user_gray.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '1'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('advertiserData') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='2' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('2')}>
+                                        <Image source={tabType === '2'? require('../../assets/images/menu_ads.png'): require('../../assets/images/gray_ads.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '2'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_11]}>{ i18n.t('similarAds') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                </ScrollView>
+                            </Card>
 
                             {
-                                adDetails.detailes.images.map((img, i) => {
-                                    return (
-                                        <View key={img.id}>
-                                            <Image source={{uri:img.image}} style={styles.swiperImg} resizeMode={'cover'}/>
-                                            <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
-                                                <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
-                                                    <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                                </TouchableOpacity>
-                                                <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
-                                                    <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    )
-                                })
+                                renderTabData()
                             }
 
-                        </Swiper>
 
-                        <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
-                            <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>{adDetails.detailes.title}</Text>
-                                <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>
-                            </View>
-                            <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.address}</Text>
-                                <View style={[styles.directionRow]}>
-                                    <Image source={require("../../assets/images/seen.png")}  style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'}/>
-                                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.views}</Text>
-                                </View>
-                            </View>
-                        </Card>
+                        </View>
 
-                    </View>
+                        :
+                        null
+                }
 
-                    <Card style={[styles.Width_97,styles.flexCenter , styles.Radius_10,{padding:5,top:-30}]}>
-                        <ScrollView style={{}} contentContainerStyle={[styles.directionRowSpace , styles.Width_100 ]} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='0' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('0')}>
-                                <Image source={tabType === '0'? require('../../assets/images/white_info.png') : require('../../assets/images/gray_info.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '0'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('buildData') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='1' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('1')} >
-                                <Image source={tabType === '1'? require('../../assets/images/user_white.png'): require('../../assets/images/user_gray.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '1'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('advertiserData') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='2' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('2')}>
-                                <Image source={tabType === '2'? require('../../assets/images/menu_ads.png'): require('../../assets/images/gray_ads.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '2'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_11]}>{ i18n.t('similarAds') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                        </ScrollView>
-                    </Card>
-
-                    {
-                        renderTabData()
-                    }
-
-
-                </View>
 
             </Content>
         </Container>

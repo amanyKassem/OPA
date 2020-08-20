@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {View, Text, Image, TouchableOpacity, Dimensions} from "react-native";
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getNotifications} from '../actions';
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -12,6 +13,22 @@ function Header({navigation , title , toggleModal}) {
     const lang          = useSelector(state => state.lang.lang);
     const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const user          = useSelector(state => state.auth.user ? state.auth.user.data :  {avatar: null});
+    const notifications = useSelector(state => state.notifications.notifications);
+
+    const dispatch = useDispatch()
+
+    function fetchData(){
+        dispatch(getNotifications(lang, token))
+    }
+
+    useEffect(() => {
+        fetchData();
+        const unsubscribe = navigation.addListener('focus', () => {
+            fetchData();
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <View style={[styles.marginTop_35 , styles.marginHorizontal_15 , styles.directionRowSpace , styles.marginBottom_20]}>
@@ -35,7 +52,7 @@ function Header({navigation , title , toggleModal}) {
                 title === i18n.t('home') || title === i18n.t('searchByList') || title === i18n.t('conversations') || title === i18n.t('contracting') ?
                     <View style={[styles.directionRow]}>
                         <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:10}}>
-                            <Image source={require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                            <Image source={notifications && (notifications).length > 0 ? require('../../assets/images/notifcation_active.png') : require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate('tabs', {
                             screen: 'profile'

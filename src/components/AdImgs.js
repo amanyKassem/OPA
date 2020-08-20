@@ -13,9 +13,10 @@ const isIOS = Platform.OS === 'ios';
 
 let base64   = [];
 
-function AdImgs({navigation}) {
+function AdImgs({navigation , route}) {
 
     const [photos, setPhotos] = useState([]);
+    const featuers = route.params.featuers;
 
     function renderUploadImgs() {
        let imgBlock = [];
@@ -61,12 +62,12 @@ function AdImgs({navigation}) {
                 tempPhotos[i] = result.uri;
                 base64[i]=result.base64;
             }else{
-                if(i != photos.length){
-                    for(let k=0 ; k < i ; k++){
-                        tempPhotos.push(null);
-                        base64.push(null);
-                    }
-                }
+                // if(i != photos.length){
+                //     for(let k=0 ; k < i ; k++){
+                //         tempPhotos.push(null);
+                //         base64.push(null);
+                //     }
+                // }
                 tempPhotos.push(result.uri);
                 base64.push(result.base64);
             }
@@ -91,7 +92,7 @@ function AdImgs({navigation}) {
                         {renderUploadImgs()}
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('detailsAdded')} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
+                    <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' , {featuers})} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
                     </TouchableOpacity>
                 </View>

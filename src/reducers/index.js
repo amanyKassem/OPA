@@ -26,6 +26,7 @@ import categoryConstructions from './CategoryConstructionsReducer';
 import constructionDetailes from './ConstructionDetailesReducer';
 import types from './TypesReducer';
 import features from './FeaturesReducer';
+import singleCategory from './SingleCategoryReducer';
 
 export default combineReducers({
     lang,
@@ -55,4 +56,5 @@ export default combineReducers({
     constructionDetailes,
     types,
     features,
+    singleCategory,
 });

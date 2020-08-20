@@ -18,6 +18,14 @@
           <option name="port" value="1289" />
         </fileTransfer>
       </webServer>
+      <webServer id="ffbd2536-7d5b-4802-ad2e-8193870c9c57" name="Opa" url="http://opaapp.aait-sa.com">
+        <fileTransfer host="opaapp.aait-sa.com" port="1289" rootFolder="/home/opaappaa/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="1289" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

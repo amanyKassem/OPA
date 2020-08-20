@@ -107,26 +107,32 @@ function Favourite({navigation}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                     {renderNoData()}
-                    <View style={[{height:height - 112}]}>
+                    {
+                        favourite ?
+                            <View style={[{height:height - 112}]}>
 
-                        <FlatList
-                            data={favourite}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                location={item.address}
-                                price={item.price}
-                                space={item.space}
-                                image={item.image}
-                                desc={item.description}
-                                isFav={item.isFav}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                                <FlatList
+                                    data={favourite}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        location={item.address}
+                                        price={item.price}
+                                        space={item.space}
+                                        image={item.image}
+                                        desc={item.description}
+                                        isFav={item.isFav}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
 
-                    </View>
+                            </View>
+                            :
+                            null
+                    }
+
 
                 </View>
 

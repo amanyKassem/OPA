@@ -4,16 +4,16 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Dimensions, I18nManager
+    Dimensions, I18nManager, ActivityIndicator
 } from "react-native";
-import {Container, Content, CheckBox, Form, Label, Input, Item} from 'native-base'
+import {Container, Content, CheckBox, Form, Label, Input, Item, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Header from '../common/Header';
 import RNPickerSelect from 'react-native-picker-select';
 import COLORS from "../consts/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getFeatures} from "../actions";
+import {getFeatures, AddAdOrder} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -39,6 +39,8 @@ function NewAddedDetails({navigation , route}) {
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const features = useSelector(state => state.features.features);
     const featuresLoader = useSelector(state => state.features.loader);
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -66,6 +68,35 @@ function NewAddedDetails({navigation , route}) {
 
         return unsubscribe;
     }, [navigation , featuresLoader]);
+
+    useEffect(() => {
+        setIsSubmitted(false)
+    }, [isSubmitted]);
+
+    function renderConfirm(){
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_50]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity onPress={() => onConfirm()} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('continue') }</Text>
+            </TouchableOpacity>
+
+        );
+    }
+
+    function onConfirm(){
+
+        setIsSubmitted(true)
+        dispatch(AddAdOrder(lang , category_id , rent_id , type_id , Latitude , Longitude , rooms , hall , bathroom , floor , age ,basicDetails ,isChecked , checkedArr , token , navigation));
+    }
+
+
 
     return (
         <Container>
@@ -119,9 +150,7 @@ function NewAddedDetails({navigation , route}) {
 
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('contracting')} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('continue') }</Text>
-                        </TouchableOpacity>
+                        {renderConfirm()}
 
                     </View>
                 </View>
