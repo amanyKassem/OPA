@@ -317,7 +317,8 @@ const ar = {
     "editAd"                    : "تعديل الاعلان",
     "detailsAdded"              : "تفاصيل مضافة",
     "basicDetails"              : "تفاصيل اساسية",
-    "buildDesc"                 : "وصف العقار",
+    "buildDesc"                 : "وصف العقار بالعربي",
+    "buildDescEn"               : "وصف العقار بالانجليزي",
     "adFee"                     : "رسوم الاعلان",
     "feeCommit"                 : "العهد بدفع الرسوم",
     "reviewAd"                  : "مراجعه تفاصيل الاعلان",
@@ -350,6 +351,10 @@ const ar = {
     'website'                   : 'الموقع الالكتروني',
     'companyData'               : 'بيانات الشركه',
     'preJob'                    : 'سابقة اعمال',
+    'title_ar'                  : 'العنوان بالعربي',
+    'title_en'                  : 'العنوان بالانجليزي',
+    'street_view'               : 'منظر الشارع',
+    'meter_price'               : 'سعر المتر',
 };
 
 export default ar;

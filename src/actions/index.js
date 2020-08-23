@@ -28,3 +28,4 @@ export * from './TypesAction';
 export * from './FeaturesAction';
 export * from './AddAdOrderAction';
 export * from './SingleCategoryAction';
+export * from './StoreAdAction';

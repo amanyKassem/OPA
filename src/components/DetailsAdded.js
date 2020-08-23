@@ -23,18 +23,36 @@ function DetailsAdded({navigation , route}) {
 
     const featuers = route.params.featuers;
     const [checkedArr, setCheckedArr] = useState([]);
+    const [checkedArrNames, setCheckedArrNames] = useState([]);
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
+    const category_id = route.params ? route.params.category_id : null;
+    const Latitude = route.params ? route.params.Latitude : null;
+    const Longitude = route.params ? route.params.Longitude : null;
+    const address = route.params ? route.params.address : null;
+    const rent_id = route.params ? route.params.rent_id : null;
+    const type_id = route.params ? route.params.type_id : null;
+    const hall = route.params ? route.params.hall : null;
+    const floor = route.params ? route.params.floor : null;
+    const rooms = route.params ? route.params.rooms : null;
+    const age = route.params ? route.params.age : null;
+    const bathroom = route.params ? route.params.bathroom : null;
+    const images = route.params ? route.params.images : null;
+    const imagesUrl = route.params ? route.params.imagesUrl : null;
 
-    function checkArr(id){
+    function checkArr(id , name){
         if(!checkedArr.includes(id)){
             setCheckedArr([...checkedArr,id])
+            setCheckedArrNames([...checkedArrNames,name])
+            alert(name)
         }else{
             const index = checkedArr.indexOf(id);
             if (index > -1) {
                 checkedArr.splice(index, 1)
+                checkedArrNames.splice(index, 1)
                 setCheckedArr([...checkedArr]);
+                setCheckedArrNames([...checkedArrNames])
             }
         }
     }
@@ -63,7 +81,7 @@ function DetailsAdded({navigation , route}) {
                                                     <CheckBox
                                                         checked={checkedArr.indexOf(feat.id) !== -1}
                                                         color={COLORS.midGray}
-                                                        onPress={() => checkArr(feat.id)}
+                                                        onPress={() => checkArr(feat.id , feat.name)}
                                                         style={styles.checkbox}
                                                     />
                                                 </TouchableOpacity>
@@ -76,7 +94,24 @@ function DetailsAdded({navigation , route}) {
 
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('basicDetails')} style={[styles.babyblueBtn , styles.Width_85, styles.marginBottom_50 ]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('basicDetails'  ,{
+                            features : checkedArr,
+                            category_id,
+                            Latitude,
+                            Longitude,
+                            address,
+                            rent_id,
+                            type_id,
+                            hall,
+                            floor,
+                            rooms,
+                            age,
+                            bathroom,
+                            images,
+                            imagesUrl,
+                            featArr: featuers,
+                            checkedArrNames
+                        })} style={[styles.babyblueBtn , styles.Width_85, styles.marginBottom_50 ]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('continue') }</Text>
                         </TouchableOpacity>
 
@@ -89,5 +124,3 @@ function DetailsAdded({navigation , route}) {
 }
 
 export default DetailsAdded;
-
-

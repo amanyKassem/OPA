@@ -316,7 +316,8 @@ const en = {
     "editAd"                    : "Edit Ad",
     "detailsAdded"              : "Added details",
     "basicDetails"              : "Basic details",
-    "buildDesc"                 : "Build description",
+    "buildDesc"                 : "Build description in arabic",
+    "buildDescEn"               : "Build description in english",
     "adFee"                     : "Advertising fee",
     "feeCommit"                 : "commitment to pay the fees",
     "reviewAd"                  : "Review ad details",
@@ -349,6 +350,10 @@ const en = {
     'website'                   : 'Website',
     'companyData'               : 'Company data',
     'preJob'                    : 'previous jobs',
+    'title_ar'                  : 'Title in arabic',
+    'title_en'                  : 'Title in english',
+    'street_view'               : 'Street view',
+    'meter_price'               : 'Meter price',
 };
 
 export default en;

@@ -75,10 +75,20 @@ function AddAdTerms({navigation}) {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('addUrAd')}
-                                      style={[styles.babyblueBtn , styles.flexCenter , styles.Width_85, styles.marginBottom_50 , styles.marginTop_35]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
-                    </TouchableOpacity>
+                    {
+                        isChecked ?
+                            <TouchableOpacity onPress={() => navigation.navigate('addUrAd')}
+                                              style={[styles.babyblueBtn , styles.flexCenter , styles.Width_85, styles.marginBottom_50 , styles.marginTop_35]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                            </TouchableOpacity>
+                            :
+                            <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_85, styles.marginBottom_50 ,
+                                styles.marginTop_35 , {backgroundColor:"#bbb"}]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                            </View>
+                    }
+
+
 
                 </View>
 

@@ -304,12 +304,31 @@ function AddUrAd({navigation,route}) {
                         }
 
 
-                        <TouchableOpacity onPress={() => navigation.navigate('adImgs' , {
-                            featuers:singleCategory.featuers
-                        })}
-                                          style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
-                        </TouchableOpacity>
+                        {
+                            buildType ?
+                                <TouchableOpacity onPress={() => navigation.navigate('adImgs' , {
+                                    category_id:buildType,
+                                    Latitude:mapRegion.latitude,
+                                    Longitude:mapRegion.longitude,
+                                    address:cityName,
+                                    rent_id:serviceType,
+                                    type_id:accType,
+                                    hall:lounges,
+                                    floor:floor,
+                                    rooms:rooms,
+                                    age:buildAge,
+                                    bathroom:washrooms,
+                                    featuers:singleCategory.featuers,
+                                })}
+                                                  style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </TouchableOpacity>
+                                :
+                                <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 ,
+                                    styles.marginTop_20 , {backgroundColor:'#bbb'}]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </View>
+                        }
 
                     </View>
 

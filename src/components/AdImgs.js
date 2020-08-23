@@ -16,7 +16,18 @@ let base64   = [];
 function AdImgs({navigation , route}) {
 
     const [photos, setPhotos] = useState([]);
-    const featuers = route.params.featuers;
+    const featuers = route.params ? route.params.featuers : null;
+    const category_id = route.params ? route.params.category_id : null;
+    const Latitude = route.params ? route.params.Latitude : null;
+    const Longitude = route.params ? route.params.Longitude : null;
+    const address = route.params ? route.params.address : null;
+    const rent_id = route.params ? route.params.rent_id : null;
+    const type_id = route.params ? route.params.type_id : null;
+    const hall = route.params ? route.params.hall : null;
+    const floor = route.params ? route.params.floor : null;
+    const rooms = route.params ? route.params.rooms : null;
+    const age = route.params ? route.params.age : null;
+    const bathroom = route.params ? route.params.bathroom : null;
 
     function renderUploadImgs() {
        let imgBlock = [];
@@ -92,9 +103,35 @@ function AdImgs({navigation , route}) {
                         {renderUploadImgs()}
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' , {featuers})} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
-                    </TouchableOpacity>
+                    {
+                        photos.length > 0 ?
+                            <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
+                                {
+                                    featuers,
+                                    category_id,
+                                    Latitude,
+                                    Longitude,
+                                    address,
+                                    rent_id,
+                                    type_id,
+                                    hall,
+                                    floor,
+                                    rooms,
+                                    age,
+                                    bathroom,
+                                    images : base64,
+                                    imagesUrl : photos
+                                })} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
+                            </TouchableOpacity>
+                            :
+                            <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 ,
+                                styles.marginTop_20, {backgroundColor:'#bbb'}]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
+                            </View>
+                    }
+
+
                 </View>
 
             </Content>
