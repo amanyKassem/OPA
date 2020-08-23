@@ -101,6 +101,7 @@ function BasicDetails({navigation , route}) {
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(street_view) => setStreet_view(street_view)}
                                            value={street_view}
+                                           keyboardType={'number-pad'}
                                     />
                                 </Item>
 

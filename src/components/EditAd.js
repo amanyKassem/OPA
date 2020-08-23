@@ -1,15 +1,14 @@
 import React , {useEffect, useState} from "react";
 import {View, Text, Image, TouchableOpacity, Dimensions, I18nManager} from "react-native";
-import {Container, Content, Card, Label, Form} from 'native-base'
+import {Container, Content, Card, Label, Form, Item, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
 import Header from '../common/Header';
 import COLORS from "../consts/colors";
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
 import axios from "axios";
 import RNPickerSelect from 'react-native-picker-select';
+import {useSelector , useDispatch} from "react-redux";
+import {getCategories , getRents , getTypes , getSingleCategory} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -19,14 +18,14 @@ const longitudeDelta = 0.0421;
 function EditAd({navigation,route}) {
 
     const [cityName, setCityName] = useState('');
-    const [buildType, setBuildType] = useState('home');
-    const [accType, setAccType] = useState('families');
-    const [lounges, setLounges] = useState('2');
-    const [washrooms, setWashrooms] = useState('3');
-    const [rooms, setRooms] = useState('3');
-    const [floor, setFloor] = useState('2');
-    const [buildAge, setBuildAge] = useState('3');
-    const [serviceType, setServiceType] = useState('owner');
+    const [buildType, setBuildType] = useState('');
+    const [accType, setAccType] = useState('');
+    const [lounges, setLounges] = useState('');
+    const [washrooms, setWashrooms] = useState('');
+    const [rooms, setRooms] = useState('');
+    const [floor, setFloor] = useState('');
+    const [buildAge, setBuildAge] = useState('');
+    const [serviceType, setServiceType] = useState('');
     const [mapRegion, setMapRegion] = useState({
         latitude: 31.2587 ,
         longitude:32.2988,
@@ -34,17 +33,24 @@ function EditAd({navigation,route}) {
         longitudeDelta
     });
 
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const categories = useSelector(state => state.categories.categories);
+    const categoriesLoader = useSelector(state => state.categories.loader);
+    const rents = useSelector(state => state.rents.rents);
+    const rentsLoader = useSelector(state => state.rents.loader);
+    const types = useSelector(state => state.types.types);
+    const typesLoader = useSelector(state => state.types.loader);
+    const singleCategory = useSelector(state => state.singleCategory.singleCategory);
+    const singleCategoryLoader = useSelector(state => state.singleCategory.loader);
+
+    const dispatch = useDispatch()
+
+
 
     const fetchData = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        let userLocation = {};
-        if (status !== 'granted') {
-            alert('صلاحيات تحديد موقعك الحالي ملغاه');
-        }else {
-            const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
-            userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
-            setMapRegion(userLocation);
-        }
+        let userLocation = { latitude :mapRegion.latitude, longitude :mapRegion.longitude , latitudeDelta , longitudeDelta};
+        setMapRegion(userLocation);
         let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
         getCity    += userLocation.latitude + ',' + userLocation.longitude;
         getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
@@ -114,255 +120,206 @@ function EditAd({navigation,route}) {
                                     },
                                 }}
                                 placeholder={{
-                                    label: '' ,
+                                    label: i18n.t('buildType') ,
                                 }}
-                                onValueChange={(buildType) => setBuildType(buildType)}
-                                items={[
-                                    { label: 'شقة', value: 'home' },
-                                    { label: 'سوبر ماركت', value: 'super market' },
-                                ]}
+                                onValueChange={(buildType) => { setBuildType(buildType) ;  buildType ? dispatch(getSingleCategory(lang , buildType , token)) : null}}
+                                items={categories ?
+                                    categories.map((cat, i) => {
+                                            return (
+                                                { label: cat.name, value: cat.id , key: cat.id}
+                                            )
+                                        }
+                                    )
+                                    :  [] }
                                 Icon={() => {
                                     return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
                                 }}
                                 value={buildType}
                             />
                         </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('accType') }</Label>
+                        {
+                            singleCategory.type_id === 1 ?
+                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('accType') }</Label>
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(AccType) => setAccType(AccType)}
-                                items={[
-                                    { label: 'عائلات', value: 'families' },
-                                    { label: 'اصدقاء', value: 'friends' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={accType}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
+                                    <RNPickerSelect
+                                        style={{
+                                            inputAndroid: {
+                                                fontFamily: 'cairo',
+                                                color:COLORS.midGray,
+                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                fontSize            : 14,
+                                            },
+                                            inputIOS: {
+                                                fontFamily: 'cairo',
+                                                color:COLORS.midGray,
+                                                alignSelf:'flex-start',
+                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                fontSize            : 14,
+                                            },
+                                        }}
+                                        placeholder={{
+                                            label: i18n.t('accType') ,
+                                        }}
+                                        onValueChange={(AccType) => setAccType(AccType)}
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(lounges) => setLounges(lounges)}
-                                items={[
-                                    { label: '2', value: '2' },
-                                    { label: '3', value: '3' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={lounges}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
+                                        items={types ?
+                                            types.map((type, i) => {
+                                                    return (
+                                                        { label: type.name, value: type.id , key: type.id}
+                                                    )
+                                                }
+                                            )
+                                            :  [] }
+                                        Icon={() => {
+                                            return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
+                                        }}
+                                    />
+                                </View>
+                                :
+                                null
+                        }
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(washrooms) => setWashrooms(washrooms)}
-                                items={[
-                                    { label: '2', value: '2' },
-                                    { label: '3', value: '3' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={washrooms}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(rooms) => setRooms(rooms)}
-                                items={[
-                                    { label: '2', value: '2' },
-                                    { label: '3', value: '3' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={rooms}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
+                        {
+                            singleCategory.hall === 1 ?
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(lounges) => setLounges(lounges)}
+                                           keyboardType={'number-pad'}
+                                           value={lounges}
+                                    />
+                                </Item>
+                                :
+                                null
+                        }
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(floor) => setFloor(floor)}
-                                items={[
-                                    { label: '2', value: '2' },
-                                    { label: '3', value: '3' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={floor}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
+                        {
+                            singleCategory.bathroom === 1 ?
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(washrooms) => setWashrooms(washrooms)}
+                                           keyboardType={'number-pad'}
+                                           value={washrooms}
+                                    />
+                                </Item>
+                                :
+                                null
+                        }
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(buildAge) => setBuildAge(buildAge)}
-                                items={[
-                                    { label: '2', value: '2' },
-                                    { label: '3', value: '3' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={buildAge}
-                            />
-                        </View>
-                        <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('serviceType') }</Label>
+                        {
+                            singleCategory.rooms === 1 ?
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(rooms) => setRooms(rooms)}
+                                           keyboardType={'number-pad'}
+                                           value={rooms}
+                                    />
+                                </Item>
+                                :
+                                null
+                        }
 
-                            <RNPickerSelect
-                                style={{
-                                    inputAndroid: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                    inputIOS: {
-                                        fontFamily: 'cairo',
-                                        color:COLORS.midGray,
-                                        alignSelf:'flex-start',
-                                        textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                        fontSize            : 14,
-                                    },
-                                }}
-                                placeholder={{
-                                    label: '' ,
-                                }}
-                                onValueChange={(serviceType) => setServiceType(serviceType)}
-                                items={[
-                                    { label: 'ايجار', value: 'rent' },
-                                    { label: 'ملك', value: 'owner' },
-                                ]}
-                                Icon={() => {
-                                    return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                }}
-                                value={serviceType}
-                            />
-                        </View>
+                        {
+                            singleCategory.floor === 1 ?
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(floor) => setFloor(floor)}
+                                           keyboardType={'number-pad'}
+                                           value={floor}
+                                    />
+                                </Item>
+                                :
+                                null
+                        }
 
-                        <TouchableOpacity onPress={() => navigation.navigate('adImgs')}
-                                          style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
-                        </TouchableOpacity>
+                        {
+                            singleCategory.age === 1 ?
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(buildAge) => setBuildAge(buildAge)}
+                                           keyboardType={'number-pad'}
+                                           value={buildAge}
+                                    />
+                                </Item>
+                                :
+                                null
+                        }
+
+                        {
+                            singleCategory.rent_id === 1 ?
+                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('serviceType') }</Label>
+
+                                    <RNPickerSelect
+                                        style={{
+                                            inputAndroid: {
+                                                fontFamily: 'cairo',
+                                                color:COLORS.midGray,
+                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                fontSize            : 14,
+                                            },
+                                            inputIOS: {
+                                                fontFamily: 'cairo',
+                                                color:COLORS.midGray,
+                                                alignSelf:'flex-start',
+                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                fontSize            : 14,
+                                            },
+                                        }}
+                                        placeholder={{
+                                            label: i18n.t('serviceType') ,
+                                        }}
+                                        onValueChange={(serviceType) => setServiceType(serviceType)}
+                                        items={rents ?
+                                            rents.map((rent, i) => {
+                                                    return (
+                                                        { label: rent.name, value: rent.id , key: rent.id}
+                                                    )
+                                                }
+                                            )
+                                            :  [] }
+                                        Icon={() => {
+                                            return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
+                                        }}
+                                    />
+                                </View>
+                                :
+                                null
+                        }
+
+
+                        {
+                            buildType ?
+                                <TouchableOpacity onPress={() => navigation.navigate('adImgs' , {
+                                    category_id:buildType,
+                                    Latitude:mapRegion.latitude,
+                                    Longitude:mapRegion.longitude,
+                                    address:cityName,
+                                    rent_id:serviceType,
+                                    type_id:accType,
+                                    hall:lounges,
+                                    floor:floor,
+                                    rooms:rooms,
+                                    age:buildAge,
+                                    bathroom:washrooms,
+                                    featuers:singleCategory.featuers,
+                                })}
+                                                  style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </TouchableOpacity>
+                                :
+                                <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 ,
+                                    styles.marginTop_20 , {backgroundColor:'#bbb'}]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </View>
+                        }
+
 
                     </View>
 

@@ -40,7 +40,7 @@ function Header({navigation , title , toggleModal}) {
                             <Image source={require('../../assets/images/menu.png')} style={[styles.icon25 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={{marginRight:15}}>
+                        <TouchableOpacity onPress={() => title === i18n.t('postAdConfirmation') ? navigation.navigate('home') : navigation.goBack()} style={{marginRight:15}}>
                             <Image source={require('../../assets/images/back.png')} style={[styles.icon20 , styles.transform]} resizeMode={'contain'} />
                         </TouchableOpacity>
                 }

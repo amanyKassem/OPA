@@ -8,23 +8,25 @@ import {
     ScrollView,
     Linking,
     I18nManager,
-    FlatList
+    FlatList, ActivityIndicator
 } from "react-native";
 import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Header from '../common/Header';
 import Swiper from 'react-native-swiper';
+import {StoreAd} from "../actions";
 import COLORS from "../consts/colors";
-import StarRating from "react-native-star-rating";
-import Communications from 'react-native-communications';
-import  Modal  from "react-native-modal";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
 function ReviewAd({navigation , route}) {
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
     const featArr = route.params ? route.params.featArr : null;
     const checkedArrNames = route.params ? route.params.checkedArrNames : null;
@@ -51,7 +53,40 @@ function ReviewAd({navigation , route}) {
     const street_view = route.params ? route.params.street_view : null;
     const meter_price = route.params ? route.params.meter_price : null;
 
-    console.log(checkedArrNames)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsSubmitted(false)
+    }, [isSubmitted]);
+
+
+
+    function renderSubmit() {
+
+        if (isSubmitted){
+            return(
+                <View style={[{ justifyContent: 'center', alignItems: 'center' } , styles.marginBottom_30]}>
+                    <ActivityIndicator size="large" color={COLORS.babyblue} style={{ alignSelf: 'center' }} />
+                </View>
+            )
+        }
+
+        return (
+            <TouchableOpacity onPress={() => onPuplish()} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_80, styles.marginBottom_30 ]}>
+                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('postAd') }</Text>
+            </TouchableOpacity>
+        );
+    }
+
+
+    function onPuplish(){
+        setIsSubmitted(true);
+        dispatch(StoreAd(lang , category_id , null , Latitude , Longitude , address ,
+            title_ar , title_en , description_ar , description_en , price ,space , rent_id,
+            type_id , hall , floor , rooms ,
+            age , street_view , bathroom , meter_price , 1,
+            features , images, token , navigation));
+    }
 
     return (
         <Container>
@@ -118,9 +153,7 @@ function ReviewAd({navigation , route}) {
                         </View>
                     </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('confirmPost')} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_80, styles.marginBottom_30 ]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('postAd') }</Text>
-                    </TouchableOpacity>
+                    {renderSubmit()}
 
                 </View>
 

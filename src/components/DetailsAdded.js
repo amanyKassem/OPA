@@ -45,7 +45,6 @@ function DetailsAdded({navigation , route}) {
         if(!checkedArr.includes(id)){
             setCheckedArr([...checkedArr,id])
             setCheckedArrNames([...checkedArrNames,name])
-            alert(name)
         }else{
             const index = checkedArr.indexOf(id);
             if (index > -1) {
@@ -75,7 +74,7 @@ function DetailsAdded({navigation , route}) {
                                 featuers ?
                                     featuers.map((feat, i) => {
                                             return (
-                                                <TouchableOpacity onPress={() => checkArr(feat.id)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
+                                                <TouchableOpacity onPress={() => checkArr(feat.id, feat.name)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
                                                     {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
                                                     <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
                                                     <CheckBox
