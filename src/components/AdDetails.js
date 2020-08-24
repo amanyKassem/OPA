@@ -250,7 +250,7 @@ function AdDetails({navigation , route}) {
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} toggleModal={() => toggleModal()} title={ i18n.t('adDetails') }/>
+                <Header navigation={navigation} toggleModal={() => toggleModal()} ad_id={adDetails? adDetails.detailes.id : null} title={ i18n.t('adDetails') }/>
 
                 {
                     adDetails ?

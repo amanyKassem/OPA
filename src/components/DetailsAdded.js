@@ -22,6 +22,7 @@ const isIOS = Platform.OS === 'ios';
 function DetailsAdded({navigation , route}) {
 
     const featuers = route.params.featuers;
+    const editFeatuers = route.params.editFeatuers;
     const [checkedArr, setCheckedArr] = useState([]);
     const [checkedArrNames, setCheckedArrNames] = useState([]);
     const lang = useSelector(state => state.lang.lang);
@@ -40,6 +41,26 @@ function DetailsAdded({navigation , route}) {
     const bathroom = route.params ? route.params.bathroom : null;
     const images = route.params ? route.params.images : null;
     const imagesUrl = route.params ? route.params.imagesUrl : null;
+    const pathName = route.params ? route.params.pathName : null;
+    const adDetails = route.params ? route.params.adDetails : null;
+
+
+    console.log(editFeatuers)
+
+    useEffect(() => {
+
+        editFeatuers ?
+            editFeatuers.map((feat, i) => {
+                alert('lk')
+                checkedArr.push(feat.id)
+                checkedArrNames.push(feat.name)
+                setCheckedArr([...checkedArr])
+                setCheckedArrNames([...checkedArrNames])
+            })
+            :
+            null
+
+    }, []);
 
     function checkArr(id , name){
         if(!checkedArr.includes(id)){
@@ -108,6 +129,8 @@ function DetailsAdded({navigation , route}) {
                             bathroom,
                             images,
                             imagesUrl,
+                            pathName,
+                            adDetails,
                             featArr: featuers,
                             checkedArrNames
                         })} style={[styles.babyblueBtn , styles.Width_85, styles.marginBottom_50 ]}>

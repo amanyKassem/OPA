@@ -8,7 +8,7 @@ import {getNotifications} from '../actions';
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function Header({navigation , title , toggleModal}) {
+function Header({navigation , title , toggleModal , ad_id}) {
 
     const lang          = useSelector(state => state.lang.lang);
     const token         = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -72,7 +72,7 @@ function Header({navigation , title , toggleModal}) {
                                 <TouchableOpacity onPress={toggleModal} style={{marginRight:10}}>
                                     <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('editAd')} >
+                                <TouchableOpacity onPress={() => navigation.navigate('editAd' , {ad_id})} >
                                     <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                             </View>

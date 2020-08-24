@@ -17,6 +17,7 @@ function AdImgs({navigation , route}) {
 
     const [photos, setPhotos] = useState([]);
     const featuers = route.params ? route.params.featuers : null;
+    const editFeatuers = route.params ? route.params.editFeatuers : null;
     const category_id = route.params ? route.params.category_id : null;
     const Latitude = route.params ? route.params.Latitude : null;
     const Longitude = route.params ? route.params.Longitude : null;
@@ -28,6 +29,9 @@ function AdImgs({navigation , route}) {
     const rooms = route.params ? route.params.rooms : null;
     const age = route.params ? route.params.age : null;
     const bathroom = route.params ? route.params.bathroom : null;
+    const images = route.params ? route.params.images : null;
+    const pathName = route.params ? route.params.pathName : null;
+    const adDetails = route.params ? route.params.adDetails : null;
 
     function renderUploadImgs() {
        let imgBlock = [];
@@ -35,7 +39,7 @@ function AdImgs({navigation , route}) {
            if(i === 0){
               imgBlock.push(
                   <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
-                      <Image source= {photos[i]?{uri:photos[i]} : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i]? styles.heightFull:null]} resizeMode={photos[i]?'cover':'contain'} />
+                      <Image source= {photos[i]?{uri:photos[i]} : images[i] ? {uri:images[i].image} : require('../../assets/images/upload_white.png')} style={[photos[i] || images[i]? styles.Width_100 : styles.icon50 , photos[i] || images[i]? styles.heightFull:null]} resizeMode={photos[i] || images[i]?'cover':'contain'} />
                       <Text style={[styles.textRegular , styles.text_White , styles.textSize_13]}>{ i18n.t('uploadAdImgs') }</Text>
                   </TouchableOpacity>
               )
@@ -43,7 +47,7 @@ function AdImgs({navigation , route}) {
                imgBlock.push(
                    <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
-                       <Image source= {photos[i]?{uri:photos[i]} : require('../../assets/images/upload_gray.png')} style={[photos[i]? styles.Width_100 : styles.icon50  , photos[i]? styles.heightFull:null]} resizeMode={photos[i]?'cover':'contain'} />
+                       <Image source= {photos[i]?{uri:photos[i]} : images[i] ? {uri:images[i].image} :  require('../../assets/images/upload_gray.png')} style={[photos[i] || images[i]? styles.Width_100 : styles.icon50  , photos[i] || images[i]? styles.heightFull:null]} resizeMode={photos[i] || images[i]?'cover':'contain'} />
                    </TouchableOpacity>
                )
            }
@@ -104,10 +108,11 @@ function AdImgs({navigation , route}) {
                     </View>
 
                     {
-                        photos.length > 0 ?
+                        photos.length > 0 || images.length > 0 ?
                             <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
                                 {
                                     featuers,
+                                    editFeatuers,
                                     category_id,
                                     Latitude,
                                     Longitude,
@@ -119,6 +124,8 @@ function AdImgs({navigation , route}) {
                                     rooms,
                                     age,
                                     bathroom,
+                                    pathName,
+                                    adDetails,
                                     images : base64,
                                     imagesUrl : photos
                                 })} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
