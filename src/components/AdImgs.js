@@ -3,7 +3,8 @@ import {View, Text, Image, TouchableOpacity, Dimensions, ScrollView, Vibration} 
 import {Container, Content, Card} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {DeleteAdImage} from '../actions';
 import Header from '../common/Header';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -14,6 +15,9 @@ const isIOS = Platform.OS === 'ios';
 let base64   = [];
 
 function AdImgs({navigation , route}) {
+
+    const lang = useSelector(state => state.lang.lang);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
     const [photos, setPhotos] = useState([]);
     const featuers = route.params ? route.params.featuers : null;
@@ -29,9 +33,36 @@ function AdImgs({navigation , route}) {
     const rooms = route.params ? route.params.rooms : null;
     const age = route.params ? route.params.age : null;
     const bathroom = route.params ? route.params.bathroom : null;
-    const images = route.params ? route.params.images : null;
     const pathName = route.params ? route.params.pathName : null;
     const adDetails = route.params ? route.params.adDetails : null;
+    const images = route.params ? route.params.images : null;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+
+        route.params && images ?
+            images.map((img, i) => {
+                photos.push({ id : img.id , image:img.image})
+                setPhotos([...photos])
+                console.log(photos)
+            })
+            :
+            null
+
+    }, []);
+
+    function confirmDelete (id , i) {
+        photos.splice(i, 1);
+        setPhotos([...photos]);
+        {
+            pathName === 'editAd'?
+                dispatch(DeleteAdImage(lang , id , token))
+                :
+                base64.splice(i, 1);
+        }
+
+    };
+
 
     function renderUploadImgs() {
        let imgBlock = [];
@@ -39,7 +70,15 @@ function AdImgs({navigation , route}) {
            if(i === 0){
               imgBlock.push(
                   <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
-                      <Image source= {photos[i]?{uri:photos[i]} : images[i] ? {uri:images[i].image} : require('../../assets/images/upload_white.png')} style={[photos[i] || images[i]? styles.Width_100 : styles.icon50 , photos[i] || images[i]? styles.heightFull:null]} resizeMode={photos[i] || images[i]?'cover':'contain'} />
+                      {
+                          photos[i]?
+                              <TouchableOpacity onPress={() => confirmDelete(images[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                                  <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                              </TouchableOpacity>
+                              :
+                              null
+                      }
+                      <Image source= {photos[i]? (images[i] ? {uri:photos[i].image} : {uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                       <Text style={[styles.textRegular , styles.text_White , styles.textSize_13]}>{ i18n.t('uploadAdImgs') }</Text>
                   </TouchableOpacity>
               )
@@ -47,7 +86,15 @@ function AdImgs({navigation , route}) {
                imgBlock.push(
                    <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
-                       <Image source= {photos[i]?{uri:photos[i]} : images[i] ? {uri:images[i].image} :  require('../../assets/images/upload_gray.png')} style={[photos[i] || images[i]? styles.Width_100 : styles.icon50  , photos[i] || images[i]? styles.heightFull:null]} resizeMode={photos[i] || images[i]?'cover':'contain'} />
+                       {
+                           photos[i]?
+                               <TouchableOpacity onPress={() => confirmDelete(images[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                                   <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                               </TouchableOpacity>
+                               :
+                               null
+                       }
+                       <Image source= {photos[i]? (images[i] ? {uri:photos[i].image} : {uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                    </TouchableOpacity>
                )
            }
@@ -108,7 +155,7 @@ function AdImgs({navigation , route}) {
                     </View>
 
                     {
-                        photos.length > 0 || images.length > 0 ?
+                        photos.length > 0 ?
                             <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
                                 {
                                     featuers,

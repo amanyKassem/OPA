@@ -45,13 +45,10 @@ function DetailsAdded({navigation , route}) {
     const adDetails = route.params ? route.params.adDetails : null;
 
 
-    console.log(editFeatuers)
-
     useEffect(() => {
 
         editFeatuers ?
             editFeatuers.map((feat, i) => {
-                alert('lk')
                 checkedArr.push(feat.id)
                 checkedArrNames.push(feat.name)
                 setCheckedArr([...checkedArr])
