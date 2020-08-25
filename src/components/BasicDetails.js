@@ -22,14 +22,14 @@ const isIOS = Platform.OS === 'ios';
 function BasicDetails({navigation , route}) {
 
     const adDetails = route.params ? route.params.adDetails : null;
-    const [totalPrice, setTotalPrice] = useState(adDetails.detailes.price);
-    const [title_ar, setTitle_ar] = useState(adDetails.detailes.title_ar);
-    const [title_en, setTitle_en] = useState(adDetails.detailes.title_en);
-    const [buildDesc, setBuildDesc] = useState(adDetails.detailes.description_ar);
-    const [buildDescEn, setBuildDescEn] = useState(adDetails.detailes.description_en);
-    const [space, setSpace] = useState(adDetails.detailes.space);
-    const [street_view, setStreet_view] = useState(adDetails.detailes.street_view);
-    const [meter_price, setMeter_price] = useState(adDetails.detailes.meter_price);
+    const [totalPrice, setTotalPrice] = useState(adDetails ? adDetails.detailes.price : '');
+    const [title_ar, setTitle_ar] = useState(adDetails ? adDetails.detailes.title_ar : '');
+    const [title_en, setTitle_en] = useState(adDetails ? adDetails.detailes.title_en : '');
+    const [buildDesc, setBuildDesc] = useState(adDetails ? adDetails.detailes.description_ar : '');
+    const [buildDescEn, setBuildDescEn] = useState(adDetails ? adDetails.detailes.description_en : '');
+    const [space, setSpace] = useState(adDetails ? adDetails.detailes.space : '');
+    const [street_view, setStreet_view] = useState(adDetails ? adDetails.detailes.street_view : '');
+    const [meter_price, setMeter_price] = useState(adDetails ? adDetails.detailes.meter_price : '');
 
     const featArr = route.params ? route.params.featArr : null;
     const features = route.params ? route.params.features : null;
@@ -48,6 +48,7 @@ function BasicDetails({navigation , route}) {
     const imagesUrl = route.params ? route.params.imagesUrl : null;
     const checkedArrNames = route.params ? route.params.checkedArrNames : null;
     const pathName = route.params ? route.params.pathName : null;
+    const ad_id = route.params ? route.params.ad_id : null;
 
     return (
         <Container>
@@ -165,6 +166,7 @@ function BasicDetails({navigation , route}) {
                                             featArr,
                                             checkedArrNames,
                                             pathName,
+                                            ad_id,
 
                                         })} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
                                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('continue') }</Text>

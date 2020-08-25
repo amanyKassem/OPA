@@ -30,3 +30,4 @@ export * from './AddAdOrderAction';
 export * from './SingleCategoryAction';
 export * from './StoreAdAction';
 export * from './DeleteAdImageAction';
+export * from './EditAdAction';

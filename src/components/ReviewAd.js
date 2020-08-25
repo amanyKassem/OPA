@@ -16,7 +16,7 @@ import i18n from "../../locale/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import Header from '../common/Header';
 import Swiper from 'react-native-swiper';
-import {StoreAd} from "../actions";
+import {StoreAd ,EditAd} from "../actions";
 import COLORS from "../consts/colors";
 
 const height = Dimensions.get('window').height;
@@ -43,7 +43,7 @@ function ReviewAd({navigation , route}) {
     const age = route.params ? route.params.age : null;
     const bathroom = route.params ? route.params.bathroom : null;
     const images = route.params ? route.params.images : null;
-    const imagesUrl = route.params ? route.params.imagesUrl : null;
+    const imagesUrl = route.params ? route.params.imagesUrl : [];
     const title_ar = route.params ? route.params.title_ar : null;
     const title_en = route.params ? route.params.title_en : null;
     const description_ar = route.params ? route.params.description_ar : null;
@@ -52,12 +52,14 @@ function ReviewAd({navigation , route}) {
     const space = route.params ? route.params.space : null;
     const street_view = route.params ? route.params.street_view : null;
     const meter_price = route.params ? route.params.meter_price : null;
+    const pathName = route.params ? route.params.pathName : null;
+    const ad_id = route.params ? route.params.ad_id : null;
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        setIsSubmitted(false)
-    }, [isSubmitted]);
+    // useEffect(() => {
+    //     setIsSubmitted(false)
+    // }, [isSubmitted]);
 
 
 
@@ -81,11 +83,20 @@ function ReviewAd({navigation , route}) {
 
     function onPuplish(){
         setIsSubmitted(true);
-        dispatch(StoreAd(lang , category_id , null , Latitude , Longitude , address ,
-            title_ar , title_en , description_ar , description_en , price ,space , rent_id,
-            type_id , hall , floor , rooms ,
-            age , street_view , bathroom , meter_price , 1,
-            features , images, token , navigation));
+
+        if(pathName === 'editAd'){
+            dispatch(EditAd(lang , ad_id , category_id , null , Latitude , Longitude , address , features,
+                title_ar , title_en , description_ar , description_en , price ,space , rent_id,
+                type_id , hall , floor , rooms ,
+                age , street_view , bathroom , meter_price , 1, images, token , navigation));
+        } else {
+            dispatch(StoreAd(lang , category_id , null , Latitude , Longitude , address , features,
+                title_ar , title_en , description_ar , description_en , price ,space , rent_id,
+                type_id , hall , floor , rooms ,
+                age , street_view , bathroom , meter_price , 1, images, token , navigation));
+        }
+
+
     }
 
     return (
@@ -102,12 +113,15 @@ function ReviewAd({navigation , route}) {
                         <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
                                 containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
                             {
-                                imagesUrl.map((img, i) => {
-                                    return (
-                                        <Image key={i}source={{uri:img}}
-                                               style={styles.swiperImg} resizeMode={'cover'}/>
-                                    )
-                                })
+                                imagesUrl?
+                                    imagesUrl.map((img, i) => {
+                                        return (
+                                            <Image key={i} source={{uri:img}}
+                                                   style={styles.swiperImg} resizeMode={'cover'}/>
+                                        )
+                                    })
+                                    :
+                                    null
                             }
 
                         </Swiper>

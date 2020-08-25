@@ -47,6 +47,8 @@ function AdFee({navigation , route}) {
     const street_view = route.params ? route.params.street_view : null;
     const meter_price = route.params ? route.params.meter_price : null;
     const checkedArrNames = route.params ? route.params.checkedArrNames : null;
+    const pathName = route.params ? route.params.pathName : null;
+    const ad_id = route.params ? route.params.ad_id : null;
 
     const dispatch = useDispatch()
 
@@ -123,6 +125,8 @@ function AdFee({navigation , route}) {
                             meter_price,
                             featArr,
                             checkedArrNames,
+                            pathName,
+                            ad_id,
 
                         })} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('feeCommit') }</Text>

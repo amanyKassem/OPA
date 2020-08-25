@@ -351,22 +351,23 @@ function EditAd({navigation,route}) {
                                 {
                                     buildType || adDetails.detailes.category_id?
                                         <TouchableOpacity onPress={() => navigation.navigate('adImgs' , {
-                                            category_id:buildType,
+                                            category_id:buildType == null  ? adDetails.detailes.category_id : buildType,
                                             Latitude:mapRegion.latitude,
                                             Longitude:mapRegion.longitude,
-                                            address:cityName,
-                                            rent_id:singleCategory.rent_id === 1 ? serviceType : null,
-                                            type_id:singleCategory.type_id === 1 ? accType : null,
-                                            hall: singleCategory.hall === 1 ? lounges : null,
-                                            floor: singleCategory.floor === 1 ? floor : null,
-                                            rooms: singleCategory.rooms === 1 ? rooms : null,
-                                            age: singleCategory.age === 1 ? buildAge : null,
-                                            bathroom: singleCategory.bathroom === 1 ? washrooms : null,
+                                            address:cityName == null  ? adDetails.detailes.address : cityName,
+                                            rent_id:singleCategory.rent_id === 1 ? serviceType == null  ? adDetails.detailes.rent_id : serviceType : null,
+                                            type_id:singleCategory.type_id === 1 ? accType == null  ? adDetails.detailes.type_id : accType : null,
+                                            hall: singleCategory.hall === 1 ? lounges == null  ? adDetails.detailes.hall : lounges : null,
+                                            floor: singleCategory.floor === 1 ? floor == null  ? adDetails.detailes.floor : floor : null,
+                                            rooms: singleCategory.rooms === 1 ? rooms == null  ? adDetails.detailes.rooms : rooms : null,
+                                            age: singleCategory.age === 1 ? buildAge == null  ? adDetails.detailes.age : buildAge : null,
+                                            bathroom: singleCategory.bathroom === 1 ? washrooms == null  ? adDetails.detailes.bathroom : washrooms : null,
                                             featuers:singleCategory.featuers,
                                             editFeatuers: (buildType == adDetails.detailes.category_id) || buildType == null  ? adDetails.detailes.features : null,
                                             images:adDetails.detailes.images,
                                             pathName:'editAd',
                                             adDetails:adDetails,
+                                            ad_id,
                                         })}
                                                           style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>

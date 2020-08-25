@@ -5,8 +5,9 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
+    BackHandler
 } from "react-native";
-import {Container, Content,Radio} from 'native-base'
+import {Container, Content} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useSelector} from "react-redux";
@@ -18,6 +19,18 @@ const isIOS = Platform.OS === 'ios';
 
 function ConfirmPost({navigation}) {
 
+    useEffect(() => {
+        const backAction = () => {
+            navigation.navigate('myAds')
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, []);
 
     return (
         <Container>

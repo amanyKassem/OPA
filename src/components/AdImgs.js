@@ -36,31 +36,31 @@ function AdImgs({navigation , route}) {
     const pathName = route.params ? route.params.pathName : null;
     const adDetails = route.params ? route.params.adDetails : null;
     const images = route.params ? route.params.images : null;
+    const ad_id = route.params ? route.params.ad_id : null;
     const dispatch = useDispatch();
 
     useEffect(() => {
 
         route.params && images ?
             images.map((img, i) => {
-                photos.push({ id : img.id , image:img.image})
+                photos.push(img.image)
                 setPhotos([...photos])
                 console.log(photos)
             })
             :
             null
 
-    }, []);
+    }, [images]);
+
 
     function confirmDelete (id , i) {
         photos.splice(i, 1);
         setPhotos([...photos]);
-        {
-            pathName === 'editAd'?
-                dispatch(DeleteAdImage(lang , id , token))
-                :
-                base64.splice(i, 1);
+        if(pathName === 'editAd' && id){
+            dispatch(DeleteAdImage(lang , id , token))
+        }else{
+            base64.splice(i, 1);
         }
-
     };
 
 
@@ -72,13 +72,13 @@ function AdImgs({navigation , route}) {
                   <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
                       {
                           photos[i]?
-                              <TouchableOpacity onPress={() => confirmDelete(images[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                              <TouchableOpacity onPress={() => confirmDelete(images && images[i] ? images[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                   <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                               </TouchableOpacity>
                               :
                               null
                       }
-                      <Image source= {photos[i]? (images[i] ? {uri:photos[i].image} : {uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
+                      <Image source= {photos[i]? ({uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                       <Text style={[styles.textRegular , styles.text_White , styles.textSize_13]}>{ i18n.t('uploadAdImgs') }</Text>
                   </TouchableOpacity>
               )
@@ -88,13 +88,13 @@ function AdImgs({navigation , route}) {
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
                        {
                            photos[i]?
-                               <TouchableOpacity onPress={() => confirmDelete(images[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                               <TouchableOpacity onPress={() => confirmDelete(images && images[i] ? images[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                    <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                </TouchableOpacity>
                                :
                                null
                        }
-                       <Image source= {photos[i]? (images[i] ? {uri:photos[i].image} : {uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
+                       <Image source= {photos[i]? ({uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                    </TouchableOpacity>
                )
            }
@@ -173,6 +173,7 @@ function AdImgs({navigation , route}) {
                                     bathroom,
                                     pathName,
                                     adDetails,
+                                    ad_id,
                                     images : base64,
                                     imagesUrl : photos
                                 })} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>

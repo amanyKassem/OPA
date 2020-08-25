@@ -353,7 +353,7 @@ const ar = {
     'preJob'                    : 'سابقة اعمال',
     'title_ar'                  : 'العنوان بالعربي',
     'title_en'                  : 'العنوان بالانجليزي',
-    'street_view'               : 'منظر الشارع',
+    'street_view'               : 'عرض الشارع',
     'meter_price'               : 'سعر المتر',
 };
 
