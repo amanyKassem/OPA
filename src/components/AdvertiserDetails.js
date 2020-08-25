@@ -99,48 +99,67 @@ function AdvertiserDetails({navigation , route}) {
 
                 <Header navigation={navigation} title={ i18n.t('advertiserDetails') }/>
 
-                <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                    styles.Width_100, styles.paddingTop_10,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                {
+                    userAds ?
 
-                    <View style={[styles.directionBasicRow,styles.Width_100]}>
-                        <View style={[styles.borderGreen , styles.Radius_50, styles.icon50 ,{overflow:'hidden'}]}>
-                            <Image source={{uri:userAds.user.avatar}} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
-                        </View>
-                        <View style={[{marginLeft:10}]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14,styles.alignStart]}>{userAds.user.name}</Text>
-                            <TouchableOpacity onPress={() => Communications.phonecall(userAds.user.phone, true)}>
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart]}>{userAds.user.phone}</Text>
-                            </TouchableOpacity>
-                            {/*<View style={[styles.width_80, styles.marginTop_5]}>*/}
-                                {/*<StarRating*/}
+                        <View style={[styles.bgFullWidth, styles.paddingHorizontal_20, styles.bg_White,
+                            styles.Width_100, styles.paddingTop_10,
+                            {borderTopRightRadius: 50, borderTopLeftRadius: 50}]}>
+
+                            <View style={[styles.directionBasicRow, styles.Width_100]}>
+                                <View
+                                    style={[styles.borderGreen, styles.Radius_50, styles.icon50, {overflow: 'hidden'}]}>
+                                    <Image source={{uri: userAds.user.avatar}}
+                                           style={[styles.Width_100, styles.heightFull]} resizeMode={'cover'}/>
+                                </View>
+                                <View style={[{marginLeft: 10}]}>
+                                    <Text
+                                        style={[styles.textRegular, styles.text_midGray, styles.textSize_14, styles.alignStart]}>{userAds.user.name}</Text>
+                                    <TouchableOpacity
+                                        onPress={() => Communications.phonecall(userAds.user.phone, true)}>
+                                        <Text
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14, styles.alignStart]}>{userAds.user.phone}</Text>
+                                    </TouchableOpacity>
+                                    {/*<View style={[styles.width_80, styles.marginTop_5]}>*/}
+                                    {/*<StarRating*/}
                                     {/*disabled={true}*/}
                                     {/*maxStars={5}*/}
                                     {/*rating={3}*/}
                                     {/*fullStarColor={COLORS.mstarda}*/}
                                     {/*starSize={14}*/}
                                     {/*starStyle={styles.starStyle}*/}
-                                {/*/>*/}
-                            {/*</View>*/}
-                            <TouchableOpacity onPress={() => Communications.phonecall(userAds.user.contact_phone, true)} style={[styles.directionRow , styles.marginTop_5]}>
-                                <Image source={require('../../assets/images/phone_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14]}>{userAds.user.contact_phone}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => Communications.email([userAds.user.contact_email],null,null,'My Subject','My body text')} style={[styles.directionRow , styles.marginTop_5]}>
-                                <Image source={require('../../assets/images/mail_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14]}>{userAds.user.contact_email}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => Linking.openURL(userAds.user.twitter)} style={[styles.directionRow , styles.marginTop_5]}>
-                                <Image source={require('../../assets/images/twitter_gray.png')} style={[styles.icon15, {marginRight:5}]} resizeMode={'contain'} />
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14]}>{userAds.user.twitter}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={[styles.line , styles.marginVertical_20]}/>
-                    <View>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14]}>{ i18n.t('adsOwner') }</Text>
-                        {
-                            userAds ?
+                                    {/*/>*/}
+                                    {/*</View>*/}
+                                    <TouchableOpacity
+                                        onPress={() => Communications.phonecall(userAds.user.contact_phone, true)}
+                                        style={[styles.directionRow, styles.marginTop_5]}>
+                                        <Image source={require('../../assets/images/phone_gray.png')}
+                                               style={[styles.icon15, {marginRight: 5}]} resizeMode={'contain'}/>
+                                        <Text
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14]}>{userAds.user.contact_phone}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => Communications.email([userAds.user.contact_email], null, null, 'My Subject', 'My body text')}
+                                        style={[styles.directionRow, styles.marginTop_5]}>
+                                        <Image source={require('../../assets/images/mail_gray.png')}
+                                               style={[styles.icon15, {marginRight: 5}]} resizeMode={'contain'}/>
+                                        <Text
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14]}>{userAds.user.contact_email}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => Linking.openURL(userAds.user.twitter)}
+                                                      style={[styles.directionRow, styles.marginTop_5]}>
+                                        <Image source={require('../../assets/images/twitter_gray.png')}
+                                               style={[styles.icon15, {marginRight: 5}]} resizeMode={'contain'}/>
+                                        <Text
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14]}>{userAds.user.twitter}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={[styles.line, styles.marginVertical_20]}/>
+                            <View>
+                                <Text
+                                    style={[styles.textRegular, styles.text_midGray, styles.textSize_14]}>{i18n.t('adsOwner')}</Text>
+
                                 <View style={[styles.marginTop_20]}>
 
                                     {renderNoData()}
@@ -148,7 +167,7 @@ function AdvertiserDetails({navigation , route}) {
                                     <FlatList
                                         data={userAds.ads}
                                         showsVerticalScrollIndicator={false}
-                                        renderItem={({ item , index}) => <Item
+                                        renderItem={({item, index}) => <Item
                                             title={item.title}
                                             location={item.address}
                                             price={item.price}
@@ -162,13 +181,13 @@ function AdvertiserDetails({navigation , route}) {
                                     />
 
                                 </View>
-                                :
-                                null
-                        }
 
-                    </View>
+                            </View>
 
-                </View>
+                        </View>
+                        :
+                        null
+                }
 
             </Content>
         </Container>

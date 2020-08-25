@@ -113,25 +113,33 @@ function SearchResults({navigation , route}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                     {renderNoData()}
-                    <View style={[{height:height - 100}]}>
 
-                        <FlatList
-                            data={searchResult}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                location={item.address}
-                                price={item.price}
-                                space={item.space}
-                                desc={item.description}
-                                image={item.image}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                    {
+                        searchResult ?
+                            <View style={[{height:height - 100}]}>
 
-                    </View>
+                                <FlatList
+                                    data={searchResult}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        location={item.address}
+                                        price={item.price}
+                                        space={item.space}
+                                        desc={item.description}
+                                        image={item.image}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+
+                            </View>
+                            :
+                            null
+                    }
+
+
                 </View>
 
             </Content>

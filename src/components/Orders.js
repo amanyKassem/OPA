@@ -96,21 +96,29 @@ function Orders({navigation}) {
 
                     {renderNoData()}
 
-                    <View style={[{height:height - 115}]}>
+                    {
+                        ordersResults ?
 
-                        <FlatList
-                            data={ordersResults}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                id={item.id}
-                                ad_id={item.ad_id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                            <View style={[{height:height - 115}]}>
 
-                    </View>
+                                <FlatList
+                                    data={ordersResults}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        id={item.id}
+                                        ad_id={item.ad_id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+
+                            </View>
+                            :
+                            null
+                    }
+
+
 
                 </View>
 

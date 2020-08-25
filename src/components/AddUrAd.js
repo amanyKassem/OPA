@@ -148,161 +148,168 @@ function AddUrAd({navigation,route}) {
                         </View>
 
                         {
-                            singleCategory.type_id === 1 ?
-                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('accType') }</Label>
+                            singleCategory ?
+                                <View style={[styles.Width_100]}>
+                                    {
+                                        singleCategory.type_id === 1 ?
+                                            <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('accType') }</Label>
 
-                                    <RNPickerSelect
-                                        style={{
-                                            inputAndroid: {
-                                                fontFamily: 'cairo',
-                                                color:COLORS.midGray,
-                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                fontSize            : 14,
-                                            },
-                                            inputIOS: {
-                                                fontFamily: 'cairo',
-                                                color:COLORS.midGray,
-                                                alignSelf:'flex-start',
-                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                fontSize            : 14,
-                                            },
-                                        }}
-                                        placeholder={{
-                                            label: i18n.t('accType') ,
-                                        }}
-                                        onValueChange={(AccType) => setAccType(AccType)}
+                                                <RNPickerSelect
+                                                    style={{
+                                                        inputAndroid: {
+                                                            fontFamily: 'cairo',
+                                                            color:COLORS.midGray,
+                                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                            fontSize            : 14,
+                                                        },
+                                                        inputIOS: {
+                                                            fontFamily: 'cairo',
+                                                            color:COLORS.midGray,
+                                                            alignSelf:'flex-start',
+                                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                            fontSize            : 14,
+                                                        },
+                                                    }}
+                                                    placeholder={{
+                                                        label: i18n.t('accType') ,
+                                                    }}
+                                                    onValueChange={(AccType) => setAccType(AccType)}
 
-                                        items={types ?
-                                            types.map((type, i) => {
-                                                    return (
-                                                        { label: type.name, value: type.id , key: type.id}
-                                                    )
-                                                }
-                                            )
-                                            :  [] }
-                                        Icon={() => {
-                                            return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                        }}
-                                    />
+                                                    items={types ?
+                                                        types.map((type, i) => {
+                                                                return (
+                                                                    { label: type.name, value: type.id , key: type.id}
+                                                                )
+                                                            }
+                                                        )
+                                                        :  [] }
+                                                    Icon={() => {
+                                                        return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
+                                                    }}
+                                                />
+                                            </View>
+                                            :
+                                            null
+                                    }
+
+
+                                    {
+                                        singleCategory.hall === 1 ?
+                                            <Item style={[styles.item]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
+                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                                       onChangeText={(lounges) => setLounges(lounges)}
+                                                       keyboardType={'number-pad'}
+                                                       value={lounges}
+                                                />
+                                            </Item>
+                                            :
+                                            null
+                                    }
+
+                                    {
+                                        singleCategory.bathroom === 1 ?
+                                            <Item style={[styles.item]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
+                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                                       onChangeText={(washrooms) => setWashrooms(washrooms)}
+                                                       keyboardType={'number-pad'}
+                                                       value={washrooms}
+                                                />
+                                            </Item>
+                                            :
+                                            null
+                                    }
+
+                                    {
+                                        singleCategory.rooms === 1 ?
+                                            <Item style={[styles.item]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
+                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                                       onChangeText={(rooms) => setRooms(rooms)}
+                                                       keyboardType={'number-pad'}
+                                                       value={rooms}
+                                                />
+                                            </Item>
+                                            :
+                                            null
+                                    }
+
+                                    {
+                                        singleCategory.floor === 1 ?
+                                            <Item style={[styles.item]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
+                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                                       onChangeText={(floor) => setFloor(floor)}
+                                                       keyboardType={'number-pad'}
+                                                       value={floor}
+                                                />
+                                            </Item>
+                                            :
+                                            null
+                                    }
+
+                                    {
+                                        singleCategory.age === 1 ?
+                                            <Item style={[styles.item]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
+                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                                       onChangeText={(buildAge) => setBuildAge(buildAge)}
+                                                       keyboardType={'number-pad'}
+                                                       value={buildAge}
+                                                />
+                                            </Item>
+                                            :
+                                            null
+                                    }
+
+                                    {
+                                        singleCategory.rent_id === 1 ?
+                                            <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
+                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('serviceType') }</Label>
+
+                                                <RNPickerSelect
+                                                    style={{
+                                                        inputAndroid: {
+                                                            fontFamily: 'cairo',
+                                                            color:COLORS.midGray,
+                                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                            fontSize            : 14,
+                                                        },
+                                                        inputIOS: {
+                                                            fontFamily: 'cairo',
+                                                            color:COLORS.midGray,
+                                                            alignSelf:'flex-start',
+                                                            textAlign           : I18nManager.isRTL ? 'right' : 'left',
+                                                            fontSize            : 14,
+                                                        },
+                                                    }}
+                                                    placeholder={{
+                                                        label: i18n.t('serviceType') ,
+                                                    }}
+                                                    onValueChange={(serviceType) => setServiceType(serviceType)}
+                                                    items={rents ?
+                                                        rents.map((rent, i) => {
+                                                                return (
+                                                                    { label: rent.name, value: rent.id , key: rent.id}
+                                                                )
+                                                            }
+                                                        )
+                                                        :  [] }
+                                                    Icon={() => {
+                                                        return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
+                                                    }}
+                                                />
+                                            </View>
+                                            :
+                                            null
+                                    }
+
                                 </View>
                                 :
                                 null
                         }
-
-
-                        {
-                            singleCategory.hall === 1 ?
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(lounges) => setLounges(lounges)}
-                                           keyboardType={'number-pad'}
-                                           value={lounges}
-                                    />
-                                </Item>
-                                :
-                                null
-                        }
-
-                        {
-                            singleCategory.bathroom === 1 ?
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(washrooms) => setWashrooms(washrooms)}
-                                           keyboardType={'number-pad'}
-                                           value={washrooms}
-                                    />
-                                </Item>
-                                :
-                                null
-                        }
-
-                        {
-                            singleCategory.rooms === 1 ?
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(rooms) => setRooms(rooms)}
-                                           keyboardType={'number-pad'}
-                                           value={rooms}
-                                    />
-                                </Item>
-                                :
-                                null
-                        }
-
-                        {
-                            singleCategory.floor === 1 ?
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(floor) => setFloor(floor)}
-                                           keyboardType={'number-pad'}
-                                           value={floor}
-                                    />
-                                </Item>
-                                :
-                                null
-                        }
-
-                        {
-                            singleCategory.age === 1 ?
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(buildAge) => setBuildAge(buildAge)}
-                                           keyboardType={'number-pad'}
-                                           value={buildAge}
-                                    />
-                                </Item>
-                                :
-                                null
-                        }
-
-                        {
-                            singleCategory.rent_id === 1 ?
-                                <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('serviceType') }</Label>
-
-                                    <RNPickerSelect
-                                        style={{
-                                            inputAndroid: {
-                                                fontFamily: 'cairo',
-                                                color:COLORS.midGray,
-                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                fontSize            : 14,
-                                            },
-                                            inputIOS: {
-                                                fontFamily: 'cairo',
-                                                color:COLORS.midGray,
-                                                alignSelf:'flex-start',
-                                                textAlign           : I18nManager.isRTL ? 'right' : 'left',
-                                                fontSize            : 14,
-                                            },
-                                        }}
-                                        placeholder={{
-                                            label: i18n.t('serviceType') ,
-                                        }}
-                                        onValueChange={(serviceType) => setServiceType(serviceType)}
-                                        items={rents ?
-                                            rents.map((rent, i) => {
-                                                    return (
-                                                        { label: rent.name, value: rent.id , key: rent.id}
-                                                    )
-                                                }
-                                            )
-                                            :  [] }
-                                        Icon={() => {
-                                            return <Image source={require('../../assets/images/dropdown_arrow.png')} style={[styles.icon15 , {top: isIOS ? 7 : 18, right:-9}]} resizeMode={'contain'} />
-                                        }}
-                                    />
-                                </View>
-                                :
-                                null
-                        }
-
 
                         {
                             buildType ?

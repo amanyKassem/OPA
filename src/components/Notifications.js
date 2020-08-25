@@ -100,22 +100,29 @@ function Notifications({navigation}) {
 
                     {renderNoData()}
 
-                    <View style={[{height:height - 115}]}>
+                    {
+                        notifications ?
+                            <View style={[{height:height - 115}]}>
 
-                        <FlatList
-                            data={notifications}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                body={item.body}
-                                time={item.created_at}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                                <FlatList
+                                    data={notifications}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        body={item.body}
+                                        time={item.created_at}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
 
-                    </View>
+                            </View>
+                            :
+                            null
+                    }
+
+
 
                 </View>
 

@@ -91,22 +91,30 @@ function RealEstateComp({navigation , route}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
                     {renderNoData()}
-                    <View style={[{height:height - 100,paddingBottom:10}]}>
 
-                        <FlatList
-                            data={categoryConstructions}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                website={item.website}
-                                icon={item.icon}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                    {
+                        categoryConstructions ?
+                            <View style={[{height:height - 100,paddingBottom:10}]}>
 
-                    </View>
+                                <FlatList
+                                    data={categoryConstructions}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        website={item.website}
+                                        icon={item.icon}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+
+                            </View>
+                            :
+                            null
+                    }
+
+
                 </View>
 
             </Content>

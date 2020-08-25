@@ -58,9 +58,8 @@ function AdImgs({navigation , route}) {
         setPhotos([...photos]);
         if(pathName === 'editAd' && id){
             dispatch(DeleteAdImage(lang , id , token))
-        }else{
-            base64.splice(i, 1);
         }
+        base64.splice(i, 1);
     };
 
 

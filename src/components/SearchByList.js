@@ -146,27 +146,35 @@ function SearchByList({navigation}) {
 
                     {renderNoData()}
 
-                    <View style={[{height:height - 220} , styles.marginTop_10]}>
+                    {
+                        homeAds ?
 
-                        <FlatList
-                            data={homeAds}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                location={item.address}
-                                price={item.price}
-                                space={item.space}
-                                rooms={item.rooms}
-                                hall={item.hall}
-                                bathroom={item.bathroom}
-                                image={item.image}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                            <View style={[{height:height - 220} , styles.marginTop_10]}>
 
-                    </View>
+                                <FlatList
+                                    data={homeAds}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        location={item.address}
+                                        price={item.price}
+                                        space={item.space}
+                                        rooms={item.rooms}
+                                        hall={item.hall}
+                                        bathroom={item.bathroom}
+                                        image={item.image}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
+
+                            </View>
+                            :
+                            null
+                    }
+
+
 
 
                 </View>

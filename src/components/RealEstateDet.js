@@ -280,124 +280,132 @@ function RealEstateDet({navigation,route}) {
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
-                <Header navigation={navigation} title={constructionDetailes.title}/>
+                <Header navigation={navigation} title={constructionDetailes ? constructionDetailes.title : ''}/>
 
-                <View style={[styles.bgFullWidth ,styles.bg_White,
-                    styles.Width_100,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                {
+                    constructionDetailes ?
 
-                    <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
-                        <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
-                            backgroundColor: COLORS.mstarda}]}
-                                containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
-                            {
-                                constructionDetailes.images.map((img, i) => {
-                                    return (
-                                        <Image key={img.id}source={{uri:img.image}}
-                                               style={styles.swiperImg} resizeMode={'cover'}/>
-                                    )
-                                })
-                            }
-                        </Swiper>
+                        <View style={[styles.bgFullWidth ,styles.bg_White,
+                            styles.Width_100,
+                            {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                        <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
-                            <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, styles.alignStart ]}>{constructionDetailes.title}</Text>
-                            <View style={[styles.directionRow]}>
-                                <Image source={require("../../assets/images/global_gray.png")} style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'} />
-                                <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.textCenter ]}>{constructionDetailes.website}</Text>
-                            </View>
-                        </Card>
+                            <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
+                                <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
+                                    backgroundColor: COLORS.mstarda}]}
+                                        containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+                                    {
+                                        constructionDetailes.images.map((img, i) => {
+                                            return (
+                                                <Image key={img.id}source={{uri:img.image}}
+                                                       style={styles.swiperImg} resizeMode={'cover'}/>
+                                            )
+                                        })
+                                    }
+                                </Swiper>
 
-                    </View>
-
-                    <Card style={[styles.Width_97,styles.flexCenter , styles.Radius_10,{padding:5,top:-30}]}>
-                        <ScrollView style={{}} contentContainerStyle={[styles.directionRowSpace , styles.Width_100 ]} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='0' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('0')}>
-                                <Image source={tabType === '0'? require('../../assets/images/white_info.png') : require('../../assets/images/gray_info.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '0'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('companyData') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='1' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('1')} >
-                                <Image source={tabType === '1'? require('../../assets/images/user_white.png'): require('../../assets/images/user_gray.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '1'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('socialMedia2') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='2' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('2')}>
-                                <Image source={tabType === '2'? require('../../assets/images/menu_ads.png'): require('../../assets/images/gray_ads.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
-                                {
-                                    tabType === '2'?
-                                        <Text style={[styles.textRegular, styles.text_White, styles.textSize_11]}>{ i18n.t('preJob') }</Text>
-                                        :
-                                        null
-                                }
-                            </TouchableOpacity>
-                        </ScrollView>
-                    </Card>
-
-                    {
-                        renderTabData()
-                    }
-
-                    <Modal
-                        onBackdropPress                 ={() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
-                        onBackButtonPress               = {() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
-                        isVisible                       = {showModal}
-                        // style                        = {styles.bgModel}
-                        avoidKeyboard                   = {true}
-                    >
-                        <TouchableOpacity onPress={()=> {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}}
-                            style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
-                                {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
-                            <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
-                        </TouchableOpacity>
-
-
-                        {
-                            isVideo ? (
-                                    <View style={styles.slide} >
-                                        <Video
-                                            source={{ uri: url }}
-                                            rate={1.0}
-                                            volume={1.0}
-                                            isMuted={mute}
-                                            resizeMode="contain"
-                                            shouldPlay={shouldPlay}
-                                            isLooping
-                                            style={{ width: '100%', height: '100%' }}
-                                        />
-                                        <View style={[styles.directionRowCenter , {position: 'absolute', bottom: 30, left: 0, right: 0}]}>
-
-                                            <TouchableOpacity onPress={handleVolume} style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,styles.icon40]}>
-                                                <Icon type={'FontAwesome'} name={mute ? "volume-off" : "volume-up"}
-                                                      style={[styles.textSize_24,styles.text_babyblue]} />
-                                            </TouchableOpacity>
-
-                                            <TouchableOpacity onPress={handlePlayAndPause} style={[styles.icon35, styles.centerContext, styles.bg_White,
-                                                styles.Radius_50,styles.icon40 , {marginLeft:20}]}>
-                                                <Icon type={'FontAwesome'} name={shouldPlay ? "pause" : "play"}
-                                                      style={[styles.textSize_20,styles.text_babyblue]} />
-                                            </TouchableOpacity>
-
-                                        </View>
+                                <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, styles.alignStart ]}>{constructionDetailes.title}</Text>
+                                    <View style={[styles.directionRow]}>
+                                        <Image source={require("../../assets/images/global_gray.png")} style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'} />
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.textCenter ]}>{constructionDetailes.website}</Text>
                                     </View>
-                                ) :
-                                (
-                                    <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}} enableSwipeDown={true} imageUrls={imgArr}/>
-                                )
+                                </Card>
 
-                        }
+                            </View>
 
-                    </Modal>
+                            <Card style={[styles.Width_97,styles.flexCenter , styles.Radius_10,{padding:5,top:-30}]}>
+                                <ScrollView style={{}} contentContainerStyle={[styles.directionRowSpace , styles.Width_100 ]} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='0' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('0')}>
+                                        <Image source={tabType === '0'? require('../../assets/images/white_info.png') : require('../../assets/images/gray_info.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '0'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('companyData') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='1' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('1')} >
+                                        <Image source={tabType === '1'? require('../../assets/images/user_white.png'): require('../../assets/images/user_gray.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '1'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_13]}>{ i18n.t('socialMedia2') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={[styles.Radius_10, styles.directionRow, styles.flexCenter , {flex:1,padding:5,backgroundColor :tabType ==='2' ? COLORS.babyblue : 'transparent'}]} onPress={() => changeTab('2')}>
+                                        <Image source={tabType === '2'? require('../../assets/images/menu_ads.png'): require('../../assets/images/gray_ads.png')} style={[styles.icon20, {marginRight:3}]} resizeMode={'contain'} />
+                                        {
+                                            tabType === '2'?
+                                                <Text style={[styles.textRegular, styles.text_White, styles.textSize_11]}>{ i18n.t('preJob') }</Text>
+                                                :
+                                                null
+                                        }
+                                    </TouchableOpacity>
+                                </ScrollView>
+                            </Card>
 
-                </View>
+                            {
+                                renderTabData()
+                            }
+
+                            <Modal
+                                onBackdropPress                 ={() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
+                                onBackButtonPress               = {() => {setShowModal(!showModal);setImgUri('');setMute(true);setShouldPlay(false)}}
+                                isVisible                       = {showModal}
+                                // style                        = {styles.bgModel}
+                                avoidKeyboard                   = {true}
+                            >
+                                <TouchableOpacity onPress={()=> {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}}
+                                                  style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
+                                                      {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
+                                    <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
+                                </TouchableOpacity>
+
+
+                                {
+                                    isVideo ? (
+                                            <View style={styles.slide} >
+                                                <Video
+                                                    source={{ uri: url }}
+                                                    rate={1.0}
+                                                    volume={1.0}
+                                                    isMuted={mute}
+                                                    resizeMode="contain"
+                                                    shouldPlay={shouldPlay}
+                                                    isLooping
+                                                    style={{ width: '100%', height: '100%' }}
+                                                />
+                                                <View style={[styles.directionRowCenter , {position: 'absolute', bottom: 30, left: 0, right: 0}]}>
+
+                                                    <TouchableOpacity onPress={handleVolume} style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,styles.icon40]}>
+                                                        <Icon type={'FontAwesome'} name={mute ? "volume-off" : "volume-up"}
+                                                              style={[styles.textSize_24,styles.text_babyblue]} />
+                                                    </TouchableOpacity>
+
+                                                    <TouchableOpacity onPress={handlePlayAndPause} style={[styles.icon35, styles.centerContext, styles.bg_White,
+                                                        styles.Radius_50,styles.icon40 , {marginLeft:20}]}>
+                                                        <Icon type={'FontAwesome'} name={shouldPlay ? "pause" : "play"}
+                                                              style={[styles.textSize_20,styles.text_babyblue]} />
+                                                    </TouchableOpacity>
+
+                                                </View>
+                                            </View>
+                                        ) :
+                                        (
+                                            <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModal(false);setImgUri('');setMute(true);setShouldPlay(false)}} enableSwipeDown={true} imageUrls={imgArr}/>
+                                        )
+
+                                }
+
+                            </Modal>
+
+                        </View>
+                        :
+                        null
+                }
+
+
 
             </Content>
         </Container>

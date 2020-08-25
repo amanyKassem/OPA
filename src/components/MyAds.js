@@ -85,38 +85,44 @@ function MyAds({navigation}) {
 
                 <Header navigation={navigation} title={ i18n.t('myAds') }/>
 
-                <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                    styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                {
+                    authUserAds ?
+                        <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
+                            styles.Width_100, styles.paddingTop_30,
+                            {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
-                    </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
+                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
+                            </TouchableOpacity>
 
-                    {renderNoData()}
+                            {renderNoData()}
 
-                    <View style={[{height:height - 182} , styles.marginTop_25]}>
+                            <View style={[{height:height - 182} , styles.marginTop_25]}>
 
-                        <FlatList
-                            data={authUserAds}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({ item , index}) => <Item
-                                title={item.title}
-                                location={item.address}
-                                price={item.price}
-                                space={item.space}
-                                desc={item.description}
-                                image={item.image}
-                                id={item.id}
-                                index={index}
-                            />}
-                            keyExtractor={item => item.id}
-                        />
+                                <FlatList
+                                    data={authUserAds}
+                                    showsVerticalScrollIndicator={false}
+                                    renderItem={({ item , index}) => <Item
+                                        title={item.title}
+                                        location={item.address}
+                                        price={item.price}
+                                        space={item.space}
+                                        desc={item.description}
+                                        image={item.image}
+                                        id={item.id}
+                                        index={index}
+                                    />}
+                                    keyExtractor={item => item.id}
+                                />
 
-                    </View>
+                            </View>
 
 
-                </View>
+                        </View>
+                        :
+                        null
+                }
+
 
             </Content>
         </Container>
