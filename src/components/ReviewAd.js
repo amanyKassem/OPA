@@ -141,16 +141,19 @@ function ReviewAd({navigation , route}) {
                             styles.Width_100,{padding:5}]}>
 
                             {
-                                checkedArrNames.map((feature, i) => {
-                                    return (
+                                checkedArrNames ?
+                                    checkedArrNames.map((feature, i) => {
+                                        return (
 
-                                        <View key={i} style={[styles.directionRow , styles.marginBottom_10 , {width:'26%'}]}>
-                                            <Text
-                                                style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature}</Text>
+                                            <View key={i} style={[styles.directionRow , styles.marginBottom_10 , {width:'26%'}]}>
+                                                <Text
+                                                    style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature}</Text>
 
-                                        </View>
-                                    )
-                                })
+                                            </View>
+                                        )
+                                    })
+                                    :
+                                    null
                             }
 
                         </View>

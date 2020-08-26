@@ -92,12 +92,11 @@ function Orders({navigation}) {
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_20,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                    {borderTopRightRadius:50 , borderTopLeftRadius:50 , justifyContent:ordersResults && (ordersResults).length <= 0 ? 'center' : 'flex-start' }]}>
 
-                    {renderNoData()}
 
                     {
-                        ordersResults ?
+                        ordersResults  && (ordersResults).length > 0 ?
 
                             <View style={[{height:height - 115}]}>
 
@@ -115,7 +114,7 @@ function Orders({navigation}) {
 
                             </View>
                             :
-                            null
+                            renderNoData()
                     }
 
 

@@ -19,6 +19,8 @@ function AdImgs({navigation , route}) {
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
+    const [refreshImgs, setRefreshImgs] = useState(false);
+
     const [photos, setPhotos] = useState([]);
     const featuers = route.params ? route.params.featuers : null;
     const editFeatuers = route.params ? route.params.editFeatuers : null;
@@ -40,7 +42,6 @@ function AdImgs({navigation , route}) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-
         route.params && images ?
             images.map((img, i) => {
                 photos.push(img.image)
@@ -56,10 +57,17 @@ function AdImgs({navigation , route}) {
     function confirmDelete (id , i) {
         photos.splice(i, 1);
         setPhotos([...photos]);
+
         if(pathName === 'editAd' && id){
+            // delete image in edit ad
             dispatch(DeleteAdImage(lang , id , token))
+            // base64.splice(photos.length -1 , 1);
+        } else{
+            // delete image in add ad
+            base64.splice(i , 1);
         }
-        base64.splice(i, 1);
+        console.log('base64',base64)
+        console.log('photos',photos)
     };
 
 
@@ -68,7 +76,7 @@ function AdImgs({navigation , route}) {
        for (let i = 0; i < 7; i++) {
            if(i === 0){
               imgBlock.push(
-                  <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
+                  <TouchableOpacity key={i} onPress={() => _pickImage(images && images[i] ? images[i].id : null,i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
                       {
                           photos[i]?
                               <TouchableOpacity onPress={() => confirmDelete(images && images[i] ? images[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
@@ -83,7 +91,7 @@ function AdImgs({navigation , route}) {
               )
            }else{
                imgBlock.push(
-                   <TouchableOpacity key={i} onPress={() => _pickImage(i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
+                   <TouchableOpacity key={i} onPress={() => _pickImage(images && images[i] ? images[i].id : null,i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
                        {
                            photos[i]?
@@ -108,7 +116,7 @@ function AdImgs({navigation , route}) {
 
     };
 
-    const _pickImage = async (i) => {
+    const _pickImage = async (id ,i) => {
         askPermissionsAsync();
 
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -122,19 +130,18 @@ function AdImgs({navigation , route}) {
             if(photos[i]){
                 tempPhotos[i] = result.uri;
                 base64[i]=result.base64;
+                if(pathName === 'editAd' && id){
+                    // replacement existed image in edit ad
+                    dispatch(DeleteAdImage(lang , id , token))
+                }
             }else{
-                // if(i != photos.length){
-                //     for(let k=0 ; k < i ; k++){
-                //         tempPhotos.push(null);
-                //         base64.push(null);
-                //     }
-                // }
                 tempPhotos.push(result.uri);
                 base64.push(result.base64);
             }
 
             setPhotos([...tempPhotos]);
             console.log('tempPhotos', photos , 'PhotosNew' ,tempPhotos)
+            // console.log('base64',base64)
         }
     };
 

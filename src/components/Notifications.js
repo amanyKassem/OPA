@@ -66,9 +66,9 @@ function Notifications({navigation}) {
     }
 
 
-    function Item({ title ,body , time , id, index }) {
+    function Item({ title ,body , time , id , ad_id, index }) {
         return (
-            <TouchableOpacity style={[styles.notiCard ,styles.marginBottom_10 , styles.paddingVertical_15,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
+            <TouchableOpacity onPress={ ad_id !== null ? () => navigation.navigate('listDetails', {ad_id}) : null} style={[styles.notiCard ,styles.marginBottom_10 , styles.paddingVertical_15,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
                 <View style={[styles.paddingHorizontal_15 , styles.directionColumnC, {flex:1}]}>
                     <TouchableOpacity onPress = {() => deleteNotify(id)} style={[styles.paddingVertical_5 , styles.paddingHorizontal_5, styles.Radius_50
                         , {backgroundColor: index % 2 === 0 ? COLORS.green : COLORS.orange
@@ -112,6 +112,7 @@ function Notifications({navigation}) {
                                         body={item.body}
                                         time={item.created_at}
                                         id={item.id}
+                                        ad_id={item.ad_id}
                                         index={index}
                                     />}
                                     keyExtractor={item => item.id}

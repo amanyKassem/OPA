@@ -27,7 +27,7 @@ export const DeleteAd = (lang , id , token , navigation) => {
         }).then(response => {
 
             if (response.data.success){
-                navigation.navigate('contracting');
+                navigation.navigate('myAds');
             }
 
             Toast.show({

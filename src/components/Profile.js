@@ -20,12 +20,12 @@ function Profile({navigation}) {
     const userData = useSelector(state => state.userData.userData);
     const userDataLoader = useSelector(state => state.userData.loader);
 
-    const dispatch = useDispatch();
+    const [advNum, setAdvNum] = useState(userData ? userData.phone : '');
+    const [adsNum, setAdsNum] = useState(userData ? userData.ads : '');
+    const [phone, setPhone] = useState(userData ? userData.phone : '');
+    const [country, setCountry] = useState(userData ? userData.country : '');
 
-    const [advNum, setAdvNum] = useState(userData.phone);
-    const [adsNum, setAdsNum] = useState(userData.ads);
-    const [phone, setPhone] = useState(userData.phone);
-    const [country, setCountry] = useState(userData.country);
+    const dispatch = useDispatch();
 
     function fetchData(){
         dispatch(getUserData(lang, token))
@@ -45,68 +45,75 @@ function Profile({navigation}) {
 
                 <Header navigation={navigation} title={ i18n.t('profile') }/>
 
-                <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                    styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                {
+                    userData ?
+                        <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
+                            styles.Width_100, styles.paddingTop_30,
+                            {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <View style={[styles.flexCenter ,{top:-50}]}>
-                        <Image source={{uri : userData.avatar}} style={[styles.icon110,styles.Radius_15 ]} resizeMode={'cover'} />
-                        <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , right:5}]}>
-                            <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                        </TouchableOpacity>
-                        <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>{userData.name}</Text>
-                    </View>
+                            <View style={[styles.flexCenter ,{top:-50}]}>
+                                <Image source={{uri : userData.avatar}} style={[styles.icon110,styles.Radius_15 ]} resizeMode={'cover'} />
+                                <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , right:5}]}>
+                                    <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                </TouchableOpacity>
+                                <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>{userData.name}</Text>
+                            </View>
 
 
-                    <Form style={[styles.Width_80 , styles.flexCenter ,{top:-10}]}>
+                            <Form style={[styles.Width_80 , styles.flexCenter ,{top:-10}]}>
 
-                        <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
-                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                   onChangeText={(advNum) => setAdvNum(advNum)}
-                                   value={advNum}
-                                   disabled={true}
-                            />
-                        </Item>
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(advNum) => setAdvNum(advNum)}
+                                           value={advNum}
+                                           disabled={true}
+                                    />
+                                </Item>
 
-                        <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
-                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                   onChangeText={(adsNum) => setAdsNum(adsNum)}
-                                   value={adsNum}
-                                   disabled={true}
-                            />
-                        </Item>
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(adsNum) => setAdsNum(adsNum)}
+                                           value={adsNum}
+                                           disabled={true}
+                                    />
+                                </Item>
 
-                        <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
-                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                   onChangeText={(phone) => setPhone(phone)}
-                                   value={phone}
-                                   disabled={true}
-                            />
-                        </Item>
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(phone) => setPhone(phone)}
+                                           value={phone}
+                                           disabled={true}
+                                    />
+                                </Item>
 
-                        <Item style={[styles.item]}>
-                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
-                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                   onChangeText={(country) => setCountry(country)}
-                                   value={country}
-                                   disabled={true}
-                            />
-                        </Item>
+                                <Item style={[styles.item]}>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
+                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
+                                           onChangeText={(country) => setCountry(country)}
+                                           value={country}
+                                           disabled={true}
+                                    />
+                                </Item>
 
-                    </Form>
+                            </Form>
 
-                    <TouchableOpacity onPress={() => navigation.push('editPass')} style={[styles.flexCenter , styles.marginBottom_30]}>
-                        <Text style={[styles.textRegular , styles.text_babyblue , styles.textDecoration , styles.textSize_17]}>{ i18n.t('changePass') }</Text>
-                    </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.push('editPass')} style={[styles.flexCenter , styles.marginBottom_30]}>
+                                <Text style={[styles.textRegular , styles.text_babyblue , styles.textDecoration , styles.textSize_17]}>{ i18n.t('changePass') }</Text>
+                            </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.push('adverInfo')}  style={[styles.babyblueBtn, styles.Width_80,styles.flexCenter]}>
-                        <Text style={[styles.textRegular , styles.text_White  , styles.textSize_16]}>{ i18n.t('adInfo') }</Text>
-                    </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.push('adverInfo')}  style={[styles.babyblueBtn, styles.Width_80,styles.flexCenter]}>
+                                <Text style={[styles.textRegular , styles.text_White  , styles.textSize_16]}>{ i18n.t('adInfo') }</Text>
+                            </TouchableOpacity>
 
-                </View>
+                        </View>
+                        :
+                        null
+                }
+
+
 
             </Content>
         </Container>
