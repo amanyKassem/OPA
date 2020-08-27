@@ -89,11 +89,10 @@ function RealEstateComp({navigation , route}) {
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
-                    {renderNoData()}
+                    {borderTopRightRadius:50 , borderTopLeftRadius:50, justifyContent:categoryConstructions && (categoryConstructions).length <= 0 ? 'center' : 'flex-start' }]}>
 
                     {
-                        categoryConstructions ?
+                        categoryConstructions && (categoryConstructions).length <= 0?
                             <View style={[{height:height - 100,paddingBottom:10}]}>
 
                                 <FlatList
@@ -111,7 +110,7 @@ function RealEstateComp({navigation , route}) {
 
                             </View>
                             :
-                            null
+                            renderNoData()
                     }
 
 

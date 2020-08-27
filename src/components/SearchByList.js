@@ -144,10 +144,9 @@ function SearchByList({navigation}) {
                        </View>
                    </View>
 
-                    {renderNoData()}
 
                     {
-                        homeAds ?
+                        homeAds && (homeAds).length > 0?
 
                             <View style={[{height:height - 220} , styles.marginTop_10]}>
 
@@ -171,7 +170,7 @@ function SearchByList({navigation}) {
 
                             </View>
                             :
-                            null
+                            renderNoData()
                     }
 
 

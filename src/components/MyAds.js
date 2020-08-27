@@ -85,17 +85,16 @@ function MyAds({navigation}) {
 
                 <Header navigation={navigation} title={ i18n.t('myAds') }/>
 
-                {
-                    authUserAds ?
-                        <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                            styles.Width_100, styles.paddingTop_30,
-                            {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                    <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
+                        styles.Width_100, styles.paddingTop_30,
+                        {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
+                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
+                        </TouchableOpacity>
 
-                            {renderNoData()}
+                        {
+                            authUserAds && (authUserAds).length > 0?
 
                             <View style={[{height:height - 182} , styles.marginTop_25]}>
 
@@ -116,13 +115,11 @@ function MyAds({navigation}) {
                                 />
 
                             </View>
+                            :
+                            renderNoData()
+                        }
 
-
-                        </View>
-                        :
-                        null
-                }
-
+                    </View>
 
             </Content>
         </Container>

@@ -104,11 +104,10 @@ function Favourite({navigation}) {
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                    {borderTopRightRadius:50 , borderTopLeftRadius:50, justifyContent:favourite && (favourite).length <= 0 ? 'center' : 'flex-start' }]}>
 
-                    {renderNoData()}
                     {
-                        favourite ?
+                        favourite && (favourite).length > 0?
                             <View style={[{height:height - 112}]}>
 
                                 <FlatList
@@ -130,7 +129,7 @@ function Favourite({navigation}) {
 
                             </View>
                             :
-                            null
+                            renderNoData()
                     }
 
 

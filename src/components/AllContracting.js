@@ -83,13 +83,12 @@ function AllContracting({navigation}) {
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
+                    {borderTopRightRadius:50 , borderTopLeftRadius:50, justifyContent:contractingCat && (contractingCat).length <= 0 ? 'center' : 'flex-start' }]}>
 
-                    {renderNoData()}
 
                     <View style={[{height:height - 100,paddingBottom:10}]}>
                         {
-                            contractingCat ?
+                            contractingCat && (contractingCat).length > 0?
                                 <FlatList
                                     data={contractingCat}
                                     horizontal={false}
@@ -106,7 +105,7 @@ function AllContracting({navigation}) {
                                     columnWrapperStyle={[styles.directionRowCenter]}
                                 />
                                 :
-                                null
+                                renderNoData()
 
                         }
 

@@ -110,12 +110,10 @@ function SearchResults({navigation , route}) {
 
                 <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
                     styles.Width_100, styles.paddingTop_30,
-                    {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
-
-                    {renderNoData()}
+                    {borderTopRightRadius:50 , borderTopLeftRadius:50, justifyContent:searchResult && (searchResult).length <= 0 ? 'center' : 'flex-start' }]}>
 
                     {
-                        searchResult ?
+                        searchResult && (searchResult).length > 0?
                             <View style={[{height:height - 100}]}>
 
                                 <FlatList
@@ -136,7 +134,7 @@ function SearchResults({navigation , route}) {
 
                             </View>
                             :
-                            null
+                            renderNoData()
                     }
 
 
