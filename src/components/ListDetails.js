@@ -294,6 +294,14 @@ function ListDetails({navigation , route}) {
                             {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                             <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
+                                <View style={[styles.directionRow,{position:'absolute',top:0,right:50 , zIndex:1}]}>
+                                    <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
+                                        <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
+                                        <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
+                                    </TouchableOpacity>
+                                </View>
                                 <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
                                     backgroundColor: COLORS.mstarda}]}
                                         containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
@@ -303,14 +311,6 @@ function ListDetails({navigation , route}) {
                                             return (
                                                 <View key={img.id}>
                                                     <Image source={{uri:img.image}} style={styles.swiperImg} resizeMode={'cover'}/>
-                                                    <View style={[styles.directionRow,{position:'absolute',top:-10,right:40}]}>
-                                                        <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
-                                                            <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
-                                                            <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
-                                                        </TouchableOpacity>
-                                                    </View>
                                                 </View>
                                             )
                                         })
@@ -324,7 +324,7 @@ function ListDetails({navigation , route}) {
                                         <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>
                                     </View>
                                     <View style={[styles.directionRowSpace]}>
-                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.address}</Text>
+                                        <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{(adDetails.detailes.address).substr(0,20)}</Text>
                                         <View style={[styles.directionRow]}>
                                             <Image source={require("../../assets/images/seen.png")}  style={[styles.icon15 , {marginRight:5}]} resizeMode={'contain'}/>
                                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14 ]}>{adDetails.detailes.views}</Text>

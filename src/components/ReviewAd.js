@@ -116,7 +116,7 @@ function ReviewAd({navigation , route}) {
                                 imagesUrl?
                                     imagesUrl.map((img, i) => {
                                         return (
-                                            <Image key={i} source={{uri:img}}
+                                            <Image key={i} source={{uri:img.image}}
                                                    style={styles.swiperImg} resizeMode={'cover'}/>
                                         )
                                     })

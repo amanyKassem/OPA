@@ -1329,8 +1329,9 @@ const styles = ({
     touchBlue: {
         backgroundColor:'#1cd6c98c',
         width:30,
-        height:50,
-        borderRadius:13,
+        height:35,
+        borderBottomLeftRadius:13,
+        borderBottomRightRadius:13,
         alignItems:'center',
         justifyContent:"flex-end",
         paddingBottom:10

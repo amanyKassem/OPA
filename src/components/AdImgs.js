@@ -19,8 +19,6 @@ function AdImgs({navigation , route}) {
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
-    const [refreshImgs, setRefreshImgs] = useState(false);
-
     const [photos, setPhotos] = useState([]);
     const featuers = route.params ? route.params.featuers : null;
     const editFeatuers = route.params ? route.params.editFeatuers : null;
@@ -42,16 +40,15 @@ function AdImgs({navigation , route}) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        route.params && images ?
-            images.map((img, i) => {
-                photos.push(img.image)
-                setPhotos([...photos])
-                console.log(photos)
-            })
-            :
-            null
+       if ( route.params && images ){
+            setPhotos(images)
+            console.log(photos)
+        }
+       else{
+           console.log('kkkkkk')
+       }
 
-    }, [images]);
+    }, [photos]);
 
 
     function confirmDelete (id , i) {
@@ -61,7 +58,7 @@ function AdImgs({navigation , route}) {
         if(pathName === 'editAd' && id){
             // delete image in edit ad
             dispatch(DeleteAdImage(lang , id , token))
-            // base64.splice(photos.length -1 , 1);
+            // base64.splice(i , 1);
         } else{
             // delete image in add ad
             base64.splice(i , 1);
@@ -76,32 +73,32 @@ function AdImgs({navigation , route}) {
        for (let i = 0; i < 7; i++) {
            if(i === 0){
               imgBlock.push(
-                  <TouchableOpacity key={i} onPress={() => _pickImage(images && images[i] ? images[i].id : null,i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
+                  <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
                       {
                           photos[i]?
-                              <TouchableOpacity onPress={() => confirmDelete(images && images[i] ? images[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                              <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                   <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                               </TouchableOpacity>
                               :
                               null
                       }
-                      <Image source= {photos[i]? ({uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
+                      <Image source= {photos[i]? ({uri:photos[i].image}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                       <Text style={[styles.textRegular , styles.text_White , styles.textSize_13]}>{ i18n.t('uploadAdImgs') }</Text>
                   </TouchableOpacity>
               )
            }else{
                imgBlock.push(
-                   <TouchableOpacity key={i} onPress={() => _pickImage(images && images[i] ? images[i].id : null,i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
+                   <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
                        {
                            photos[i]?
-                               <TouchableOpacity onPress={() => confirmDelete(images && images[i] ? images[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                               <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                    <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                </TouchableOpacity>
                                :
                                null
                        }
-                       <Image source= {photos[i]? ({uri:photos[i]}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
+                       <Image source= {photos[i]? ({uri:photos[i].image}) : require('../../assets/images/upload_white.png')} style={[photos[i]? styles.Width_100 : styles.icon50 , photos[i] ? styles.heightFull:null]} resizeMode={photos[i] ?'cover':'contain'} />
                    </TouchableOpacity>
                )
            }
@@ -128,14 +125,14 @@ function AdImgs({navigation , route}) {
         if (!result.cancelled) {
             let tempPhotos = photos;
             if(photos[i]){
-                tempPhotos[i] = result.uri;
+                tempPhotos[i] = { id: i, image: result.uri};
                 base64[i]=result.base64;
                 if(pathName === 'editAd' && id){
                     // replacement existed image in edit ad
                     dispatch(DeleteAdImage(lang , id , token))
                 }
             }else{
-                tempPhotos.push(result.uri);
+                tempPhotos.push({ id: i, image: result.uri});
                 base64.push(result.base64);
             }
 
