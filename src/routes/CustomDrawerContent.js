@@ -21,8 +21,10 @@ export default function CustomDrawerContent(props) {
             dispatch(chooseLang(language))
         }
     }
-    const auth = useSelector(state => state.auth);
+    // const auth = useSelector(state => state.auth);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    const user  = useSelector(state => state.auth.user ? state.auth.user.data : { avatar: '', name: null});
+
 
     const dispatch  = useDispatch();
 
@@ -54,12 +56,12 @@ export default function CustomDrawerContent(props) {
 
                 <TouchableOpacity  onPress={() => props.navigation.navigate('tabs', {screen: 'profile'})}
                                    style={[styles.flexCenter ,{ position:'absolute' ,top:-40 , left:15}]}>
-                    <Image source={{uri:auth.user ? auth.user.data.avatar : ''}}
+                    <Image source={{uri:user.avatar}}
                            style={[styles.icon80,styles.Radius_15 ,{ borderWidth:5 , borderColor:'#fff'}]} resizeMode={'cover'} />
                     <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
                         <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>{auth.user.data.name}</Text>
+                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>{user.name}</Text>
                 </TouchableOpacity>
 
                 <DrawerItem

@@ -11,8 +11,8 @@ import COLORS from "../consts/colors";
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
 
-function AddAdTerms({navigation}) {
-
+function AddAdTerms({navigation , route}) {
+    const confirmCheck = route.params ? route.params.confirmCheck : false;
     const [isChecked, setIsChecked] = useState(false);
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
@@ -27,12 +27,15 @@ function AddAdTerms({navigation}) {
 
     useEffect(() => {
         fetchData();
+        confirmCheck ?setIsChecked(confirmCheck) : null;
         const unsubscribe = navigation.addListener('focus', () => {
+            confirmCheck ?setIsChecked(confirmCheck) : null;
             fetchData();
         });
 
         return unsubscribe;
-    }, [navigation , loader]);
+    }, [navigation , loader , confirmCheck]);
+
 
     function renderLoader(){
         if (loader === false){

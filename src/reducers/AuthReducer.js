@@ -22,6 +22,8 @@ export default (state = INITIAL_STATE, action) => {
 			return ({...state, loading: false, message: action.payload.message});
 		case ('temp_auth') :
 			return ({...state, user: null});
+		case ('logout') :
+			return ({...state, user: null});
 		default :
 			return state;
 	}

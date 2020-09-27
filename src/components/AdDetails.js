@@ -141,7 +141,7 @@ function AdDetails({navigation , route}) {
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>{adDetails.detailes.id}</Text>
                     </View>
                     <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
+                        <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('desc') }</Text>
                         <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart,
                             {lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                             {adDetails.detailes.description}

@@ -22,7 +22,9 @@ import {getCountries , register} from "../actions";
 
 const isIOS = Platform.OS === 'ios';
 
-function Register({navigation}) {
+function Register({navigation , route}) {
+
+    const confirmCheck = route.params ? route.params.confirmCheck : false;
 
     const lang = useSelector(state => state.lang.lang);
     const auth = useSelector(state => state.auth);
@@ -44,8 +46,9 @@ function Register({navigation}) {
 
 
     useEffect(() => {
+        confirmCheck ?setIsChecked(confirmCheck) : null;
         dispatch(getCountries(lang))
-    }, [countriesLoader]);
+    }, [countriesLoader , confirmCheck]);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -94,7 +97,7 @@ function Register({navigation}) {
 
 
     function renderSubmit() {
-        if (username == '' ||password == '' || phone == ''|| confirmPass == ''|| country == null) {
+        if (username == '' || password == '' || phone == '' || confirmPass == '' || country == null || base64 == '' || !isChecked) {
             return (
                 <View
                     style={[styles.babyblueBtn , styles.Width_100 , styles.marginBottom_10 , {

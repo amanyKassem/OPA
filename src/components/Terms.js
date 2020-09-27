@@ -50,6 +50,10 @@ function Terms({navigation , route}) {
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
+                <TouchableOpacity onPress={() => navigation.navigate(route && pathname ==='terms'?'addAdTerms':'register' , {confirmCheck:false})} style={[styles.marginTop_60 , styles.directionRow , {marginLeft:25}]}>
+                    <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform, {marginRight:5}]} resizeMode={'contain'} />
+                </TouchableOpacity>
+
                 <View style={[styles.directionRowSpace , styles.paddingHorizontal_25, styles.paddingTop_30]}>
                     <Text style={[styles.textRegular , styles.text_White , styles.textSize_20, {top:20}]}>{ i18n.t('terms') }</Text>
                     <Image source={require('../../assets/images/vector_rules.png')} style={[styles.transform,styles.icon200, {top:20, right:I18nManager.isRTL ?10:50}]} resizeMode={'contain'} />
@@ -72,7 +76,7 @@ function Terms({navigation , route}) {
                     }
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate(route && pathname ==='terms'?'addAdTerms':'register')}
+                    <TouchableOpacity onPress={() => navigation.navigate(route && pathname ==='terms'?'addAdTerms':'register' , {confirmCheck:true})}
                                       style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_35]}>
                         <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
                     </TouchableOpacity>

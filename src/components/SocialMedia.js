@@ -16,10 +16,10 @@ function SocialMedia({navigation}) {
 
     const token = useSelector(state => state.auth.user.data.token);
     const lang = useSelector(state => state.lang.lang);
-    const contact = useSelector(state => state.contact.contact)
-    const loader = useSelector(state => state.contact.loader)
+    const contact = useSelector(state => state.contact.contact);
+    const loader = useSelector(state => state.contact.loader);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
 
     const [username, setUsername] = useState('');

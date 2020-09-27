@@ -20,10 +20,10 @@ function Profile({navigation}) {
     const userData = useSelector(state => state.userData.userData);
     const userDataLoader = useSelector(state => state.userData.loader);
 
-    const [advNum, setAdvNum] = useState(userData ? userData.phone : '');
-    const [adsNum, setAdsNum] = useState(userData ? userData.ads : '');
-    const [phone, setPhone] = useState(userData ? userData.phone : '');
-    const [country, setCountry] = useState(userData ? userData.country : '');
+    const [advNum, setAdvNum] = useState( '');
+    const [adsNum, setAdsNum] = useState('');
+    const [phone, setPhone] = useState('');
+    const [country, setCountry] = useState('');
 
     const dispatch = useDispatch();
 
@@ -32,6 +32,7 @@ function Profile({navigation}) {
     }
 
     useEffect(() => {
+        fetchData();
         const unsubscribe = navigation.addListener('focus', () => {
             fetchData();
         });
@@ -66,7 +67,7 @@ function Profile({navigation}) {
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(advNum) => setAdvNum(advNum)}
-                                           value={advNum}
+                                           value={userData.phone}
                                            disabled={true}
                                     />
                                 </Item>
@@ -75,7 +76,7 @@ function Profile({navigation}) {
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(adsNum) => setAdsNum(adsNum)}
-                                           value={adsNum}
+                                           value={userData.ads}
                                            disabled={true}
                                     />
                                 </Item>
@@ -84,7 +85,7 @@ function Profile({navigation}) {
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(phone) => setPhone(phone)}
-                                           value={phone}
+                                           value={userData.phone}
                                            disabled={true}
                                     />
                                 </Item>
@@ -93,7 +94,7 @@ function Profile({navigation}) {
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(country) => setCountry(country)}
-                                           value={country}
+                                           value={userData.country}
                                            disabled={true}
                                     />
                                 </Item>

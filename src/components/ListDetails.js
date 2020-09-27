@@ -103,7 +103,7 @@ function ListDetails({navigation , route}) {
         try {
             const result = await Share.share({
                 message:
-                    'Msara App',
+                    'OPA App',
             });
 
             if (result.action === Share.sharedAction) {

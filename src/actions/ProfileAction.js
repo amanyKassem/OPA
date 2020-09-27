@@ -47,20 +47,37 @@ export const updateProfile = (lang , name , phone ,country_id , avatar , token ,
     }
 }
 
+// export const logout = (lang , token) => {
+//     return (dispatch) => {
+//         AsyncStorage.getItem('deviceID').then(device_id => {
+//             axios({
+//                 url         : CONST.url + 'Logout',
+//                 method      : 'POST',
+//                 headers     : { Authorization: token },
+//                 data        : { lang ,device_id }
+//             }).then(response => {
+//                     AsyncStorage.multiRemove(['token', 'auth', 'profile']);
+//                     dispatch({type: 'logout'})
+//                 }
+//             )
+//         });
+//     }
+// };
+
 export const logout = (lang , token) => {
     return (dispatch) => {
+        AsyncStorage.multiRemove(['token', 'auth', 'profile']);
+
         AsyncStorage.getItem('deviceID').then(device_id => {
             axios({
                 url         : CONST.url + 'Logout',
                 method      : 'POST',
                 headers     : { Authorization: token },
                 data        : { lang ,device_id }
-            }).then(response => {
-                    AsyncStorage.multiRemove(['token', 'auth', 'profile']);
-                    dispatch({type: 'logout'})
-                }
-            )
+            }).then(response => { });
         });
+
+        dispatch({type: 'logout'})
     }
 };
 

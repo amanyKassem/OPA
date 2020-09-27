@@ -266,21 +266,32 @@ function AddOrder({navigation,route}) {
                             />
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('newAddedDetails' , {
-                            category_id:buildType,
-                            rent_id:serviceType,
-                            type_id:accType,
-                            Latitude:mapRegion.latitude,
-                            Longitude:mapRegion.longitude,
-                            rooms:rooms,
-                            hall:lounges,
-                            bathroom:washrooms,
-                            floor:floor,
-                            age:buildAge,
-                        })}
-                                          style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
-                        </TouchableOpacity>
+                        {
+                            buildType ?
+                                <TouchableOpacity onPress={() => navigation.navigate('newAddedDetails' , {
+                                    category_id:buildType,
+                                    rent_id:serviceType,
+                                    type_id:accType,
+                                    Latitude:mapRegion.latitude,
+                                    Longitude:mapRegion.longitude,
+                                    rooms:rooms,
+                                    hall:lounges,
+                                    bathroom:washrooms,
+                                    floor:floor,
+                                    age:buildAge,
+                                })}
+                                                  style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </TouchableOpacity>
+                            :
+                                <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 ,
+                                    styles.marginTop_20 , {backgroundColor:'#bbb'}]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>
+                                </View>
+
+                        }
+
+
 
                     </View>
 
