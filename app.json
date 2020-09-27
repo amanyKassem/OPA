@@ -29,7 +29,8 @@
         "NSPhotoLibraryAddUsageDescription": "App need this permission to update profile photo.",
         "NSLocationWhenInUseUsageDescription": "App need this permission to determine your order location.",
         "NSPhotoLibraryUsageDescription": "App need this permission to update profile photo."
-      }
+      },
+      "userInterfaceStyle": "light"
     },
     "android": {
       "package": "com.OPA",
@@ -38,7 +39,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyBQu-aDY--uY14s4U3ok-XwwqhsnhLFe5Q"
         }
-      }
+      },
+      "userInterfaceStyle": "light"
     }
   }
 }

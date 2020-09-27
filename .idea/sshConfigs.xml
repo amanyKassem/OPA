@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="host.aait-sa.com" id="edb90cb4-e7dc-4900-a6b4-4772aff0e3f3" port="1289" customName="salaty" nameFormat="CUSTOM">
+        <option name="customName" value="salaty" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="masarah.aait-sa.com" id="b981cd3c-afee-4cd0-adbe-24697945922b" port="1289" customName="msara" nameFormat="CUSTOM">
+        <option name="customName" value="msara" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="opaapp.aait-sa.com" id="cb7f2ecd-218a-4f63-b9a8-ebf59551792c" port="1289" customName="Opa" nameFormat="CUSTOM">
+        <option name="customName" value="Opa" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

@@ -51,13 +51,14 @@ function AdImgs({navigation , route}) {
     }, [photos]);
 
 
-    function confirmDelete (id , i) {
+    function confirmDelete (imgId , i) {
         photos.splice(i, 1);
         setPhotos([...photos]);
 
-        if(pathName === 'editAd' && id){
+        if(pathName === 'editAd' && imgId){
             // delete image in edit ad
-            dispatch(DeleteAdImage(lang , id , token))
+            // msh sh3'ala saaaa7 byrg3 l image elly etms7t tany aked L moshkla fe l id ^_^
+            dispatch(DeleteAdImage(lang , imgId , token))
             // base64.splice(i , 1);
         } else{
             // delete image in add ad
@@ -129,6 +130,7 @@ function AdImgs({navigation , route}) {
                 base64[i]=result.base64;
                 if(pathName === 'editAd' && id){
                     // replacement existed image in edit ad
+                    // de sh3'alaaa saaa7 lma y3ml t3del 3la l soraaa elly rag3a enma lw 3dl 3la sora lsa mdafa btfdl mwgoda ' emojii byltom'
                     dispatch(DeleteAdImage(lang , id , token))
                 }
             }else{
@@ -141,6 +143,34 @@ function AdImgs({navigation , route}) {
             // console.log('base64',base64)
         }
     };
+
+    function setImages(){
+        base64 = base64.filter(function (el) {
+            return el != null;
+        });
+
+        navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
+            {
+                featuers,
+                editFeatuers,
+                category_id,
+                Latitude,
+                Longitude,
+                address,
+                rent_id,
+                type_id,
+                hall,
+                floor,
+                rooms,
+                age,
+                bathroom,
+                pathName,
+                adDetails,
+                ad_id,
+                images : base64,
+                imagesUrl : photos
+            })
+    }
 
 
     return (
@@ -159,27 +189,7 @@ function AdImgs({navigation , route}) {
 
                     {
                         photos.length > 0 ?
-                            <TouchableOpacity onPress={() => navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
-                                {
-                                    featuers,
-                                    editFeatuers,
-                                    category_id,
-                                    Latitude,
-                                    Longitude,
-                                    address,
-                                    rent_id,
-                                    type_id,
-                                    hall,
-                                    floor,
-                                    rooms,
-                                    age,
-                                    bathroom,
-                                    pathName,
-                                    adDetails,
-                                    ad_id,
-                                    images : base64,
-                                    imagesUrl : photos
-                                })} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
+                            <TouchableOpacity onPress={() => setImages()} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
                             </TouchableOpacity>
                             :
