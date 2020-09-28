@@ -28,6 +28,7 @@ import types from './TypesReducer';
 import features from './FeaturesReducer';
 import singleCategory from './SingleCategoryReducer';
 import storeAd from './StoreAdReducer';
+import uses from './UsesReducer';
 
 export default combineReducers({
     lang,
@@ -59,4 +60,5 @@ export default combineReducers({
     features,
     singleCategory,
     storeAd,
+    uses,
 });

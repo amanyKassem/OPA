@@ -92,7 +92,7 @@ function RealEstateComp({navigation , route}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50, justifyContent:categoryConstructions && (categoryConstructions).length <= 0 ? 'center' : 'flex-start' }]}>
 
                     {
-                        categoryConstructions && (categoryConstructions).length <= 0?
+                        categoryConstructions && (categoryConstructions).length  > 0?
                             <View style={[{height:height - 100,paddingBottom:10}]}>
 
                                 <FlatList

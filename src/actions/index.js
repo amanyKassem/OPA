@@ -31,3 +31,4 @@ export * from './SingleCategoryAction';
 export * from './StoreAdAction';
 export * from './DeleteAdImageAction';
 export * from './EditAdAction';
+export * from './UsesAction';

@@ -99,38 +99,43 @@ function AdFee({navigation , route}) {
                         }
 
 
+                        {
+                            pathName === 'contactUs' ?
+                                null :
+                                <TouchableOpacity onPress={() => navigation.navigate('payMethods',{
+                                    features,
+                                    category_id,
+                                    Latitude,
+                                    Longitude,
+                                    address,
+                                    rent_id,
+                                    type_id,
+                                    hall,
+                                    floor,
+                                    rooms,
+                                    age,
+                                    bathroom,
+                                    images,
+                                    imagesUrl,
+                                    title_ar,
+                                    title_en,
+                                    description_ar,
+                                    description_en,
+                                    price,
+                                    space,
+                                    street_view,
+                                    meter_price,
+                                    featArr,
+                                    checkedArrNames,
+                                    pathName,
+                                    ad_id,
 
-                        <TouchableOpacity onPress={() => navigation.navigate('payMethods',{
-                            features,
-                            category_id,
-                            Latitude,
-                            Longitude,
-                            address,
-                            rent_id,
-                            type_id,
-                            hall,
-                            floor,
-                            rooms,
-                            age,
-                            bathroom,
-                            images,
-                            imagesUrl,
-                            title_ar,
-                            title_en,
-                            description_ar,
-                            description_en,
-                            price,
-                            space,
-                            street_view,
-                            meter_price,
-                            featArr,
-                            checkedArrNames,
-                            pathName,
-                            ad_id,
+                                })} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
+                                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('feeCommit') }</Text>
+                                </TouchableOpacity>
+                        }
 
-                        })} style={[styles.babyblueBtn , styles.Width_100, styles.marginBottom_50 ]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('feeCommit') }</Text>
-                        </TouchableOpacity>
+
 
                     </View>
                 </View>

@@ -100,7 +100,7 @@ function AdvertiserDetails({navigation , route}) {
                 <Header navigation={navigation} title={ i18n.t('advertiserDetails') }/>
 
                 {
-                    userAds ?
+                    userAds && userAds.user?
 
                         <View style={[styles.bgFullWidth, styles.paddingHorizontal_20, styles.bg_White,
                             styles.Width_100, styles.paddingTop_10,
