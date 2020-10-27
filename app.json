@@ -23,7 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.OPA",
+      "bundleIdentifier": "aait.opa.com",
       "infoPlist": {
         "NSCameraUsageDescription": "App need this permission to update profile photo.",
         "NSPhotoLibraryAddUsageDescription": "App need this permission to update profile photo.",
