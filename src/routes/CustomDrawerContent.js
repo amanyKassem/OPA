@@ -3,13 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {chooseLang} from "../actions";
 import {DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
 import styles from "../../assets/styles";
-import {Dimensions, I18nManager, Image, Text, TouchableOpacity, View} from "react-native";
+import {Dimensions, I18nManager, Image, Platform, Text, TouchableOpacity, View} from "react-native";
 import i18n from "../../locale/i18n";
 import COLORS from "../consts/colors";
 import {logout, tempAuth} from '../actions';
 
 
 const height = Dimensions.get('window').height;
+const isIOS = Platform.OS === 'ios';
 
 export default function CustomDrawerContent(props) {
 
@@ -183,9 +184,9 @@ export default function CustomDrawerContent(props) {
                 <TouchableOpacity style={[styles.babyblueBtn ,{
                     position:'absolute',
                     transform: [{ rotate: '90deg' }],
-                    right:-63,
+                    right:isIOS ? -77 : -63,
                     width:'50%',
-                    bottom:62,
+                    bottom: isIOS ? 100 : 62,
                 }]}
                   onPress={() => logoutFunc()}
                 >

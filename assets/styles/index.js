@@ -1353,7 +1353,7 @@ const styles = ({
     },
     footerStyle:{
         backgroundColor:'#fff',
-        height:60,
+        height: isIOS ? 100 : 60,
         paddingHorizontal:15,
         borderTopLeftRadius:25,
         borderTopRightRadius:25,

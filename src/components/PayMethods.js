@@ -47,7 +47,7 @@ function PayMethods({navigation , route}) {
     const ad_id = route.params ? route.params.ad_id : null;
 
     return (
-        <Container>
+         <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('payMethods') }/>
@@ -61,7 +61,7 @@ function PayMethods({navigation , route}) {
                         <View style={[styles.rowGroup]}>
                             <TouchableOpacity onPress={() => setPayMethod('0')} style={[styles.marginBottom_25]}>
                                 <View style={[styles.bg_light_gray , {padding:20}]}>
-                                    <Image source={require("../../assets/images/mastercard.png")} style={[styles.width_70,styles.height_40]} resizeMode={'cover'} />
+                                    <Image source={require("../../assets/images/mastercard.png")} style={[isIOS ? styles.width_80 : styles.width_70,styles.height_40]} resizeMode={'cover'} />
                                 </View>
                                 <View style={[styles.directionRowReverse , styles.marginTop_10]}>
                                     <Radio
@@ -75,7 +75,7 @@ function PayMethods({navigation , route}) {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setPayMethod('1')} style={[styles.marginBottom_25]}>
                                 <View style={[styles.bg_light_gray , {padding:20}]}>
-                                    <Image source={require("../../assets/images/visa.png")} style={[styles.width_70,styles.height_40]} resizeMode={'cover'} />
+                                    <Image source={require("../../assets/images/visa.png")} style={[isIOS ? styles.width_80 : styles.width_70,styles.height_40]} resizeMode={'cover'} />
                                 </View>
                                 <View style={[styles.directionRowReverse , styles.marginTop_10]}>
                                     <Radio
@@ -89,7 +89,7 @@ function PayMethods({navigation , route}) {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setPayMethod('2')} style={[styles.marginBottom_25]}>
                                 <View style={[styles.bg_light_gray , {padding:20}]}>
-                                    <Image source={require("../../assets/images/Mada_Logo.png")} style={[styles.width_70,styles.height_40]} resizeMode={'cover'} />
+                                    <Image source={require("../../assets/images/Mada_Logo.png")} style={[isIOS ? styles.width_80 : styles.width_70,styles.height_40]} resizeMode={'cover'} />
                                 </View>
                                 <View style={[styles.directionRowReverse , styles.marginTop_10]}>
                                     <Radio
@@ -103,7 +103,7 @@ function PayMethods({navigation , route}) {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setPayMethod('3')} style={[styles.marginBottom_25]}>
                                 <View style={[styles.bg_light_gray , {padding:20}]}>
-                                    <Image source={require("../../assets/images/paypal.png")} style={[styles.width_70,styles.height_40]} resizeMode={'cover'} />
+                                    <Image source={require("../../assets/images/paypal.png")} style={[isIOS ? styles.width_80 : styles.width_70,styles.height_40]} resizeMode={'cover'} />
                                 </View>
                                 <View style={[styles.directionRowReverse , styles.marginTop_10]}>
                                     <Radio

@@ -34,7 +34,7 @@ function Language({}) {
 
 
     return (
-        <Container>
+         <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_45]}>
 

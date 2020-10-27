@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, AsyncStorage, ActivityIndicator } from "react-native";
+import { View, Text, Image, TouchableOpacity, KeyboardAvoidingView, AsyncStorage, ActivityIndicator , Platform } from "react-native";
 import {Container, Content, Form, Input, Item, Label, Toast} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -8,6 +8,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {userLogin} from '../actions';
 import * as Permissions from 'expo-permissions';
 import {Notifications} from 'expo'
+
+
+const isIOS = Platform.OS === 'ios';
 
 function Login({navigation}) {
 
@@ -122,7 +125,7 @@ function Login({navigation}) {
     }
 
     return (
-        <Container>
+        <Container style={[styles.bg_gray]}>
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_25]}>

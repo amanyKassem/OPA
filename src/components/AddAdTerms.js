@@ -49,7 +49,7 @@ function AddAdTerms({navigation , route}) {
 
 
     return (
-        <Container>
+        <Container style={[styles.bg_gray]}>
             {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 

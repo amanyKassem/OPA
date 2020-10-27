@@ -102,7 +102,7 @@ function SearchResults({navigation , route}) {
 
 
     return (
-        <Container>
+         <Container style={[styles.bg_gray]}>
             {renderLoader()}
             <Content scrollEnabled={false} contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
