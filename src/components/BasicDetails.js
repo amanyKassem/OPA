@@ -22,14 +22,8 @@ const isIOS = Platform.OS === 'ios';
 function BasicDetails({navigation , route}) {
 
     const adDetails = route.params ? route.params.adDetails : null;
-    const [totalPrice, setTotalPrice] = useState(adDetails ? adDetails.detailes.price : '');
     const [title_ar, setTitle_ar] = useState(adDetails ? adDetails.detailes.title_ar : '');
-    const [title_en, setTitle_en] = useState(adDetails ? adDetails.detailes.title_en : '');
     const [buildDesc, setBuildDesc] = useState(adDetails ? adDetails.detailes.description_ar : '');
-    const [buildDescEn, setBuildDescEn] = useState(adDetails ? adDetails.detailes.description_en : '');
-    const [space, setSpace] = useState(adDetails ? adDetails.detailes.space : '');
-    const [street_view, setStreet_view] = useState(adDetails ? adDetails.detailes.street_view : '');
-    const [meter_price, setMeter_price] = useState(adDetails ? adDetails.detailes.meter_price : '');
 
     const featArr = route.params ? route.params.featArr : null;
     const features = route.params ? route.params.features : null;
@@ -42,6 +36,10 @@ function BasicDetails({navigation , route}) {
     const hall = route.params ? route.params.hall : null;
     const floor = route.params ? route.params.floor : null;
     const rooms = route.params ? route.params.rooms : null;
+    const price = route.params ? route.params.price : null;
+    const space = route.params ? route.params.space : null;
+    const meter_price = route.params ? route.params.meter_price : null;
+    const street_view = route.params ? route.params.street_view : null;
     const age = route.params ? route.params.age : null;
     const bathroom = route.params ? route.params.bathroom : null;
     const images = route.params ? route.params.images : null;
@@ -64,56 +62,13 @@ function BasicDetails({navigation , route}) {
                         <Form style={[styles.Width_100 , styles.directionColumnSpace ,{flex:1}]}>
 
                             <View style={[styles.Width_100]}>
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('totalPrice') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(totalPrice) => setTotalPrice(totalPrice)}
-                                           value={totalPrice}
-                                           keyboardType={'number-pad'}
-                                    />
-                                    <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , {position:'absolute' , right:10}]}>{ i18n.t('RS') }</Text>
-                                </Item>
+
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('title_ar') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('title') }</Label>
                                     <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                            onChangeText={(title_ar) => setTitle_ar(title_ar)}
                                            value={title_ar}
-                                    />
-                                </Item>
-
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('title_en') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(title_en) => setTitle_en(title_en)}
-                                           value={title_en}
-                                    />
-                                </Item>
-
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('space') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(space) => setSpace(space)}
-                                           value={space}
-                                           keyboardType={'number-pad'}
-                                    />
-                                </Item>
-
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('street_view') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(street_view) => setStreet_view(street_view)}
-                                           value={street_view}
-                                           keyboardType={'number-pad'}
-                                    />
-                                </Item>
-
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('meter_price') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(meter_price) => setMeter_price(meter_price)}
-                                           value={meter_price}
-                                           keyboardType={'number-pad'}
                                     />
                                 </Item>
 
@@ -126,19 +81,9 @@ function BasicDetails({navigation , route}) {
                                     />
                                 </View>
 
-                                <View style={[styles.marginBottom_35]}>
-                                    <Label style={[styles.label ,styles.textRegular ,styles.text_midGray, {backgroundColor:'#fff'}]}>{ i18n.t('buildDescEn') }</Label>
-                                    <Textarea
-                                        style={[styles.input, styles.height_120,styles.paddingVertical_20, styles.text_midGray, {borderColor:COLORS.midGray}]}
-                                        onChangeText={(buildDescEn) => setBuildDescEn(buildDescEn)}
-                                        value={buildDescEn}
-                                    />
-                                </View>
-
                             </View>
                             {
-                                totalPrice != '' && title_ar != '' && title_en != '' && space != '' && street_view != ''
-                                && meter_price != '' && buildDesc != '' && buildDescEn != '' ?
+                                title_ar != ''  && buildDesc != ''?
                                     <TouchableOpacity onPress={() => navigation.navigate('adFee'
                                         ,{
                                             features,
@@ -156,13 +101,11 @@ function BasicDetails({navigation , route}) {
                                             images,
                                             imagesUrl,
                                             title_ar,
-                                            title_en,
                                             description_ar:buildDesc,
-                                            description_en:buildDescEn,
-                                            price:totalPrice,
+                                            price,
                                             space,
-                                            street_view,
                                             meter_price,
+                                            street_view,
                                             featArr,
                                             checkedArrNames,
                                             pathName,

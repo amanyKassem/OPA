@@ -37,6 +37,10 @@ function DetailsAdded({navigation , route}) {
     const hall = route.params ? route.params.hall : null;
     const floor = route.params ? route.params.floor : null;
     const rooms = route.params ? route.params.rooms : null;
+    const price = route.params ? route.params.price : null;
+    const space = route.params ? route.params.space : null;
+    const meter_price = route.params ? route.params.meter_price : null;
+    const street_view = route.params ? route.params.street_view : null;
     const age = route.params ? route.params.age : null;
     const bathroom = route.params ? route.params.bathroom : null;
     const images = route.params ? route.params.images : null;
@@ -123,6 +127,10 @@ function DetailsAdded({navigation , route}) {
                             hall,
                             floor,
                             rooms,
+                            price,
+                            space,
+                            meter_price,
+                            street_view,
                             age,
                             bathroom,
                             images,

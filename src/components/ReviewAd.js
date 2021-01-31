@@ -45,9 +45,7 @@ function ReviewAd({navigation , route}) {
     const images = route.params ? route.params.images : null;
     const imagesUrl = route.params ? route.params.imagesUrl : [];
     const title_ar = route.params ? route.params.title_ar : null;
-    const title_en = route.params ? route.params.title_en : null;
     const description_ar = route.params ? route.params.description_ar : null;
-    const description_en = route.params ? route.params.description_en : null;
     const price = route.params ? route.params.price : null;
     const space = route.params ? route.params.space : null;
     const street_view = route.params ? route.params.street_view : null;
@@ -86,12 +84,12 @@ function ReviewAd({navigation , route}) {
 
         if(pathName === 'editAd'){
             dispatch(EditAd(lang , ad_id , category_id , null , Latitude , Longitude , address , features,
-                title_ar , title_en , description_ar , description_en , price ,space , rent_id,
+                title_ar  , description_ar  , price ,space , rent_id,
                 type_id , hall , floor , rooms ,
                 age , street_view , bathroom , meter_price , 1, images, token , navigation));
         } else {
             dispatch(StoreAd(lang , category_id , null , Latitude , Longitude , address , features,
-                title_ar , title_en , description_ar , description_en , price ,space , rent_id,
+                title_ar , description_ar , price ,space , rent_id,
                 type_id , hall , floor , rooms ,
                 age , street_view , bathroom , meter_price , 1, images, token , navigation));
         }

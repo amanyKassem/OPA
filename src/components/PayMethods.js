@@ -35,9 +35,7 @@ function PayMethods({navigation , route}) {
     const images = route.params ? route.params.images : null;
     const imagesUrl = route.params ? route.params.imagesUrl : null;
     const title_ar = route.params ? route.params.title_ar : null;
-    const title_en = route.params ? route.params.title_en : null;
     const description_ar = route.params ? route.params.description_ar : null;
-    const description_en = route.params ? route.params.description_en : null;
     const price = route.params ? route.params.price : null;
     const space = route.params ? route.params.space : null;
     const street_view = route.params ? route.params.street_view : null;
@@ -133,9 +131,7 @@ function PayMethods({navigation , route}) {
                             images,
                             imagesUrl,
                             title_ar,
-                            title_en,
                             description_ar,
-                            description_en,
                             price,
                             space,
                             street_view,

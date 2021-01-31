@@ -3,15 +3,15 @@ import CONST from "../consts";
 import {Toast} from "native-base";
 
 
-export const StoreAd = (lang , category_id , city_id , Latitude , Longitude , address , features , title_ar , title_en ,
-                        description_ar , description_en , price , space, rent_id , type_id , hall , floor , rooms ,
+export const StoreAd = (lang , category_id , city_id , Latitude , Longitude , address , features , title_ar  ,
+                        description_ar  , price , space, rent_id , type_id , hall , floor , rooms ,
                         age , street_view , bathroom , meter_price , publication, images ,token , navigation) => {
     return (dispatch) => {
         axios({
             url         : CONST.url + 'storeAd',
             method      : 'POST',
-            data        : {lang , category_id , city_id , Latitude , Longitude , address , features , title_ar , title_en ,
-                description_ar , description_en , price , space, rent_id , type_id , hall , floor , rooms ,
+            data        : {lang , category_id , city_id , Latitude , Longitude , address , features , title_ar  ,
+                description_ar  , price , space, rent_id , type_id , hall , floor , rooms ,
                 age , street_view , bathroom , meter_price , publication, images},
             headers     : {Authorization: token}
         }).then(response => {
