@@ -53,10 +53,10 @@ function Home({navigation,route}) {
             const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
             if (route.params && route.params.latitude){
                 userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
-                dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude , token))
+                dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude  , null , token))
             } else {
-                userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
-                dispatch(getHomeAds(lang , latitude ,longitude , token))
+                userLocation = { latitude, longitude , latitudeDelta  , longitudeDelta};
+                dispatch(getHomeAds(lang , latitude ,longitude , null , token))
             }
             setInitMap(false);
             setMapRegion(userLocation);
@@ -111,6 +111,15 @@ function Home({navigation,route}) {
         setPopInfo(markerInfo)
     }
 
+    const setSearchText = (keyword) => {
+        setSearch(keyword);
+        if(keyword)
+            dispatch(getHomeAds(lang , mapRegion.latitude ,mapRegion.longitude  , keyword , token))
+        else
+            dispatch(getHomeAds(lang , mapRegion.latitude ,mapRegion.longitude  , null , token))
+    }
+
+
     return (
         <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
@@ -124,14 +133,17 @@ function Home({navigation,route}) {
                         <Input style={[styles.inputSearch , styles.Width_100, styles.bg_White , {flex:0}]}
                                placeholder={i18n.t('search')}
                                placeholderTextColor={COLORS.lightGray}
-                               onChangeText={(search) => setSearch(search)}
+                               onChangeText={(search) => setSearchText(search)}
                                value={search}
                         />
 
                         <View style={[styles.directionRow , {position:'absolute' , right:15 , top:13}]}>
-                            <TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})}>
+                            {/*<TouchableOpacity onPress={() => navigation.push('searchResults' , {keyword:search})}>*/}
+                            {/*    <Image source={require("../../assets/images/search.png")} style={[styles.icon20]} resizeMode={'cover'} />*/}
+                            {/*</TouchableOpacity>*/}
+                            <View>
                                 <Image source={require("../../assets/images/search.png")} style={[styles.icon20]} resizeMode={'cover'} />
-                            </TouchableOpacity>
+                            </View>
                             <View style={[styles.height_20 ,styles.marginHorizontal_7 , {width:.5 ,  backgroundColor: COLORS.midGray}]}/>
                             <TouchableOpacity onPress={() => navigation.navigate('advancedSearch')}>
                                 <Image source={require("../../assets/images/filter.png")} style={[styles.icon20]} resizeMode={'cover'} />
