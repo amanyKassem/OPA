@@ -181,6 +181,25 @@ export default function CustomDrawerContent(props) {
                     onPress={() => props.navigation.navigate('contactUs')}
                 />
 
+                <DrawerItem
+                    style={[styles.justifyCenter ,{marginHorizontal:0}]}
+                    label={
+                        ({ focused, color }) => {
+                            return (
+                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('faq') }</Text>
+                            )
+                        }
+                    }
+                    icon={
+                        ({ focused, color }) => {
+                            return (
+                                <Image source={require('../../assets/images/ques.png')} style={[styles.icon23]} resizeMode={'contain'} />
+                            )
+                        }
+                    }
+                    onPress={() => props.navigation.navigate('questions')}
+                />
+
                 <TouchableOpacity style={[styles.babyblueBtn ,{
                     position:'absolute',
                     transform: [{ rotate: '90deg' }],

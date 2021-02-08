@@ -88,6 +88,7 @@ function GetLocation({navigation, route}) {
             console.log(e);
         }
     };
+
     function getLoc(){
         console.log("mapRegion button" ,mapRegion);
         console.log("city3 " , city);
@@ -113,18 +114,36 @@ function GetLocation({navigation, route}) {
                     {borderTopRightRadius:50 , borderTopLeftRadius:50,overflow:'hidden'}]}>
                     {
                         !initMap && mapRegion.latitude != null? (
-                            <MapView
-                                ref={mapRef}
-                                style={{ width: '100%', height: '100%' , flex:1 }}
-                                initialRegion={mapRegion}>
-                                <MapView.Marker
-                                    draggable
-                                    coordinate={mapRegion}
-                                    onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
-                                >
+                            // <MapView
+                            //     ref={mapRef}
+                            //     onRegionChangeComplete={(e) => _handleMapRegionChange(e)}
+                            //     style={{ width: '100%', height: '100%' , flex:1 }}
+                            //     initialRegion={mapRegion}>
+                            //     <MapView.Marker
+                            //         draggable
+                            //         coordinate={mapRegion}
+                            //         onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
+                            //     >
+                            //
+                            //         <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 35, height: 35 }}>
+                            //             <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
+                            //         </View>
+                            //
+                            //     </MapView.Marker>
+                            // </MapView>
+
+                            <>
+                                <MapView
+                                    ref={mapRef}
+                                    onRegionChangeComplete={(e) => _handleMapRegionChange(e)}
+                                    style={{ width: '100%', height: '100%', flex: 1, }}
+                                    initialRegion={mapRegion} />
+
+                                <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 35, height: 35 }}>
                                     <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
-                                </MapView.Marker>
-                            </MapView>
+                                </View>
+                            </>
+
                         ) : (<View />)
                     }
                 </View>

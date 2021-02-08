@@ -123,7 +123,7 @@ function EditProfile({navigation}) {
 
                     <View style={[styles.flexCenter,styles.icon110,{top:-40 , overflow:'hidden'}]}>
                         <View style={[styles.imgOverLay,styles.Radius_15]}/>
-                        <Image source= {image != null?{uri:image} : {uri:user.avatar}} style={[styles.Width_100 , styles.heightFull,styles.Radius_15]} resizeMode={'cover'} />
+                        <Image source= {image != null?{uri:image} : {uri:user.avatar}} style={[styles.Width_100 , styles.heightFull,styles.Radius_15, styles.borderGray]} resizeMode={'cover'} />
                         <TouchableOpacity onPress={_pickImage} style={[styles.icon25,styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , top:0 , right:0 , zIndex:1}]}>
                             <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
                         </TouchableOpacity>

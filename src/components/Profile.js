@@ -49,13 +49,14 @@ function Profile({navigation}) {
                 {
                     userData ?
                         <View style={[styles.bgFullWidth,styles.paddingHorizontal_20 ,styles.bg_White,
-                            styles.Width_100, styles.paddingTop_30,
+                            styles.Width_100, styles.paddingTop_30 ,
                             {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
                             <View style={[styles.flexCenter ,{top:-50}]}>
-                                <Image source={{uri : userData.avatar}} style={[styles.icon110,styles.Radius_15 ]} resizeMode={'cover'} />
-                                <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , right:5}]}>
-                                    <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                <Image source={{uri : userData.avatar}} style={[styles.icon110,styles.Radius_15, styles.borderGray ]} resizeMode={'cover'} />
+                                <TouchableOpacity onPress={() => navigation.push('editProfile')} style={[styles.marginHorizontal_5 , styles.bg_mstarda , styles.Radius_5 , styles.marginVertical_5
+                                    ,{position:'absolute' , bottom:35 , right:5 , padding:5}]}>
+                                    <Image source={require('../../assets/images/edit.png')} style={[styles.icon15]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                                 <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_16, {marginTop:5}]}>{userData.name}</Text>
                             </View>
@@ -105,7 +106,7 @@ function Profile({navigation}) {
                                 <Text style={[styles.textRegular , styles.text_babyblue , styles.textDecoration , styles.textSize_17]}>{ i18n.t('changePass') }</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.push('adverInfo')}  style={[styles.babyblueBtn, styles.Width_80,styles.flexCenter]}>
+                            <TouchableOpacity onPress={() => navigation.push('adverInfo')}  style={[styles.babyblueBtn, styles.Width_80,styles.flexCenter, styles.marginBottom_80]}>
                                 <Text style={[styles.textRegular , styles.text_White  , styles.textSize_16]}>{ i18n.t('adInfo') }</Text>
                             </TouchableOpacity>
 

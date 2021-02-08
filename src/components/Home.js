@@ -119,6 +119,19 @@ function Home({navigation,route}) {
             dispatch(getHomeAds(lang , mapRegion.latitude ,mapRegion.longitude  , null , token))
     }
 
+    async function getCurrentLocation() {
+        let { status } = await Location.requestPermissionsAsync();
+
+        if (status !== 'granted') {
+            alert('صلاحيات تحديد موقعك الحالي ملغاه');
+        } else {
+            const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
+            let userLocation = { latitude, longitude, latitudeDelta, longitudeDelta };
+            setMapRegion(userLocation);
+            mapRef.current.animateToRegion(userLocation, 500)
+        }
+    }
+
 
     return (
         <Container style={[styles.bg_gray]}>
@@ -149,7 +162,14 @@ function Home({navigation,route}) {
                                 <Image source={require("../../assets/images/filter.png")} style={[styles.icon20]} resizeMode={'cover'} />
                             </TouchableOpacity>
                         </View>
+
+
                     </View>
+                    <TouchableOpacity onPress={() => getCurrentLocation()}
+                                      style={[styles.flexCenter,styles.Radius_5, styles.icon40, styles.bg_gray ,
+                                          { padding: 10 , position:'absolute' , bottom:75 , left:15 , zIndex:1}]}>
+                        <Icon type='Ionicons' name='locate' style={{ color: '#fff', fontSize: 22 }} />
+                    </TouchableOpacity>
 
                     {
                         !initMap && mapRegion.latitude != null? (
@@ -166,6 +186,7 @@ function Home({navigation,route}) {
                                     <Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>
 
                                 </MapView.Marker>
+
 
                                 {
                                     homeAds ?

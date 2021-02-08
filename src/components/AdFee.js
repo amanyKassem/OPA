@@ -98,7 +98,7 @@ function AdFee({navigation , route}) {
 
 
                         {
-                            pathName === 'contactUs' ?
+                            pathName === 'questions' ?
                                 null :
                                 <TouchableOpacity onPress={() => navigation.navigate('payMethods',{
                                     features,
