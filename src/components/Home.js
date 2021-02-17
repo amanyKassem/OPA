@@ -167,7 +167,7 @@ function Home({navigation,route}) {
                     </View>
                     <TouchableOpacity onPress={() => getCurrentLocation()}
                                       style={[styles.flexCenter,styles.Radius_5, styles.icon40, styles.bg_gray ,
-                                          { padding: 10 , position:'absolute' , bottom:75 , left:15 , zIndex:1}]}>
+                                          { padding: 10 , position:'absolute' , bottom:isIOS?100 : 75 , left:15 , zIndex:1}]}>
                         <Icon type='Ionicons' name='locate' style={{ color: '#fff', fontSize: 22 }} />
                     </TouchableOpacity>
 

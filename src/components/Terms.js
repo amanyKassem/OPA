@@ -68,7 +68,7 @@ function Terms({navigation , route}) {
 
                     {
                         terms?
-                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14,styles.alignStart , {lineHeight:22}]}>
+                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14,styles.alignStart , {lineHeight:22,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                                 {terms.terms}
                             </Text>
                             :

@@ -8,6 +8,8 @@ import {DeleteAdImage} from '../actions';
 import Header from '../common/Header';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import * as FileSystem from "expo-file-system";
+
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -44,9 +46,10 @@ function AdImgs({navigation , route}) {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        base64   = [];
        if ( route.params && images ){
             setPhotos(images)
-            console.log(photos)
+            // console.log(photos)
         }
        else{
            console.log('kkkkkk')
@@ -55,22 +58,38 @@ function AdImgs({navigation , route}) {
     }, [photos]);
 
 
-    function confirmDelete (imgId , i) {
+    function confirmDelete (imgId , i , isNew) {
         photos.splice(i, 1);
         setPhotos([...photos]);
 
         if(pathName === 'editAd' && imgId){
             // delete image in edit ad
-            // msh sh3'ala saaaa7 byrg3 l image elly etms7t tany aked L moshkla fe l id ^_^
-            dispatch(DeleteAdImage(lang , imgId , token))
-            // base64.splice(i , 1);
+
+            if(isNew !== false){
+                // alert('ll')
+                // base64.splice(i , 1);
+            }else{
+                // alert('base')
+                dispatch(DeleteAdImage(lang , imgId , token))
+            }
         } else{
             // delete image in add ad
-            base64.splice(i , 1);
+            // base64.splice(i , 1);
         }
-        console.log('base64',base64)
-        console.log('photos',photos)
+        // console.log('base64',base64)
+        // console.log('photos',photos)
     };
+
+    async function convertToBase64(){
+        for (let i=0; i < photos.length; i++){
+            if(photos[i].new){
+                let imageURL = photos[i].image;
+                await FileSystem.readAsStringAsync(imageURL, { encoding: 'base64' }).then((base) => {
+                    base64.push(base);
+                })
+            }
+        }
+    }
 
 
     function renderUploadImgs() {
@@ -78,10 +97,10 @@ function AdImgs({navigation , route}) {
        for (let i = 0; i < 7; i++) {
            if(i === 0){
               imgBlock.push(
-                  <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
+                  <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i , photos && photos[i] ? photos[i].new : null)} style={[styles.bg_babyblue , styles.Width_100 , styles.height_120 , styles.flexCenter, styles.marginBottom_15]}>
                       {
                           photos[i]?
-                              <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                              <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i,photos && photos[i] ? photos[i].new : null)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                   <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                               </TouchableOpacity>
                               :
@@ -93,11 +112,11 @@ function AdImgs({navigation , route}) {
               )
            }else{
                imgBlock.push(
-                   <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
+                   <TouchableOpacity key={i} onPress={() => _pickImage(photos && photos[i] ? photos[i].id : null,i , photos && photos[i] ? photos[i].new : null)} style={[styles.bg_light_gray,styles.Width_48 , styles.height_100 , styles.flexCenter
                        , styles.borderGray, styles.marginBottom_15, {borderStyle: 'dashed', borderRadius: 1}]}>
                        {
                            photos[i]?
-                               <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
+                               <TouchableOpacity onPress={() => confirmDelete(photos && photos[i] ? photos[i].id : null,i ,photos && photos[i] ? photos[i].new : null)} style={[styles.bg_mstarda , styles.Radius_50 , {position:'absolute' , right:5 , top:5 , zIndex:1 , padding:5}]}>
                                    <Image source= {require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
                                </TouchableOpacity>
                                :
@@ -118,7 +137,7 @@ function AdImgs({navigation , route}) {
 
     };
 
-    const _pickImage = async (id ,i) => {
+    const _pickImage = async (id ,i , isNew) => {
         askPermissionsAsync();
 
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -130,54 +149,64 @@ function AdImgs({navigation , route}) {
         if (!result.cancelled) {
             let tempPhotos = photos;
             if(photos[i]){
-                tempPhotos[i] = { id: i, image: result.uri};
-                base64[i]=result.base64;
+                tempPhotos[i] = { id: i, image: result.uri, new: true};
+             //   base64[i]=result.base64;
                 if(pathName === 'editAd' && id){
                     // replacement existed image in edit ad
-                    // de sh3'alaaa saaa7 lma y3ml t3del 3la l soraaa elly rag3a enma lw 3dl 3la sora lsa mdafa btfdl mwgoda ' emojii byltom'
-                    dispatch(DeleteAdImage(lang , id , token))
+
+                    if(isNew !== false) {
+                      //  alert('new')
+                    //    base64.splice(i , 1);
+                    }else {
+                     //   alert('old')
+                        dispatch(DeleteAdImage(lang , id , token))
+                    }
                 }
             }else{
-                tempPhotos.push({ id: i, image: result.uri});
-                base64.push(result.base64);
+             //   alert('bye')
+                tempPhotos.push({ id: i, image: result.uri, new: true});
+              //  base64.push(result.base64);
             }
 
             setPhotos([...tempPhotos]);
             console.log('tempPhotos', photos , 'PhotosNew' ,tempPhotos)
-            // console.log('base64',base64)
+            console.log('base64',base64)
         }
     };
 
     function setImages(){
-        base64 = base64.filter(function (el) {
-            return el != null;
-        });
+        // base64 = base64.filter(function (el) {
+        //     return el != null;
+        // });
 
-        navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
-            {
-                featuers,
-                editFeatuers,
-                category_id,
-                Latitude,
-                Longitude,
-                address,
-                rent_id,
-                type_id,
-                hall,
-                floor,
-                rooms,
-                age,
-                bathroom,
-                pathName,
-                adDetails,
-                price,
-                space,
-                meter_price,
-                street_view,
-                ad_id,
-                images : base64,
-                imagesUrl : photos
-            })
+        convertToBase64().then(() => {
+            navigation.navigate(featuers.length > 0 ? 'detailsAdded' : 'basicDetails' ,
+                {
+                    featuers,
+                    editFeatuers,
+                    category_id,
+                    Latitude,
+                    Longitude,
+                    address,
+                    rent_id,
+                    type_id,
+                    hall,
+                    floor,
+                    rooms,
+
+                    age,
+                    bathroom,
+                    pathName,
+                    adDetails,
+                    price,
+                    space,
+                    meter_price,
+                    street_view,
+                    ad_id,
+                    images : base64,
+                    imagesUrl : photos
+                })
+        })
     }
 
 

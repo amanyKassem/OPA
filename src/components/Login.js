@@ -49,8 +49,10 @@ function Login({navigation}) {
         AsyncStorage.setItem('deviceID', deviceId);
     };
 
+
     useEffect(() => {
-        getDeviceId()
+        setTimeout(() => getDeviceId(), 1000)
+
     }, []);
 
     useEffect(() => {
