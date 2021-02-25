@@ -45,6 +45,20 @@ function RealEstateDet({navigation,route}) {
     const constructionDetailesLoader = useSelector(state => state.constructionDetailes.loader);
     const [screenLoader , setScreenLoader ] = useState(true);
 
+
+    const [tabType, setTabType] = useState('0');
+
+    let mapRef = useRef(null);
+    const [city, setCity] = useState('');
+    const [mapRegion, setMapRegion] = useState({
+        latitude: 31.2587 ,
+        longitude:32.2988,
+        latitudeDelta ,
+        longitudeDelta
+    });
+
+    const [initMap, setInitMap] = useState(true);
+
     const dispatch = useDispatch();
 
     const fetchData = async () => {
@@ -109,20 +123,6 @@ function RealEstateDet({navigation,route}) {
     function handleVolume() {
         setMute(!mute)
     }
-
-
-    const [tabType, setTabType] = useState('0');
-
-    let mapRef = useRef(null);
-    const [city, setCity] = useState('');
-    const [mapRegion, setMapRegion] = useState({
-        latitude: 31.2587 ,
-        longitude:32.2988,
-        latitudeDelta ,
-        longitudeDelta
-    });
-
-    const [initMap, setInitMap] = useState(true);
 
 
     function _linkGoogleMap(lat, lng){
@@ -202,15 +202,25 @@ function RealEstateDet({navigation,route}) {
 
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_14,styles.marginBottom_10, styles.alignStart]}>{ i18n.t('companyLoca') }</Text>
                         {
-                            constructionDetailes && !initMap && mapRegion.latitude != null? (
+                            constructionDetailes && !initMap && constructionDetailes.Latitude? (
                                 <MapView
                                     ref={mapRef}
                                     style={{ width: '100%', height: 200 , flex:1 }}
-                                    initialRegion={mapRegion}>
+                                    initialRegion={{
+                                        latitude: constructionDetailes.Latitude,
+                                        longitude: constructionDetailes.Longitude,
+                                        latitudeDelta,
+                                        longitudeDelta
+                                    }}>
                                     <MapView.Marker
                                         // draggable
-                                        coordinate={mapRegion}
-                                        onPress={()=> _linkGoogleMap( mapRegion.latitude , mapRegion.longitude)}
+                                        coordinate={{
+                                            latitude: constructionDetailes.Latitude,
+                                            longitude: constructionDetailes.Longitude,
+                                            latitudeDelta,
+                                            longitudeDelta
+                                        }}
+                                        onPress={()=> _linkGoogleMap( constructionDetailes.Latitude , constructionDetailes.Longitude)}
                                         // onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
                                     >
                                         <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>

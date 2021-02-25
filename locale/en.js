@@ -350,7 +350,7 @@ const en = {
     'website'                   : 'Website',
     'companyData'               : 'Company data',
     'preJob'                    : 'previous jobs',
-    'title'                  : 'Title',
+    'title'                     : 'Title',
     'title_ar'                  : 'Title in arabic',
     'title_en'                  : 'Title in english',
     'street_view'               : 'Street view',
