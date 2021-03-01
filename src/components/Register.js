@@ -163,12 +163,12 @@ function Register({navigation , route}) {
     let image = userImage;
 
     return (
-         <Container style={[styles.bg_gray]}>
+         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth]}>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.marginTop_60 , styles.directionRow , {marginLeft:25}]}>
-                    <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform, {marginRight:5}]} resizeMode={'contain'} />
+                    <Image source={require('../../assets/images/back_blueblack.png')} style={[styles.icon25, styles.transform, {marginRight:5}]} resizeMode={'contain'} />
                     <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('createAcc') }</Text>
                 </TouchableOpacity>
 
@@ -183,14 +183,14 @@ function Register({navigation , route}) {
                             <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('username') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_gray]}>{ i18n.t('username') }</Label>
                                     <Input style={[styles.input]}
                                            onChangeText={(username) => setUsername(username)}
                                     />
                                 </Item>
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('phone') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_gray]}>{ i18n.t('phone') }</Label>
                                     <Input style={[styles.input]}
                                            onChangeText={(phone) => setPhone(phone)}
                                            keyboardType={'number-pad'}
@@ -199,7 +199,7 @@ function Register({navigation , route}) {
 
 
                                 <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_White, {left:0}]}>{ i18n.t('country') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_gray, {left:0}]}>{ i18n.t('country') }</Label>
 
                                     <RNPickerSelect
                                         style={{
@@ -237,7 +237,7 @@ function Register({navigation , route}) {
                                 </View>
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('password') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_gray]}>{ i18n.t('password') }</Label>
                                     <Input style={[styles.input]}
                                            onChangeText={(password) => setPassword(password)}
                                            secureTextEntry
@@ -245,7 +245,7 @@ function Register({navigation , route}) {
                                 </Item>
 
                                 <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('confirmPass') }</Label>
+                                    <Label style={[styles.label, styles.textRegular ,styles.text_gray]}>{ i18n.t('confirmPass') }</Label>
                                     <Input style={[styles.input]}
                                            onChangeText={(confirmPass) => setConfirmPass(confirmPass)}
                                            secureTextEntry
@@ -257,7 +257,7 @@ function Register({navigation , route}) {
                                 <TouchableOpacity onPress={() => navigation.navigate('terms')}
                                                   style={[styles.marginBottom_20 , styles.marginTop_5  , styles.directionRowCenter, styles.alignStart,{left:-8}]}>
                                     <CheckBox style={[styles.checkBox]} onPress={() => setIsChecked(!isChecked)} checked={isChecked} color={COLORS.babyblue}/>
-                                    <Text style={[styles.textRegular , styles.text_White , styles.textDecoration , styles.textSize_14]}>{ i18n.t('agreeTo') }</Text>
+                                    <Text style={[styles.textRegular , styles.text_gray , styles.textDecoration , styles.textSize_14]}>{ i18n.t('agreeTo') }</Text>
                                 </TouchableOpacity>
 
 

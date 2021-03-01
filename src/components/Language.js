@@ -34,15 +34,15 @@ function Language({}) {
 
 
     return (
-         <Container style={[styles.bg_gray]}>
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
+         <Container>
+            <Content contentContainerStyle={[styles.bgFullWidth]}>
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_45]}>
 
                     <Image source={require('../../assets/images/logo.png')} style={[styles.icon160 , styles.marginBottom_80 , styles.SelfCenter , styles.marginTop_60]} resizeMode={'contain'} />
 
 
                     <TouchableOpacity onPress={() => selectLang('ar')} style={[styles.chooseLang , styles.directionRowSpace , styles.marginBottom_30 , styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_14 , styles.bg_gray , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>العربية</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.bg_White , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>العربية</Text>
                         <Image source={require('../../assets/images/saudi_flag.png')} style={[styles.icon25 , styles.marginTop_5]} resizeMode={'contain'} />
                         {
                             lang === 'ar' ?
@@ -53,7 +53,7 @@ function Language({}) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => selectLang('en')} style={[styles.chooseLang , styles.directionRowSpace , styles.marginBottom_30 , styles.paddingHorizontal_15]}>
-                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_14 , styles.bg_gray , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>English</Text>
+                        <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14 , styles.bg_White , styles.paddingHorizontal_10 , {position:'absolute' ,top:-12 , left:0}]}>English</Text>
                         <Image source={require('../../assets/images/en_flag.png')} style={[styles.icon25 , styles.marginTop_5]} resizeMode={'contain'} />
                         {
                             lang === 'en' ?

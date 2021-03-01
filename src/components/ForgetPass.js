@@ -62,12 +62,12 @@ function ForgetPass({navigation}) {
     }
 
     return (
-         <Container style={[styles.bg_gray]}>
+         <Container>
             {renderLoader()}
-            <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
+            <Content contentContainerStyle={[styles.bgFullWidth]}>
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.marginTop_60 , {marginLeft:25}]}>
-                    <Image source={require('../../assets/images/back.png')} style={[styles.icon25, styles.transform]} resizeMode={'contain'} />
+                    <Image source={require('../../assets/images/back_blueblack.png')} style={[styles.icon25, styles.transform]} resizeMode={'contain'} />
                 </TouchableOpacity>
 
                 <View style={[styles.position_R , styles.bgFullWidth, styles.Width_100 , styles.paddingHorizontal_45]}>
@@ -78,7 +78,7 @@ function ForgetPass({navigation}) {
                         <Form style={[styles.Width_100 , styles.flexCenter]}>
 
                             <Item style={[styles.item]}>
-                                <Label style={[styles.label, styles.textRegular ,styles.text_White]}>{ i18n.t('phone') }</Label>
+                                <Label style={[styles.label, styles.textRegular ,styles.text_gray8]}>{ i18n.t('phone') }</Label>
                                 <Input style={[styles.input]}
                                        onChangeText={(phone) => setPhone(phone)}
                                        keyboardType={'number-pad'}

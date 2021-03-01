@@ -37,7 +37,7 @@ function MyAds({navigation}) {
     }, [navigation , authUserAdsLoader]);
 
 
-    function Item({ title ,location , price , img , space , desc , image , id, index }) {
+    function Item({ title ,location , price  , space , desc , image , id, index }) {
         return (
             <TouchableOpacity onPress={() => navigation.navigate('adDetails' , {ad_id:id})} style={[styles.notiCard ,styles.marginBottom_10,{ borderLeftColor: index % 2 === 0 ? COLORS.green : COLORS.orange}]}>
                 <Image source={{uri:image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />

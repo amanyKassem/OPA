@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, Vibration, I18nManager} from "react-native";
+import {View, Text, Image, TouchableOpacity, Dimensions, Vibration, I18nManager, ActivityIndicator} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -23,6 +23,7 @@ function Home({navigation,route}) {
     const [search, setSearch] = useState('');
     const [popInfo, setPopInfo] = useState(null);
     const [showAd, setShowAd] = useState(false);
+    const [loader, setLoader] = useState(true);
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const homeAds = useSelector(state => state.homeAds.homeAds);
@@ -85,10 +86,22 @@ function Home({navigation,route}) {
         return unsubscribe;
     }, [navigation , homeAdsLoader]);
 
-
+    function renderLoader(){
+        if (loader) {
+            return (
+                <View style={[styles.loading, styles.flexCenter, {height: '100%'}]}>
+                    <Image source={require('../../assets/images/logo.png')}
+                           style={[styles.icon130, styles.marginBottom_20, styles.SelfCenter]} resizeMode={'contain'}/>
+                </View>
+            );
+        }
+    }
 
     useEffect(() => {
         Notifications.addListener(handleNotification);
+        setTimeout(function () {
+            setLoader(false)
+        }, 2000);
     }, []);
 
     function handleNotification(notification) {
@@ -135,6 +148,7 @@ function Home({navigation,route}) {
 
     return (
         <Container style={[styles.bg_gray]}>
+            {renderLoader()}
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
 
                 <Header navigation={navigation} title={ i18n.t('home') }/>

@@ -1082,7 +1082,7 @@ const styles = ({
     babyblueBtn:{
         width:'100%',
         height:45,
-        backgroundColor:COLORS.babyblue,
+        backgroundColor:COLORS.gray,
         justifyContent:'center',
         alignItems:'center',
     },
@@ -1116,7 +1116,7 @@ const styles = ({
         left: 7,
         paddingRight:10,
         paddingLeft:10,
-        backgroundColor: COLORS.gray,
+        backgroundColor: '#fff',
         alignSelf: 'flex-start',
         fontFamily: 'cairo',
         fontSize: 14,
@@ -1132,7 +1132,7 @@ const styles = ({
         position:'absolute' ,
     },
     input : {
-        color               : '#fff',
+        color               : COLORS.gray,
         paddingRight        : 15,
         paddingLeft         : 15,
         textAlign           : I18nManager.isRTL ? 'right' : 'left',
