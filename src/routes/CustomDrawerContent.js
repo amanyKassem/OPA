@@ -56,17 +56,17 @@ export default function CustomDrawerContent(props) {
                 <View style={[styles.bg_gray , { width:56 ,  position:'absolute',left:0 , top:0,bottom:0}]}/>
 
                 <TouchableOpacity  onPress={() => props.navigation.navigate('tabs', {screen: 'profile'})}
-                                   style={[styles.flexCenter ,{ position:'absolute' ,top:-40 , left:15}]}>
+                                   style={[styles.directionBasicRow ,{ position:'absolute' ,top:-30 , left:15 , alignItems:'flex-end'}]}>
                     <Image source={{uri:user.avatar}}
                            style={[styles.icon80,styles.Radius_15 ,{ borderWidth:5 , borderColor:'#fff'}]} resizeMode={'cover'} />
+                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15 , {marginLeft:15 , marginBottom:10}]}>{user.name}</Text>
                     <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
                         <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
                     </TouchableOpacity>
-                    <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15, {marginTop:5}]}>{user.name}</Text>
                 </TouchableOpacity>
 
                 <DrawerItem
-                    style={[styles.marginTop_65 , styles.justifyCenter , {marginHorizontal:0 }]}
+                    style={[styles.marginTop_35 , styles.justifyCenter , {marginHorizontal:0 }]}
                     label={
                         ({ focused, color }) => {
                             return (

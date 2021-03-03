@@ -30,6 +30,10 @@ function NewAddedDetails({navigation , route}) {
     const bathroom = route.params.bathroom;
     const floor = route.params.floor;
     const age = route.params.age;
+    const price = route.params ? route.params.price : null;
+    const space = route.params ? route.params.space : null;
+    const meter_price = route.params ? route.params.meter_price : null;
+    const street_view = route.params ? route.params.street_view : null;
 
 
     const [basicDetails, setBasicDetails] = useState('');
@@ -37,16 +41,17 @@ function NewAddedDetails({navigation , route}) {
     const [isChecked, setIsChecked] = useState(false);
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
-    const features = useSelector(state => state.features.features);
-    const featuresLoader = useSelector(state => state.features.loader);
+    // const features = useSelector(state => state.features.features);
+    // const featuresLoader = useSelector(state => state.features.loader);
+    const features = route.params.featuers;
 
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const dispatch = useDispatch();
 
-    function fetchData() {
-        dispatch(getFeatures(lang , token));
-    }
+    // function fetchData() {
+    //     dispatch(getFeatures(lang , token));
+    // }
 
     function checkArr(id){
         if(!checkedArr.includes(id)){
@@ -60,14 +65,14 @@ function NewAddedDetails({navigation , route}) {
         }
     }
 
-    useEffect(() => {
-        fetchData();
-        const unsubscribe = navigation.addListener('focus', () => {
-            fetchData();
-        });
-
-        return unsubscribe;
-    }, [navigation , featuresLoader]);
+    // useEffect(() => {
+    //     fetchData();
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         fetchData();
+    //     });
+    //
+    //     return unsubscribe;
+    // }, [navigation , featuresLoader]);
 
     useEffect(() => {
         setIsSubmitted(false)

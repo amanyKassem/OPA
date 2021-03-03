@@ -63,20 +63,20 @@ function AdverInfo({navigation}) {
                                 <Form style={[styles.Width_100 , styles.directionColumnSpace , {flex:1}]}>
 
                                     <View style={[styles.Width_100]}>
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('facebook') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(facebook) => setFacebook(facebook)}
-                                                   value={facebook}
-                                            />
-                                        </Item>
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('twitter') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(twitter) => setTwitter(twitter)}
-                                                   value={twitter}
-                                            />
-                                        </Item>
+                                        {/*<Item style={[styles.item]}>*/}
+                                        {/*    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('facebook') }</Label>*/}
+                                        {/*    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
+                                        {/*           onChangeText={(facebook) => setFacebook(facebook)}*/}
+                                        {/*           value={facebook}*/}
+                                        {/*    />*/}
+                                        {/*</Item>*/}
+                                        {/*<Item style={[styles.item]}>*/}
+                                        {/*    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('twitter') }</Label>*/}
+                                        {/*    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
+                                        {/*           onChangeText={(twitter) => setTwitter(twitter)}*/}
+                                        {/*           value={twitter}*/}
+                                        {/*    />*/}
+                                        {/*</Item>*/}
 
                                         <Item style={[styles.item]}>
                                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>

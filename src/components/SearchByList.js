@@ -45,7 +45,7 @@ function SearchByList({navigation}) {
         }else {
             const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
             userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
-            dispatch(getHomeAds(lang , latitude ,longitude , token))
+            dispatch(getHomeAds(lang , latitude ,longitude , null , token))
         }
         let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
         getCity    += userLocation.latitude + ',' + userLocation.longitude;

@@ -3,27 +3,31 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="7f101180-1951-4d0e-82bb-87b00fe5ccb8" name="salaty" url="http://host.aait-sa.com">
-        <fileTransfer host="host.aait-sa.com" port="1289" rootFolder="/home/sltiiaa1/public_html" accessType="SFTP">
+        <fileTransfer rootFolder="/home/sltiiaa1/public_html" accessType="SFTP" host="host.aait-sa.com" port="1289" sshConfigId="edb90cb4-e7dc-4900-a6b4-4772aff0e3f3" sshConfig="salaty">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="1289" />
         </fileTransfer>
       </webServer>
       <webServer id="bed435ff-7d76-4733-8f12-39793b7adba5" name="msara" url="http://masarah.aait-sa.com">
-        <fileTransfer host="masarah.aait-sa.com" port="1289" rootFolder="/home/masaraha/public_html" accessType="SFTP">
+        <fileTransfer rootFolder="/home/masaraha/public_html" accessType="SFTP" host="masarah.aait-sa.com" port="1289" sshConfigId="b981cd3c-afee-4cd0-adbe-24697945922b" sshConfig="msara">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="1289" />
         </fileTransfer>
       </webServer>
       <webServer id="ffbd2536-7d5b-4802-ad2e-8193870c9c57" name="Opa" url="http://opaapp.aait-sa.com">
-        <fileTransfer host="opaapp.aait-sa.com" port="1289" rootFolder="/home/opaappaa/public_html" accessType="SFTP">
+        <fileTransfer rootFolder="/home/opaappaa/public_html" accessType="SFTP" host="opaapp.aait-sa.com" port="1289" sshConfigId="cb7f2ecd-218a-4f63-b9a8-ebf59551792c" sshConfig="Opa">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="1289" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="2679f987-9085-4d07-957a-4dffbb6fe100" name="handmade" url="http://handmade.aait-sa.com">
+        <fileTransfer host="handmade.aait-sa.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
         </fileTransfer>
       </webServer>
     </option>

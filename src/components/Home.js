@@ -101,7 +101,7 @@ function Home({navigation,route}) {
         Notifications.addListener(handleNotification);
         setTimeout(function () {
             setLoader(false)
-        }, 2000);
+        }, 3000);
     }, []);
 
     function handleNotification(notification) {
@@ -230,12 +230,12 @@ function Home({navigation,route}) {
 
                     {
                         showAd && popInfo?
-                            <View style={[styles.paddingHorizontal_15, styles.Width_100 , {position:'absolute' , bottom:75 , zIndex:1}]}>
+                            <View style={[styles.paddingHorizontal_10, styles.Width_100 , {position:'absolute' , bottom:70 , zIndex:1}]}>
                                 <TouchableOpacity onPress={() => setShowAd(false)} style={[styles.bg_gray,styles.centerContext , styles.Radius_50,styles.alignEnd,styles.icon25]}>
                                     <Image source={require("../../assets/images/close.png")} style={[styles.icon10]} resizeMode={'contain'} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigation.navigate('listDetails', {ad_id:popInfo.id})} style={[styles.popCard , styles.bg_White,
-                                    { borderLeftColor: COLORS.gray, minHeight:100}]}>
+                                    { borderLeftColor: COLORS.mstarda, minHeight:100}]}>
                                     <Image source={{uri:popInfo.image}} style={[styles.width_120,styles.heightFull,styles.Radius_20,{left:-3}]} resizeMode={'cover'} />
                                     <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                                         <View style={[styles.directionRowSpace , styles.Width_100]}>
