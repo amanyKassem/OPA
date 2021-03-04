@@ -29,7 +29,7 @@ function GetLocation({navigation, route}) {
     const [initMap, setInitMap] = useState(true);
 
     const fetchData = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        let { status } = await Location.requestPermissionsAsync();
         let userLocation = {};
         if (status !== 'granted') {
             alert('صلاحيات تحديد موقعك الحالي ملغاه');

@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "OPA",
+    "name": "أعمال",
     "slug": "OPA",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.3",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -34,7 +34,7 @@
     },
     "android": {
       "package": "aait.opa.com",
-      "versionCode": 4,
+      "versionCode": 6,
       "permissions": [
         "CAMERA",
         "RECORD_AUDIO",
@@ -42,6 +42,7 @@
         "READ_PHONE_STATE",
         "NOTIFICATIONS",
         "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
         "MEDIA_LIBRARY",
         "MEDIA_LIBRARY_WRITE_ONLY",
         "READ_EXTERNAL_STORAGE",
@@ -50,7 +51,7 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyBQu-aDY--uY14s4U3ok-XwwqhsnhLFe5Q"
+          "apiKey": "AIzaSyDDGCkEv3jHUzSA1FVI26h_OadsG297Pe8"
         }
       },
       "userInterfaceStyle": "light"
