@@ -195,7 +195,7 @@ function Home({navigation,route}) {
                                 <MapView.Marker
                                     coordinate={mapRegion}
                                 >
-                                    <Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                    {/*<Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>*/}
 
                                 </MapView.Marker>
 
@@ -217,7 +217,7 @@ function Home({navigation,route}) {
                                                         </View>
                                                         <View style={[styles.talkBubbleTriangle]}/>
                                                     </View>
-                                                    <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                                    {/*<Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>*/}
                                                 </View>
                                             </MapView.Marker>
                                         ))

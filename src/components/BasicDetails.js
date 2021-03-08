@@ -84,7 +84,7 @@ function BasicDetails({navigation , route}) {
                             </View>
                             {
                                 title_ar != ''  && buildDesc != ''?
-                                    <TouchableOpacity onPress={() => navigation.navigate('adFee'
+                                    <TouchableOpacity onPress={() => navigation.navigate('reviewAd'
                                         ,{
                                             features,
                                             category_id,
