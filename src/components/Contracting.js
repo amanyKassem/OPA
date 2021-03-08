@@ -26,7 +26,7 @@ function Contracting({navigation}) {
     const dispatch = useDispatch();
 
     function fetchData(){
-        dispatch(getContractingCategories(lang , 2, token));
+        dispatch(getContractingCategories(lang , null, token));
         dispatch(getCityContracting(lang , 3, token));
     }
 
@@ -68,12 +68,12 @@ function Contracting({navigation}) {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={[styles.directionRowSpace , styles.marginTop_15, styles.Width_100]}>
+                    <View style={[styles.rowGroup , styles.marginTop_15, styles.Width_100 , styles.marginBottom_80]}>
                         {
                             contractingCat ?
                             contractingCat.map((contrCat, i) => {
                                 return (
-                                    <TouchableOpacity key={i} onPress={() => navigation.navigate('realEstateComp',{category_id:contrCat.id , type:contrCat.type , title:contrCat.title})} style={[styles.Width_48, styles.height_130]}>
+                                    <TouchableOpacity key={i} onPress={() => navigation.navigate('realEstateComp',{category_id:contrCat.id , type:contrCat.type , title:contrCat.title})} style={[styles.Width_48, styles.height_130 , styles.marginBottom_15]}>
                                         <View style={[styles.imgOverLay]}/>
                                         <View style={[styles.flexCenter , styles.heightFull,{position:'absolute' , top :0,zIndex:1}]}>
                                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_12, styles.textCenter ]}>{contrCat.title}</Text>

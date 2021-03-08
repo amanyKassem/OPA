@@ -4,6 +4,7 @@ import COLORS from '../../src/consts/colors'
 const width     = Dimensions.get('window').width;
 const height    = Dimensions.get('window').height;
 const isIOS      = Platform.OS === 'ios';
+const IS_IPHONE_X 	= (height === 812 || height === 896) && Platform.OS === 'ios';
 
 const styles = ({
 
@@ -1506,6 +1507,28 @@ const styles = ({
         position:'absolute',
         bottom:-10,
         right:103
+    },
+    mapInputContainer:{
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        width: '85%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        position: 'absolute',
+        zIndex: 1,
+        top: IS_IPHONE_X ? 97 : 115,
+        height:50
+    },
+    mapInput: {
+        color               : COLORS.gray,
+        // paddingRight        : 15,
+        // paddingLeft         : 15,
+        textAlign           : I18nManager.isRTL ? 'right' : 'left',
+        fontSize            : 14,
+        height              : 45,
+        width               :'100%',
     }
 });
 

@@ -1,6 +1,6 @@
 import React, { useState , useEffect , useRef} from "react";
-import {View, Text, Image, TouchableOpacity , Switch} from "react-native";
-import {Container, Content, Form, Input,} from 'native-base'
+import {View, Text, Image, TouchableOpacity , ActivityIndicator , ScrollView} from "react-native";
+import {Container, Content, Form, Icon, Input, Item,} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import * as Permissions from 'expo-permissions';
@@ -9,144 +9,191 @@ import axios from "axios";
 import MapView from 'react-native-maps';
 import COLORS from "../consts/colors";
 import Header from '../common/Header';
+import {useSelector, useDispatch} from 'react-redux';
 
-const latitudeDelta = 0.0922;
-const longitudeDelta = 0.0421;
+const latitudeDelta= 0.422;
+const longitudeDelta= 0.121;
 const isIOS = Platform.OS === 'ios';
 
 function GetLocation({navigation, route}) {
 
-    const pathName = route.params.pathName;
-    let mapRef = useRef(null);
-    const [city, setCity] = useState('');
-    const [mapRegion, setMapRegion] = useState({
-        latitude: 31.2587 ,
-        longitude:32.2988,
-        latitudeDelta ,
+    const { latitude , longitude , address , pathName} = route.params ?? null
+    const [initMap, setInitMap]	            = useState(true);
+    const lang                              = useSelector(state => state.lang.lang);
+    const token                             = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
+    let mapRef 								= useRef(null);
+    const [userLocation, setUserLocation]   = useState([{
+        latitude: '',
+        longitude: '',
+        latitudeDelta,
         longitudeDelta
-    });
+    }]);
+    const [search, setSearch]   			= useState('');
+    const [searchResult, setSearchResult]   = useState([]);
+    const [selectedLocation, setLocation]   = useState(null);
+    const [searchHeight, setSearchHeight]   = useState(70);
 
-    const [initMap, setInitMap] = useState(true);
-
-    const fetchData = async () => {
-        let { status } = await Location.requestPermissionsAsync();
-        let userLocation = {};
-        if (status !== 'granted') {
-            alert('صلاحيات تحديد موقعك الحالي ملغاه');
-        }else {
-            const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
-            if (route.params && route.params.latitude){
-                userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestPermissionsAsync();
+            let location = {};
+            if (status !== 'granted') {
+                alert('Permission to access location was denied');
             } else {
-                userLocation = { latitude, longitude , latitudeDelta , longitudeDelta};
-            }
-            setInitMap(false);
-            setMapRegion(userLocation);
-            isIOS ? mapRef.current.animateToRegion(userLocation, 1000) : false;
-        }
-        let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-        getCity    += userLocation.latitude + ',' + userLocation.longitude;
-        getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
-        console.log("getCity  " , getCity)
-        // ReactotronConfig.log(getCity);
-        try {
-            const { data } = await axios.get(getCity);
-            setCity(data.results[0].formatted_address)
-            // console.log("city  " , data.results[0].formatted_address)
-            // console.log("city  " , city)
-        } catch (e) {
-            console.log(e);
-        }
-    };
+                if (route.params && route.params.latitude){
+                    location = { latitude, longitude , latitudeDelta , longitudeDelta};
+                    setUserLocation(location);
+                    setSearch(address)
+                }else{
+                    const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
+                    location = { latitude, longitude , latitudeDelta , longitudeDelta};
+                    setUserLocation(location);
+                    setSearch('')
+                }
 
-    useEffect(  () => {
-        fetchData();
+                setInitMap(false);
+            }
+
+        })();
     }, []);
 
-    useEffect(  () => {
-    }, [city , mapRegion ]);
+    async function _handleMapRegionChange(e){
 
+        // searchRef.current.blur()
 
-
-    const _handleMapRegionChange  = async (mapCoordinate) =>  {
-
-        setMapRegion({ latitude: mapCoordinate.latitude, longitude: mapCoordinate.longitude, latitudeDelta, longitudeDelta});
+        let formattedItem = {
+            latitude: e.latitude,
+            longitude: e.longitude,
+            latitudeDelta,
+            longitudeDelta
+        };
 
         let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-        getCity += mapCoordinate.latitude + ',' + mapCoordinate.longitude;
-        getCity += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
-
-        console.log('locations data', getCity);
+        getCity    += e.latitude + ',' + e.longitude;
+        getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
 
         try {
             const { data } = await axios.get(getCity);
-            setCity(data.results[0].formatted_address)
-            console.log("city2  " , data.results[0].formatted_address)
-            console.log("city2 " , city)
+            formattedItem  = {
+                latitude:   e.latitude,
+                longitude:  e.longitude,
+                latitudeDelta,
+                longitudeDelta
+            };
+            setSearch(data.results[0].formatted_address)
+            setUserLocation(formattedItem)
+
+            console.log('formattedItem' , formattedItem , 'userLocation' , userLocation)
+        } catch (e) { console.log(e); }
+
+    }
+
+    function setSelectedLocation(item) {
+        const { geometry: { location } } = item;
+
+        const formattedItem = {
+            latitude	: 	location.lat,
+            longitude	: 	location.lng,
+            latitudeDelta,
+            longitudeDelta
+        };
+
+        setSearchResult([]);
+        setSearchHeight(60);
+        console.log('formattedItem' , formattedItem , 'userLocation' , userLocation)
+        setUserLocation(formattedItem);
+
+        mapRef.current.animateToRegion(
+            {
+                latitude: formattedItem.latitude,
+                longitude: formattedItem.longitude,
+                latitudeDelta,
+                longitudeDelta
+            },
+            350
+        );
+    }
+
+    async function onSearch() {
+        let endPoint = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
+        endPoint    += search;
+        endPoint    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=' + lang;
+
+        try {
+            const { data } = await axios.get(endPoint);
+            setSearchResult(data.results);
+            setSearchHeight(270);
 
         } catch (e) {
             console.log(e);
         }
-    };
+    }
+
 
     function getLoc(){
-        console.log("mapRegion button" ,mapRegion);
-        console.log("city3 " , city);
-        if(pathName === 'addOrder'){
-            navigation.navigate('tabs', {
-                screen: 'addOrder',
-                params: { cityName:city , mapRegion},
-            })
-        }else {
-            navigation.navigate('MainStack', {
-                screen:pathName,
-                params: { cityName:city , mapRegion},
-            })
-        }
+
+        navigation.navigate('MainStack', {
+            screen:pathName,
+            params: { cityName:search , mapRegion:userLocation},
+        })
 
     }
     return (
          <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
                 <Header navigation={navigation} title={ i18n.t('locateAd') }/>
+
+                <View style={[styles.mapInputContainer]}>
+                    <Icon type='Entypo' name='location-pin' style={{ color: COLORS.gray, fontSize: 20 }}/>
+                    <Input style={[styles.mapInput , styles.textRegular]} placeholder={i18n.t('search')} value={search} onChangeText={(search) => setSearch(search)} onSubmitEditing={() => onSearch()} />
+                </View>
+
                 <View style={[styles.bgFullWidth ,styles.bg_White,
                     styles.Width_100,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50,overflow:'hidden'}]}>
                     {
-                        !initMap && mapRegion.latitude != null? (
-                            // <MapView
-                            //     ref={mapRef}
-                            //     onRegionChangeComplete={(e) => _handleMapRegionChange(e)}
-                            //     style={{ width: '100%', height: '100%' , flex:1 }}
-                            //     initialRegion={mapRegion}>
-                            //     <MapView.Marker
-                            //         draggable
-                            //         coordinate={mapRegion}
-                            //         onDragEnd={(e) => _handleMapRegionChange(e.nativeEvent.coordinate)}
-                            //     >
-                            //
-                            //         <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 35, height: 35 }}>
-                            //             <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
-                            //         </View>
-                            //
-                            //     </MapView.Marker>
-                            // </MapView>
+                        searchResult && searchResult.length > 0 ?
+                            <View style={{ alignSelf: 'center', width: '86%', maxHeight: 200, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, position: 'absolute', zIndex: 2, top: 85, minHeight: 60 }}>
+                                <TouchableOpacity style={{ position: 'absolute', zIndex: 3, right: -5, top: -1.5 }} onPress={() => setSearchResult([])}>
+                                    <Icon type={'AntDesign'} name={'closecircle'} style={{ color: COLORS.blue }} />
+                                </TouchableOpacity>
+                                <View style={{ alignSelf: 'center', width: '100%', height: 220, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, paddingBottom: 20, backgroundColor: '#fff', borderRadius: 10}}>
+                                    <ScrollView style={{ zIndex: 99999999 }}>
+                                        {
+                                            searchResult.map((item, i) => (
 
-                            <>
-                                <MapView
-                                    ref={mapRef}
-                                    onRegionChangeComplete={(e) => _handleMapRegionChange(e)}
-                                    style={{ width: '100%', height: '100%', flex: 1, }}
-                                    initialRegion={mapRegion} />
+                                                <TouchableOpacity key={i} onPress={() => setSelectedLocation(item)} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#ddd', marginHorizontal: 10, width: '95%', height: 50, alignItems: 'center', alignSelf: 'center', overflow: 'hidden', zIndex: 9999 }}>
+                                                    <Icon type={'Entypo'} name={'location'} style={{ marginHorizontal: 10, color: '#000', fontSize: 16 }}/>
+                                                    <Text style={[ styles.text_gray, styles.textRegular , styles.textSize_14]}>{ (item.formatted_address).substr(0, 40) + '...' }</Text>
+                                                </TouchableOpacity>
+                                            ))
+                                        }
 
-                                <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 35, height: 35 }}>
-                                    <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={{ width: 35, height: 35 }}/>
+                                    </ScrollView>
                                 </View>
-                            </>
-
-                        ) : (<View />)
+                            </View>
+                            :
+                            null
                     }
+
+                    {
+                        !initMap && userLocation.latitude != null ?
+                            <MapView
+                                ref={mapRef}
+                                onRegionChangeComplete={(e) =>  _handleMapRegionChange(e)}
+                                style={{ width: '100%', height: '100%', zIndex: 0 }}
+                                initialRegion={userLocation}
+                            >
+                            </MapView>
+                            :
+                            null
+                    }
+
+                    <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 25, height: 25 }}>
+                        <Image style={{width: 35, height: 35}} resizeMode={'contain'} source={require('../../assets/images/pink_marker_red.png')} />
+                    </View>
                 </View>
+
                 <View style={[{position:'absolute'  , bottom:20 },styles.flexCenter , styles.paddingHorizontal_25 , styles.Width_100]}>
 
                     <TouchableOpacity onPress={() => getLoc()} style={[styles.babyblueBtn , styles.Width_90]}>
@@ -154,9 +201,9 @@ function GetLocation({navigation, route}) {
                             { i18n.t('continue')}
                         </Text>
                     </TouchableOpacity>
+
                 </View>
             </Content>
-
         </Container>
     );
 }

@@ -64,14 +64,14 @@ function Profile({navigation}) {
 
                             <Form style={[styles.Width_80 , styles.flexCenter ,{top:-10}]}>
 
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(advNum) => setAdvNum(advNum)}
-                                           value={userData.phone}
-                                           disabled={true}
-                                    />
-                                </Item>
+                                {/*<Item style={[styles.item]}>*/}
+                                {/*    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('advNum') }</Label>*/}
+                                {/*    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
+                                {/*           onChangeText={(advNum) => setAdvNum(advNum)}*/}
+                                {/*           value={userData.phone}*/}
+                                {/*           disabled={true}*/}
+                                {/*    />*/}
+                                {/*</Item>*/}
 
                                 <Item style={[styles.item]}>
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('adsNum') }</Label>
@@ -82,14 +82,14 @@ function Profile({navigation}) {
                                     />
                                 </Item>
 
-                                <Item style={[styles.item]}>
-                                    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>
-                                    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                           onChangeText={(phone) => setPhone(phone)}
-                                           value={userData.phone}
-                                           disabled={true}
-                                    />
-                                </Item>
+                                {/*<Item style={[styles.item]}>*/}
+                                {/*    <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('phone') }</Label>*/}
+                                {/*    <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
+                                {/*           onChangeText={(phone) => setPhone(phone)}*/}
+                                {/*           value={userData.phone}*/}
+                                {/*           disabled={true}*/}
+                                {/*    />*/}
+                                {/*</Item>*/}
 
                                 <Item style={[styles.item]}>
                                     <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('country') }</Label>

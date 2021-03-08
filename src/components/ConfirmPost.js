@@ -45,10 +45,6 @@ function ConfirmPost({navigation}) {
                     <TouchableOpacity style={[styles.flexCenter]} onPress={() => navigation.navigate('myAds')}>
                         <Image source={require('../../assets/images/success_send_ads.png')} style={[styles.icon200 ]} resizeMode={'contain'} />
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10 , styles.textCenter]}>{ i18n.t('adPosted') }</Text>
-                        {/*<Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , styles.textCenter,{lineHeight:20}]}>*/}
-                            {/*نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص نص*/}
-                            {/*ص نص نص نص نص*/}
-                        {/*</Text>*/}
                     </TouchableOpacity>
 
                 </View>

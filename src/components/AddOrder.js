@@ -86,6 +86,7 @@ function AddOrder({navigation,route}) {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             if (route.params?.cityName) {
+                console.log('route.params.mapRegion' , route.params.mapRegion)
                 setCityName(route.params.cityName.substr(0,30))
                 setMapRegion(route.params.mapRegion)
             }
@@ -96,7 +97,7 @@ function AddOrder({navigation,route}) {
 
 
     function navToLocation () {
-        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'addOrder'})
+        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'addOrder', address:cityName})
     };
 
     return (

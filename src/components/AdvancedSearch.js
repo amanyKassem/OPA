@@ -86,7 +86,7 @@ function AdvancedSearch({navigation,route}) {
 
 
     function navToLocation () {
-        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'advancedSearch'})
+        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'advancedSearch' , address:cityName})
     };
 
     return (
@@ -186,6 +186,7 @@ function AdvancedSearch({navigation,route}) {
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(areaOfBuild) => setAreaOfBuild(areaOfBuild)}
                                    value={areaOfBuild}
+                                   keyboardType={'number-pad'}
                             />
                         </Item>
 
@@ -194,6 +195,7 @@ function AdvancedSearch({navigation,route}) {
                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                    onChangeText={(maxSpace) => setMaxSpace(maxSpace)}
                                    value={maxSpace}
+                                   keyboardType={'number-pad'}
                             />
                         </Item>
 

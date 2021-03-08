@@ -194,8 +194,6 @@ function Home({navigation,route}) {
                                 initialRegion={mapRegion}>
                                 <MapView.Marker
                                     coordinate={mapRegion}
-                                    // title={city}
-                                    // description={'my location'}
                                 >
                                     <Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>
 
@@ -212,13 +210,15 @@ function Home({navigation,route}) {
                                                 // title={marker.title}
                                                 onPress={() => showAdPop(marker)}
                                             >
-                                                <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
-                                                <MapView.Callout tooltip={true} style={[styles.flexCenter]} >
-                                                    <View style={[styles.Radius_15,styles.flexCenter ,styles.bg_gray ,styles.paddingVertical_5 , styles.paddingHorizontal_5,{minWidth:80}]}>
-                                                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_11]}>{marker.price}</Text>
+                                                <View style={[styles.directionColumnCenter]}>
+                                                    <View  style={[styles.flexCenter]} >
+                                                        <View style={[styles.Radius_15,styles.flexCenter ,styles.bg_gray ,styles.paddingVertical_5 , styles.paddingHorizontal_5,{minWidth:80}]}>
+                                                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_11]}>{marker.price}</Text>
+                                                        </View>
+                                                        <View style={[styles.talkBubbleTriangle]}/>
                                                     </View>
-                                                    <View style={[styles.talkBubbleTriangle]}/>
-                                                </MapView.Callout>
+                                                    <Image source={require('../../assets/images/pink_marker_red.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                                </View>
                                             </MapView.Marker>
                                         ))
                                         :

@@ -134,7 +134,7 @@ function EditAd({navigation,route}) {
 
 
     function navToLocation () {
-        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'editAd'})
+        navigation.navigate("getLocation",{latitude:mapRegion.latitude , longitude:mapRegion.longitude,pathName:'editAd', address:cityName})
     };
 
     return (

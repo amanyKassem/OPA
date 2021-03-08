@@ -141,8 +141,8 @@ function AdImgs({navigation , route}) {
         askPermissionsAsync();
 
         let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: [4, 3],
+            allowsEditing: false,
+            // aspect: [4, 3],
             base64:true
         });
 
