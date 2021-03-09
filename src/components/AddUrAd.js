@@ -80,6 +80,20 @@ function AddUrAd({navigation,route}) {
         fetchData();
     }, []);
 
+    useEffect(  () => {
+        setAccType('')
+        setLounges('')
+        setWashrooms('')
+        setRooms('')
+        setFloor('')
+        setBuildAge('')
+        setTotalPrice('')
+        setSpace('')
+        setMeter_price('')
+        setStreet_view('')
+        setServiceType('')
+    }, [buildType]);
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             if (route.params?.cityName) {

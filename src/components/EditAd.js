@@ -119,6 +119,22 @@ function EditAd({navigation,route}) {
         return unsubscribe;
     }, [navigation , adDetailsLoader , adDetails ? adDetails.detailes.Latitude:null]);
 
+
+    useEffect(  () => {
+        setAccType('')
+        setLounges('')
+        setWashrooms('')
+        setRooms('')
+        setFloor('')
+        setBuildAge('')
+        setTotalPrice('')
+        setSpace('')
+        setMeter_price('')
+        setStreet_view('')
+        setServiceType('')
+    }, [buildType]);
+
+
     useEffect(() => {
 
         const unsubscribe = navigation.addListener('focus', () => {
@@ -345,7 +361,7 @@ function EditAd({navigation,route}) {
                                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('meter_price') }</Label>
                                             <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
                                                    onChangeText={(meter_price) => setMeter_price(meter_price)}
-                                                   value={space? space : adDetails.detailes.meter_price}
+                                                   value={meter_price? meter_price : adDetails.detailes.meter_price}
                                                    keyboardType={'number-pad'}
                                             />
                                         </Item>

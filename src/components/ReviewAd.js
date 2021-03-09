@@ -111,7 +111,7 @@ function ReviewAd({navigation , route}) {
                         <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
                                 containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
                             {
-                                imagesUrl?
+                                imagesUrl && imagesUrl.length > 0 ?
                                     imagesUrl.map((img, i) => {
                                         return (
                                             <Image key={i} source={{uri:img.image}}
@@ -119,15 +119,16 @@ function ReviewAd({navigation , route}) {
                                         )
                                     })
                                     :
-                                    null
+                                    <Image source={require('../../assets/images/image_placeholder.png')}
+                                           style={[styles.swiperImg]} resizeMode={'cover'}/>
                             }
 
                         </Swiper>
 
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
                             <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 ]}>{title_ar}</Text>
-                                <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{price}</Text>
+                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , {flex:1}]}>{title_ar}</Text>
+                                <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{price} { i18n.t('RS') }</Text>
                             </View>
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>{address}</Text>
                         </Card>
@@ -135,18 +136,74 @@ function ReviewAd({navigation , route}) {
                     </View>
 
                     <View style={[{top:-30}]}>
-                        <View style={[styles.directionRowSpace , styles.paddingHorizontal_15 ,styles.marginTop_5,
-                            styles.Width_100,{padding:5}]}>
+                        <View style={[styles.directionRow , styles.paddingHorizontal_20 ,styles.marginTop_5,
+                            styles.Width_100,{padding:5 , flexWrap:'wrap'}]}>
+
+                            {
+                                rooms && rooms.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('rooms') } : {rooms}</Text>
+                                    :
+                                    null
+                            }
+
+                            {
+                                hall && hall.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('lounges') } : {hall}</Text>
+                                    :
+                                    null
+                            }
+
+                            {
+                                floor && floor.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('floor') } : {floor}</Text>
+                                    :
+                                    null
+                            }
+
+                            {
+                                age && age.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('buildAge') } : {age}</Text>
+                                    :
+                                    null
+                            }
+
+                            {
+                                bathroom && bathroom.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('bathroom') } : {bathroom}</Text>
+                                    :
+                                    null
+                            }
+
+                            {
+                                space && space.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('space') } : {space}</Text>
+                                    :
+                                    null
+                            }
+
+
+                            {
+                                street_view && street_view.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('street_view') } : {street_view}</Text>
+                                    :
+                                    null
+                            }
+
+
+                            {
+                                meter_price && meter_price.length > 0 ?
+                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('meter_price') } : {meter_price}</Text>
+                                    :
+                                    null
+                            }
 
                             {
                                 checkedArrNames ?
                                     checkedArrNames.map((feature, i) => {
                                         return (
 
-                                            <View key={i} style={[styles.directionRow , styles.marginBottom_10 , {width:'26%'}]}>
-                                                <Text
-                                                    style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature}</Text>
-
+                                            <View key={i} style={[styles.rowGroup , styles.marginBottom_10]}>
+                                                <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{feature}</Text>
                                             </View>
                                         )
                                     })
@@ -159,8 +216,8 @@ function ReviewAd({navigation , route}) {
                             {/*<Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13, {marginRight:10} ]}>{ i18n.t('adNumber') }</Text>*/}
                             {/*<Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13]}>1235</Text>*/}
                         {/*</View>*/}
-                        <View style={[styles.marginTop_10, styles.paddingHorizontal_15]}>
-                            <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('apartSpec') }</Text>
+                        <View style={[styles.marginTop_10, styles.paddingHorizontal_20]}>
+                            {/*<Text style={[styles.textRegular , styles.text_midGray , styles.textSize_13, styles.alignStart]}>{ i18n.t('apartSpec') }</Text>*/}
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12, styles.alignStart
                                 ,{lineHeight:20,writingDirection:I18nManager.isRTL ?'rtl':'ltr'}]}>
                                 {description_ar}

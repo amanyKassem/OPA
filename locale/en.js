@@ -355,6 +355,7 @@ const en = {
     'title_en'                  : 'Title in english',
     'street_view'               : 'Street view',
     'meter_price'               : 'Meter price',
+    'map'                       : 'Map',
 };
 
 export default en;

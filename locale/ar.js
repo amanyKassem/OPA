@@ -356,6 +356,7 @@ const ar = {
     'title_en'                  : 'العنوان بالانجليزي',
     'street_view'               : 'عرض الشارع',
     'meter_price'               : 'سعر المتر',
+    'map'                       : 'الخريطة',
 };
 
 export default ar;

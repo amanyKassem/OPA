@@ -11,7 +11,7 @@ import {
     FlatList,
     ActivityIndicator
 } from "react-native";
-import {Container, Content, Card} from 'native-base'
+import {Container, Content, Card, Icon} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import Header from '../common/Header';
@@ -23,6 +23,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {DeleteAd} from '../actions';
 import axios from "axios";
 import CONST from "../consts";
+import ImageViewer from 'react-native-image-zoom-viewer';
+import {Video} from "expo-av";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -37,6 +39,8 @@ function AdDetails({navigation , route}) {
     const adDetails = useSelector(state => state.adDetails.adDetails);
     const adDetailsLoader = useSelector(state => state.adDetails.loader);
     const [screenLoader , setScreenLoader ] = useState(true);
+    const [showModalImg, setShowModalImg] = useState(false);
+    const [imgUri, setImgUri] = useState(null);
 
     const dispatch = useDispatch();
     function fetchData(){
@@ -48,6 +52,7 @@ function AdDetails({navigation , route}) {
         }).then(response => {
             dispatch({type: 'getAdDetails', payload: response.data});
             setScreenLoader(false)
+            console.log('adDetails.detailes.images2' , adDetails.detailes.images2)
         });
     }
 
@@ -80,6 +85,7 @@ function AdDetails({navigation , route}) {
         setShowModal(!showModal);
         dispatch(DeleteAd(lang , id , token , navigation))
     };
+
 
     function Item({ title ,location , price , image , space , desc , id, index }) {
         return (
@@ -264,11 +270,16 @@ function AdDetails({navigation , route}) {
                                     {
                                         adDetails.detailes.images.map((img, i) => {
                                             return (
-                                                <Image key={img.id}source={{uri:img.image}}
-                                                       style={styles.swiperImg} resizeMode={'cover'}/>
+                                                <TouchableOpacity key={img.id} onPress={() => {setShowModalImg(!showModalImg);setImgUri(img.image)}}
+                                                                  style={[styles.swiperImg]}>
+                                                    <Image source={{uri: img.image}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                                </TouchableOpacity>
+
                                             )
                                         })
                                     }
+
+
                                 </Swiper>
 
                                 <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
@@ -343,6 +354,24 @@ function AdDetails({navigation , route}) {
                                 </View>
 
                             </Modal>
+
+                            <Modal
+                                onBackdropPress                 ={() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                                onBackButtonPress               = {() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                                isVisible                       = {showModalImg}
+                                // style                        = {styles.bgModel}
+                                avoidKeyboard                   = {true}
+                            >
+                                <TouchableOpacity onPress={()=> {setShowModalImg(false);setImgUri('')}}
+                                                  style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
+                                                      {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
+                                    <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
+                                </TouchableOpacity>
+
+                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>
+
+                            </Modal>
+
 
                         </View>
                         :

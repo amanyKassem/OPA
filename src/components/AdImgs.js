@@ -224,17 +224,17 @@ function AdImgs({navigation , route}) {
                         {renderUploadImgs()}
                     </View>
 
-                    {
-                        photos.length > 0 ?
+                    {/*{*/}
+                    {/*    photos.length > 0 ?*/}
                             <TouchableOpacity onPress={() => setImages()} style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 , styles.marginTop_20]}>
                                 <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
                             </TouchableOpacity>
-                            :
-                            <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 ,
-                                styles.marginTop_20, {backgroundColor:'#bbb'}]}>
-                                <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>
-                            </View>
-                    }
+                    {/*        :*/}
+                    {/*        <View style={[styles.babyblueBtn , styles.flexCenter , styles.Width_90, styles.marginBottom_50 ,*/}
+                    {/*            styles.marginTop_20, {backgroundColor:'#bbb'}]}>*/}
+                    {/*            <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('continue') }</Text>*/}
+                    {/*        </View>*/}
+                    {/*}*/}
 
 
                 </View>
