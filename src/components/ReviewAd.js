@@ -10,7 +10,7 @@ import {
     I18nManager,
     FlatList, ActivityIndicator
 } from "react-native";
-import {Container, Content, Card} from 'native-base'
+import {Container, Content, Card, Icon} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useDispatch, useSelector} from "react-redux";
@@ -18,6 +18,8 @@ import Header from '../common/Header';
 import Swiper from 'react-native-swiper';
 import {StoreAd ,EditAd} from "../actions";
 import COLORS from "../consts/colors";
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Modal from "react-native-modal";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -52,6 +54,9 @@ function ReviewAd({navigation , route}) {
     const meter_price = route.params ? route.params.meter_price : null;
     const pathName = route.params ? route.params.pathName : null;
     const ad_id = route.params ? route.params.ad_id : null;
+
+    const [showModalImg, setShowModalImg] = useState(false);
+    const [imgUri, setImgUri] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -97,6 +102,9 @@ function ReviewAd({navigation , route}) {
 
     }
 
+    const url      = imgUri;
+    let imgArr     = [{url}];
+
     return (
          <Container style={[styles.bg_gray]}>
             <Content contentContainerStyle={[styles.bgFullWidth , styles.bg_gray]}>
@@ -114,8 +122,10 @@ function ReviewAd({navigation , route}) {
                                 imagesUrl && imagesUrl.length > 0 ?
                                     imagesUrl.map((img, i) => {
                                         return (
-                                            <Image key={i} source={{uri:img.image}}
-                                                   style={styles.swiperImg} resizeMode={'cover'}/>
+                                        <TouchableOpacity key={i} onPress={() => {setShowModalImg(!showModalImg);setImgUri(img.image)}}
+                                                          style={[styles.swiperImg]}>
+                                            <Image source={{uri: img.image}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                        </TouchableOpacity>
                                         )
                                     })
                                     :
@@ -230,6 +240,23 @@ function ReviewAd({navigation , route}) {
                 </View>
 
             </Content>
+
+             <Modal
+                 onBackdropPress                 ={() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                 onBackButtonPress               = {() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                 isVisible                       = {showModalImg}
+                 // style                        = {styles.bgModel}
+                 avoidKeyboard                   = {true}
+             >
+                 <TouchableOpacity onPress={()=> {setShowModalImg(false);setImgUri('')}}
+                                   style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
+                                       {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
+                     <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
+                 </TouchableOpacity>
+
+                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={imgArr}/>
+
+             </Modal>
         </Container>
     );
 }

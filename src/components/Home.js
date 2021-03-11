@@ -195,7 +195,7 @@ function Home({navigation,route}) {
                                 <MapView.Marker
                                     coordinate={mapRegion}
                                 >
-                                    {/*<Image source={require('../../assets/images/marker_blue.png')} resizeMode={'contain'} style={[styles.icon35]}/>*/}
+                                    <Image source={require('../../assets/images/redMarker.png')} resizeMode={'contain'} style={[styles.icon35]}/>
 
                                 </MapView.Marker>
 

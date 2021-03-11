@@ -20,6 +20,8 @@ import Communications from 'react-native-communications';
 import {useDispatch, useSelector} from "react-redux";
 import {getFavourite} from "../actions";
 import axios from "axios";
+import ImageViewer from 'react-native-image-zoom-viewer';
+import  Modal  from "react-native-modal";
 import CONST from "../consts";
 
 const height = Dimensions.get('window').height;
@@ -38,6 +40,9 @@ function ListDetails({navigation , route}) {
 
     const [isFav , setFav ] = useState(false);
     const [screenLoader , setScreenLoader ] = useState(true);
+
+    const [showModalImg, setShowModalImg] = useState(false);
+    const [imgUri, setImgUri] = useState(null);
 
     const dispatch = useDispatch();
     function fetchData(){
@@ -280,6 +285,9 @@ function ListDetails({navigation , route}) {
         }
     }
 
+    const url      = imgUri;
+    let imgArr     = [{url}];
+
     return (
          <Container style={[styles.bg_gray]}>
             {renderLoader()}
@@ -309,9 +317,10 @@ function ListDetails({navigation , route}) {
                                     {
                                         adDetails.detailes.images.map((img, i) => {
                                             return (
-                                                <View key={img.id}>
-                                                    <Image source={{uri:img.image}} style={styles.swiperImg} resizeMode={'cover'}/>
-                                                </View>
+                                                <TouchableOpacity key={img.id} onPress={() => {setShowModalImg(!showModalImg);setImgUri(img.image)}}
+                                                                  style={[styles.swiperImg]}>
+                                                    <Image source={{uri: img.image}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                                </TouchableOpacity>
                                             )
                                         })
                                     }
@@ -379,6 +388,23 @@ function ListDetails({navigation , route}) {
 
 
             </Content>
+             <Modal
+                 onBackdropPress                 ={() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                 onBackButtonPress               = {() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                 isVisible                       = {showModalImg}
+                 // style                        = {styles.bgModel}
+                 avoidKeyboard                   = {true}
+             >
+                 <TouchableOpacity onPress={()=> {setShowModalImg(false);setImgUri('')}}
+                                   style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
+                                       {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
+                     <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
+                 </TouchableOpacity>
+
+                 {/*<ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>*/}
+                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={imgArr}/>
+
+             </Modal>
         </Container>
     );
 }

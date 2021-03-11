@@ -190,7 +190,7 @@ function GetLocation({navigation, route}) {
                     }
 
                     <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 25, height: 25 }}>
-                        <Image style={{width: 35, height: 35}} resizeMode={'contain'} source={require('../../assets/images/pink_marker_red.png')} />
+                        <Image style={{width: 35, height: 35}} resizeMode={'contain'} source={require('../../assets/images/redMarker.png')} />
                     </View>
                 </View>
 

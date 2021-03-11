@@ -24,7 +24,6 @@ import {DeleteAd} from '../actions';
 import axios from "axios";
 import CONST from "../consts";
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {Video} from "expo-av";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -52,7 +51,6 @@ function AdDetails({navigation , route}) {
         }).then(response => {
             dispatch({type: 'getAdDetails', payload: response.data});
             setScreenLoader(false)
-            console.log('adDetails.detailes.images2' , adDetails.detailes.images2)
         });
     }
 
@@ -251,6 +249,9 @@ function AdDetails({navigation , route}) {
         }
     }
 
+    const url      = imgUri;
+    let imgArr     = [{url}];
+
     return (
          <Container style={[styles.bg_gray]}>
             {renderLoader()}
@@ -368,7 +369,8 @@ function AdDetails({navigation , route}) {
                                     <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
                                 </TouchableOpacity>
 
-                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>
+                                {/*<ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>*/}
+                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={imgArr}/>
 
                             </Modal>
 
