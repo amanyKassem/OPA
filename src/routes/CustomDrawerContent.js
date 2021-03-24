@@ -16,7 +16,6 @@ export default function CustomDrawerContent(props) {
 
     const lang  = useSelector(state => state.lang.lang);
 
-
     function onChooseLang(language){
         if(language !== lang){
             dispatch(chooseLang(language))
@@ -203,9 +202,9 @@ export default function CustomDrawerContent(props) {
                 <TouchableOpacity style={[styles.babyblueBtn ,{
                     position:'absolute',
                     transform: [{ rotate: '90deg' }],
-                    right:isIOS ? -77 : -63,
+                    right:Platform.isPad ? -230 : isIOS ? -77 : -63,
                     width:'50%',
-                    bottom: isIOS ? 100 : 62,
+                    bottom: Platform.isPad ? 200 : isIOS ? 100 : 62,
                 }]}
                   onPress={() => logoutFunc()}
                 >

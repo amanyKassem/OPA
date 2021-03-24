@@ -44,6 +44,8 @@ function RealEstateDet({navigation,route}) {
     const constructionDetailes = useSelector(state => state.constructionDetailes.constructionDetailes);
     const constructionDetailesLoader = useSelector(state => state.constructionDetailes.loader);
     const [screenLoader , setScreenLoader ] = useState(true);
+    const [showModalImg, setShowModalImg] = useState(false);
+    const [index, setIndex] = useState([]);
 
 
     const [tabType, setTabType] = useState('0');
@@ -303,13 +305,21 @@ function RealEstateDet({navigation,route}) {
                                 <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={[styles.eventactiveDot , {borderColor: COLORS.mstarda,
                                     backgroundColor: COLORS.mstarda}]}
                                         containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
+
                                     {
-                                        constructionDetailes.images.map((img, i) => {
-                                            return (
-                                                <Image key={img.id}source={{uri:img.image}}
-                                                       style={styles.swiperImg} resizeMode={'cover'}/>
-                                            )
-                                        })
+                                        constructionDetailes.images2 && constructionDetailes.images2.length > 0 ?
+                                            constructionDetailes.images2.map((img, i) => {
+                                                return (
+                                                    <TouchableOpacity key={i} onPress={() => {setShowModalImg(!showModalImg); setIndex(i)}}
+                                                                      style={[styles.swiperImg]}>
+                                                        <Image source={{uri: img.url}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                                    </TouchableOpacity>
+
+                                                )
+                                            })
+                                            :
+                                            <Image source={require('../../assets/images/image_placeholder.png')}
+                                                   style={[styles.swiperImg]} resizeMode={'cover'}/>
                                     }
                                 </Swiper>
 
@@ -407,6 +417,23 @@ function RealEstateDet({navigation,route}) {
                                         )
 
                                 }
+
+                            </Modal>
+                            <Modal
+                                onBackdropPress                 ={() => {setShowModalImg(!showModalImg);}}
+                                onBackButtonPress               = {() => {setShowModalImg(!showModalImg);}}
+                                isVisible                       = {showModalImg}
+                                // style                        = {styles.bgModel}
+                                avoidKeyboard                   = {true}
+                            >
+                                <TouchableOpacity onPress={()=> {setShowModalImg(false);}}
+                                                  style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
+                                                      {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
+                                    <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
+                                </TouchableOpacity>
+
+                                {/*<ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>*/}
+                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={constructionDetailes && constructionDetailes.images2 ? constructionDetailes.images2:[]} index={index}/>
 
                             </Modal>
 

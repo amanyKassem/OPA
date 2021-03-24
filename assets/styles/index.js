@@ -483,6 +483,9 @@ const styles = ({
     alignEnd : {
         alignSelf      : 'flex-end',
     },
+    writingDir : {
+        writingDirection      : I18nManager.isRTL ? 'rtl' : 'ltr',
+    },
     rowGroup : {
         flexDirection       : "row",
         justifyContent      : "space-between",

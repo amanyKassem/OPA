@@ -20,6 +20,7 @@ import {StoreAd ,EditAd} from "../actions";
 import COLORS from "../consts/colors";
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Modal from "react-native-modal";
+import * as FileSystem from "expo-file-system";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -54,9 +55,10 @@ function ReviewAd({navigation , route}) {
     const meter_price = route.params ? route.params.meter_price : null;
     const pathName = route.params ? route.params.pathName : null;
     const ad_id = route.params ? route.params.ad_id : null;
+    const [photos, setPhotos] = useState([]);
+    const [index, setIndex] = useState([]);
 
     const [showModalImg, setShowModalImg] = useState(false);
-    const [imgUri, setImgUri] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -64,6 +66,26 @@ function ReviewAd({navigation , route}) {
     //     setIsSubmitted(false)
     // }, [isSubmitted]);
 
+    useEffect(() => {
+        if ( route.params && imagesUrl ){
+            let photosUrl=[];
+            for (let i=0; i < imagesUrl.length; i++){
+                let imageURL = imagesUrl[i].image;
+                photosUrl.push({'url':imageURL});
+            }
+            setPhotos(photosUrl)
+            console.log('photos' , photos)
+        }
+        else{
+            console.log('kkkkkk')
+        }
+
+    }, []);
+
+
+    // const imagesU = [{
+    //    url : "file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540amany_kassem%252FAaamal/ImagePicker/a5f54fd7-cc0c-4baa-876e-e040ccafdebb.png"
+    // }]
 
 
     function renderSubmit() {
@@ -102,8 +124,6 @@ function ReviewAd({navigation , route}) {
 
     }
 
-    const url      = imgUri;
-    let imgArr     = [{url}];
 
     return (
          <Container style={[styles.bg_gray]}>
@@ -119,12 +139,12 @@ function ReviewAd({navigation , route}) {
                         <Swiper key={3} dotStyle={styles.eventdoteStyle} activeDotStyle={styles.eventactiveDot}
                                 containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
                             {
-                                imagesUrl && imagesUrl.length > 0 ?
-                                    imagesUrl.map((img, i) => {
+                                photos && photos.length > 0 ?
+                                    photos.map((img, i) => {
                                         return (
-                                        <TouchableOpacity key={i} onPress={() => {setShowModalImg(!showModalImg);setImgUri(img.image)}}
+                                        <TouchableOpacity key={i} onPress={() => {setShowModalImg(!showModalImg); setIndex(i)}}
                                                           style={[styles.swiperImg]}>
-                                            <Image source={{uri: img.image}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                            <Image source={{uri: img.url}} style={[styles.swiperImg]} resizeMode={'cover'}/>
                                         </TouchableOpacity>
                                         )
                                     })
@@ -242,19 +262,19 @@ function ReviewAd({navigation , route}) {
             </Content>
 
              <Modal
-                 onBackdropPress                 ={() => {setShowModalImg(!showModalImg);setImgUri('')}}
-                 onBackButtonPress               = {() => {setShowModalImg(!showModalImg);setImgUri('')}}
+                 onBackdropPress                 ={() => {setShowModalImg(!showModalImg)}}
+                 onBackButtonPress               = {() => {setShowModalImg(!showModalImg)}}
                  isVisible                       = {showModalImg}
                  // style                        = {styles.bgModel}
                  avoidKeyboard                   = {true}
              >
-                 <TouchableOpacity onPress={()=> {setShowModalImg(false);setImgUri('')}}
+                 <TouchableOpacity onPress={()=> {setShowModalImg(false);}}
                                    style={[styles.icon35, styles.centerContext, styles.bg_White,styles.Radius_50,
                                        {position:'absolute', zIndex:1 , top:10 , left:10 }]}>
                      <Icon name={'close'} type={'EvilIcons'} style={{ color: COLORS.babyblue, fontSize: 25 }} />
                  </TouchableOpacity>
 
-                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={imgArr}/>
+                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={photos} index={index}/>
 
              </Modal>
         </Container>

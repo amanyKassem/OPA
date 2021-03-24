@@ -42,9 +42,13 @@ function ConfirmPost({navigation}) {
                     styles.Width_100, styles.paddingTop_30 ,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50,alignItems:'center'}]}>
 
-                    <TouchableOpacity style={[styles.flexCenter]} onPress={() => navigation.navigate('myAds')}>
+                    <TouchableOpacity style={[styles.flexCenter]} onPress={() => navigation.navigate('home')}>
                         <Image source={require('../../assets/images/success_send_ads.png')} style={[styles.icon200 ]} resizeMode={'contain'} />
                         <Text style={[styles.textRegular , styles.text_midGray , styles.textSize_15 , styles.marginBottom_10 , styles.textCenter]}>{ i18n.t('adPosted') }</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('home')} style={[styles.babyblueBtn , styles.bg_babyblue , styles.Width_100, styles.SelfCenter , styles.marginTop_35 ]}>
+                        <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('home') }</Text>
                     </TouchableOpacity>
 
                 </View>

@@ -43,6 +43,7 @@ function ListDetails({navigation , route}) {
 
     const [showModalImg, setShowModalImg] = useState(false);
     const [imgUri, setImgUri] = useState(null);
+    const [index, setIndex] = useState([]);
 
     const dispatch = useDispatch();
     function fetchData(){
@@ -315,16 +316,20 @@ function ListDetails({navigation , route}) {
                                         containerStyle={styles.eventswiper} showsButtons={false} autoplay={true}>
 
                                     {
-                                        adDetails.detailes.images.map((img, i) => {
-                                            return (
-                                                <TouchableOpacity key={img.id} onPress={() => {setShowModalImg(!showModalImg);setImgUri(img.image)}}
-                                                                  style={[styles.swiperImg]}>
-                                                    <Image source={{uri: img.image}} style={[styles.swiperImg]} resizeMode={'cover'}/>
-                                                </TouchableOpacity>
-                                            )
-                                        })
-                                    }
+                                        adDetails.detailes.images2 && adDetails.detailes.images2.length > 0 ?
+                                            adDetails.detailes.images2.map((img, i) => {
+                                                return (
+                                                    <TouchableOpacity key={i} onPress={() => {setShowModalImg(!showModalImg); setIndex(i)}}
+                                                                      style={[styles.swiperImg]}>
+                                                        <Image source={{uri: img.url}} style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                                    </TouchableOpacity>
 
+                                                )
+                                            })
+                                            :
+                                            <Image source={require('../../assets/images/image_placeholder.png')}
+                                                   style={[styles.swiperImg]} resizeMode={'cover'}/>
+                                    }
                                 </Swiper>
 
                                 <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
@@ -402,7 +407,7 @@ function ListDetails({navigation , route}) {
                  </TouchableOpacity>
 
                  {/*<ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>*/}
-                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);setImgUri('')}} enableSwipeDown={true} imageUrls={imgArr}/>
+                 <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={adDetails.detailes && adDetails.detailes.images2 ? adDetails.detailes.images2:[]} index={index}/>
 
              </Modal>
         </Container>
