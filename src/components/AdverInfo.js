@@ -39,7 +39,7 @@ function AdverInfo({navigation}) {
             fetchData();
         });
         return unsubscribe;
-    }, [navigation , userDataLoader]);
+    }, [navigation , userDataLoader , userData]);
 
     function onEdit(){
         dispatch(updateUserSocial(lang , facebook , twitter , phone , email , details , token , navigation));

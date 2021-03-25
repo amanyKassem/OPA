@@ -371,7 +371,7 @@ function AdDetails({navigation , route}) {
                                 </TouchableOpacity>
 
                                 {/*<ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={adDetails ? adDetails.detailes.images2 : []}/>*/}
-                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={adDetails.detailes && adDetails.detailes.images2 ? adDetails.detailes.images2:[]} index={index}/>
+                                <ImageViewer enableImageZoom={true} onSwipeDown={() => {setShowModalImg(false);}} enableSwipeDown={true} imageUrls={adDetails && adDetails.detailes && adDetails.detailes.images2 ? adDetails.detailes.images2:[]} index={index}/>
 
                             </Modal>
 
