@@ -157,7 +157,7 @@ function ReviewAd({navigation , route}) {
 
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
                             <View style={[styles.directionRowSpace]}>
-                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , {flex:1}]}>{title_ar}</Text>
+                                <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.writingDir , {flex:1}]}>{title_ar}</Text>
                                 <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{price} { i18n.t('RS') }</Text>
                             </View>
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>{address}</Text>
