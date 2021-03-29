@@ -19,7 +19,6 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import {getCountries , register} from "../actions";
 
-
 const isIOS = Platform.OS === 'ios';
 
 function Register({navigation , route}) {
@@ -217,6 +216,7 @@ function Register({navigation , route}) {
                                                 fontSize            : 14,
                                             },
                                         }}
+
                                         placeholder={{
                                             label: i18n.t('country') ,
                                         }}
