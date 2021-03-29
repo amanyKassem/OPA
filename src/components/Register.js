@@ -205,13 +205,13 @@ function Register({navigation , route}) {
                                         style={{
                                             inputAndroid: {
                                                 fontFamily: 'cairo',
-                                                color:'#fff',
+                                                color:'#323232',
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,
                                             },
                                             inputIOS: {
                                                 fontFamily: 'cairo',
-                                                color:'#fff',
+                                                color:'#323232',
                                                 alignSelf:'flex-start',
                                                 textAlign           : I18nManager.isRTL ? 'right' : 'left',
                                                 fontSize            : 14,
