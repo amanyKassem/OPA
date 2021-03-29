@@ -97,7 +97,7 @@ function Register({navigation , route}) {
 
 
     function renderSubmit() {
-        if (username == '' || password == '' || phone == '' || confirmPass == '' || country == null || base64 == '' || !isChecked) {
+        if (username == '' || password == '' || phone == '' || confirmPass == '' || country == null || !isChecked) {
             return (
                 <View
                     style={[styles.babyblueBtn , styles.Width_100 , styles.marginBottom_10 , {

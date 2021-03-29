@@ -11,8 +11,8 @@ import COLORS from "../consts/colors";
 import Header from '../common/Header';
 import {useSelector, useDispatch} from 'react-redux';
 
-const latitudeDelta= 0.422;
-const longitudeDelta= 0.121;
+const latitudeDelta= 0.01;
+const longitudeDelta= 0.01;
 const isIOS = Platform.OS === 'ios';
 
 function GetLocation({navigation, route}) {

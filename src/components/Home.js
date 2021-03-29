@@ -15,8 +15,8 @@ import {getHomeAds} from "../actions";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
-const latitudeDelta = 0.922;
-const longitudeDelta = 0.521;
+const latitudeDelta= 0.01;
+const longitudeDelta= 0.01;
 
 function Home({navigation,route}) {
 
