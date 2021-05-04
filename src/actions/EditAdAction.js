@@ -3,16 +3,14 @@ import CONST from "../consts";
 import {Toast} from "native-base";
 
 
-export const EditAd = (lang , ad_id , category_id , city_id , Latitude , Longitude , address , features , title_ar ,
-                        description_ar , price , space, rent_id , type_id , hall , floor , rooms ,
-                        age , street_view , bathroom , meter_price , publication, images ,token , navigation) => {
+export const EditAd = (lang , ad_id , category_id  , Latitude , Longitude , address , features , title_ar ,
+                        description_ar ,  rent_id , type_id , publication, images ,token , navigation) => {
     return (dispatch) => {
         axios({
             url         : CONST.url + 'editAd',
             method      : 'POST',
-            data        : {lang , ad_id , category_id , city_id , Latitude , Longitude , address , features , title_ar  ,
-                description_ar  , price , space, rent_id , type_id , hall , floor , rooms ,
-                age , street_view , bathroom , meter_price , publication, images},
+            data        : {lang , ad_id , category_id  , Latitude , Longitude , address , features , title_ar ,
+                description_ar ,  rent_id , type_id , publication, images},
             headers     : {Authorization: token}
         }).then(response => {
             if (response.data.success){

@@ -14,7 +14,7 @@ const isIOS = Platform.OS === 'ios';
 
 function ContactUs({navigation}) {
 
-    const token = useSelector(state => state.auth.user.data.token);
+    const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const lang = useSelector(state => state.lang.lang);
     const contact = useSelector(state => state.contact.contact);
     const loader = useSelector(state => state.contact.loader);

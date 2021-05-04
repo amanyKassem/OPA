@@ -56,12 +56,18 @@ export default function CustomDrawerContent(props) {
 
                 <TouchableOpacity  onPress={() => props.navigation.navigate('tabs', {screen: 'profile'})}
                                    style={[styles.directionBasicRow ,{ position:'absolute' ,top:-30 , left:15 , alignItems:'flex-end'}]}>
-                    <Image source={{uri:user.avatar}}
+                    <Image source={token ? {uri:user.avatar} : require('../../assets/images/image_placeholder.png')}
                            style={[styles.icon80,styles.Radius_15 ,{ borderWidth:5 , borderColor:'#fff'}]} resizeMode={'cover'} />
                     <Text style={[styles.textRegular , styles.text_babyblue, styles.textSize_15 , {marginLeft:15 , marginBottom:10}]}>{user.name}</Text>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
-                        <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                    </TouchableOpacity>
+
+                    {
+                        token ?
+                            <TouchableOpacity onPress={() => props.navigation.navigate('editProfile')} style={[styles.marginHorizontal_5 , styles.marginVertical_5,{position:'absolute' , bottom:35 , left:5}]}>
+                                <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                            </TouchableOpacity>
+                            :
+                            null
+                    }
                 </TouchableOpacity>
 
                 <DrawerItem
@@ -85,62 +91,71 @@ export default function CustomDrawerContent(props) {
                     })}
                 />
 
-                <DrawerItem
-                    style={[ styles.justifyCenter ,{marginHorizontal:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('myAds') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/white_ads.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('myAds')}
-                />
 
-                <DrawerItem
-                    style={[ styles.justifyCenter ,{marginHorizontal:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('favourite') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/menu_fav.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('favourite')}
-                />
 
-                <DrawerItem
-                    style={[styles.justifyCenter ,{marginHorizontal:0}]}
-                    label={
-                        ({ focused, color }) => {
-                            return (
-                                <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('addUrAd') }</Text>
-                            )
-                        }
-                    }
-                    icon={
-                        ({ focused, color }) => {
-                            return (
-                                <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                            )
-                        }
-                    }
-                    onPress={() => props.navigation.navigate('addAdTerms')}
-                />
+                {
+                    token ?
+                        <>
+                            <DrawerItem
+                                style={[ styles.justifyCenter ,{marginHorizontal:0}]}
+                                label={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('myAds') }</Text>
+                                        )
+                                    }
+                                }
+                                icon={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Image source={require('../../assets/images/white_ads.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                        )
+                                    }
+                                }
+                                onPress={() => props.navigation.navigate('myAds')}
+                            />
+
+                            <DrawerItem
+                                style={[ styles.justifyCenter ,{marginHorizontal:0}]}
+                                label={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('favourite') }</Text>
+                                        )
+                                    }
+                                }
+                                icon={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Image source={require('../../assets/images/menu_fav.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                        )
+                                    }
+                                }
+                                onPress={() => props.navigation.navigate('favourite')}
+                            />
+
+                            <DrawerItem
+                                style={[styles.justifyCenter ,{marginHorizontal:0}]}
+                                label={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Text style={[styles.textRegular, styles.text_black , styles.textSize_15, styles.alignStart , {writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr'}]}>{ i18n.t('addUrAd') }</Text>
+                                        )
+                                    }
+                                }
+                                icon={
+                                    ({ focused, color }) => {
+                                        return (
+                                            <Image source={require('../../assets/images/add_menu.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                        )
+                                    }
+                                }
+                                onPress={() => props.navigation.navigate('addAdTerms')}
+                            />
+                        </>
+                        :
+                        null
+                }
 
                 <DrawerItem
                     style={[styles.justifyCenter ,{marginHorizontal:0}]}
@@ -206,10 +221,11 @@ export default function CustomDrawerContent(props) {
                     width:'50%',
                     bottom: Platform.isPad ? 200 : isIOS ? 100 : 62,
                 }]}
-                  onPress={() => logoutFunc()}
+                                  onPress={() => {token ? logoutFunc() : props.navigation.navigate('login')}}
                 >
-                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('logout') }</Text>
+                    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ token ? i18n.t('logout') : i18n.t('login') }</Text>
                 </TouchableOpacity>
+
 
             </View>
         </DrawerContentScrollView>

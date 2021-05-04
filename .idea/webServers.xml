@@ -30,6 +30,20 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="1e277d1c-1148-47d4-ac05-87c913136eb5" name="jak" url="http://jakest.com.sa">
+        <fileTransfer rootFolder="/public_html" host="jakest.com.sa" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="c2360f41-266c-42bb-ad5a-2488463dfe20" name="dashbaai" url="http://dashb.aait-sa.com">
+        <fileTransfer rootFolder="/public_html" host="dashb.aait-sa.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

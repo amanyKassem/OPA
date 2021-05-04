@@ -23,16 +23,8 @@ function EditAd({navigation,route}) {
     const [cityName, setCityName] = useState('');
     const [buildType, setBuildType] = useState( adDetails ? adDetails.detailes.category_id : null);
     const [accType, setAccType] = useState(adDetails ? adDetails.detailes.type_id : null);
-    const [lounges, setLounges] = useState(adDetails ? adDetails.detailes.hall : null);
-    const [washrooms, setWashrooms] = useState(adDetails ? adDetails.detailes.bathroom : null);
-    const [rooms, setRooms] = useState(adDetails ? adDetails.detailes.rooms : null);
-    const [floor, setFloor] = useState(adDetails ? adDetails.detailes.floor : null);
-    const [buildAge, setBuildAge] = useState(adDetails ? adDetails.detailes.age : null);
     const [serviceType, setServiceType] = useState(adDetails ? adDetails.detailes.rent_id : null);
-    const [totalPrice, setTotalPrice] = useState(adDetails ? adDetails.detailes.price : null);
-    const [space, setSpace] = useState(adDetails ? adDetails.detailes.space : null);
-    const [street_view, setStreet_view] = useState(adDetails ? adDetails.detailes.street_view : null);
-    const [meter_price, setMeter_price] = useState(adDetails ? adDetails.detailes.meter_price : null);
+
 
     const [mapRegion, setMapRegion] = useState({
         latitude: 31.2587 ,
@@ -122,15 +114,6 @@ function EditAd({navigation,route}) {
 
     useEffect(  () => {
         setAccType('')
-        setLounges('')
-        setWashrooms('')
-        setRooms('')
-        setFloor('')
-        setBuildAge('')
-        setTotalPrice('')
-        setSpace('')
-        setMeter_price('')
-        setStreet_view('')
         setServiceType('')
     }, [buildType]);
 
@@ -256,138 +239,6 @@ function EditAd({navigation,route}) {
 
 
                                 {
-                                    singleCategory.hall === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(lounges) => setLounges(lounges)}
-                                                   keyboardType={'number-pad'}
-                                                   value={lounges? lounges : adDetails.detailes.hall}
-                                            />
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.bathroom === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(washrooms) => setWashrooms(washrooms)}
-                                                   keyboardType={'number-pad'}
-                                                   value={washrooms? washrooms : adDetails.detailes.bathroom}
-                                            />
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.rooms === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(rooms) => setRooms(rooms)}
-                                                   keyboardType={'number-pad'}
-                                                   value={rooms? rooms : adDetails.detailes.rooms}
-                                            />
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.floor === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(floor) => setFloor(floor)}
-                                                   keyboardType={'number-pad'}
-                                                   value={floor? floor : adDetails.detailes.floor}
-                                            />
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.age === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(buildAge) => setBuildAge(buildAge)}
-                                                   keyboardType={'number-pad'}
-                                                   value={buildAge? buildAge : adDetails.detailes.age}
-                                            />
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.price === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('totalPrice') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(totalPrice) => setTotalPrice(totalPrice)}
-                                                   value={totalPrice? totalPrice : adDetails.detailes.price}
-                                                   keyboardType={'number-pad'}
-                                            />
-                                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , {position:'absolute' , right:10}]}>{ i18n.t('RS') }</Text>
-                                        </Item>
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.space === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('space') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(space) => setSpace(space)}
-                                                   value={space? space : adDetails.detailes.space}
-                                                   keyboardType={'number-pad'}
-                                            />
-                                        </Item>
-
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.meter_price === 1 ?
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('meter_price') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(meter_price) => setMeter_price(meter_price)}
-                                                   value={meter_price? meter_price : adDetails.detailes.meter_price}
-                                                   keyboardType={'number-pad'}
-                                            />
-                                        </Item>
-
-                                        :
-                                        null
-                                }
-
-                                {
-                                    singleCategory.street_view === 1 ?
-
-                                        <Item style={[styles.item]}>
-                                            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('street_view') }</Label>
-                                            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                   onChangeText={(street_view) => setStreet_view(street_view)}
-                                                   value={street_view? street_view : adDetails.detailes.street_view}
-                                                   keyboardType={'number-pad'}
-                                            />
-                                        </Item>
-
-                                        :
-                                        null
-                                }
-
-
-                                {
                                     singleCategory.rent_id === 1 ?
                                         <View style={[styles.inputPicker , styles.flexCenter, styles.marginBottom_20 , styles.Width_100, {borderColor:COLORS.midGray}]}>
                                             <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {left:0, backgroundColor:'#fff'}]}>{ i18n.t('serviceType') }</Label>
@@ -440,21 +291,14 @@ function EditAd({navigation,route}) {
                                             address:cityName == null  ? adDetails.detailes.address : cityName,
                                             rent_id:singleCategory.rent_id === 1 ? serviceType == null  ? adDetails.detailes.rent_id : serviceType : null,
                                             type_id:singleCategory.type_id === 1 ? accType == null  ? adDetails.detailes.type_id : accType : null,
-                                            hall: singleCategory.hall === 1 ? lounges == null  ? adDetails.detailes.hall : lounges : null,
-                                            floor: singleCategory.floor === 1 ? floor == null  ? adDetails.detailes.floor : floor : null,
-                                            rooms: singleCategory.rooms === 1 ? rooms == null  ? adDetails.detailes.rooms : rooms : null,
-                                            age: singleCategory.age === 1 ? buildAge == null  ? adDetails.detailes.age : buildAge : null,
-                                            bathroom: singleCategory.bathroom === 1 ? washrooms == null  ? adDetails.detailes.bathroom : washrooms : null,
+
                                             featuers:singleCategory.featuers,
                                             editFeatuers: (buildType == adDetails.detailes.category_id) || buildType == null  ? adDetails.detailes.features : null,
                                             images:adDetails.detailes.images,
                                             pathName:'editAd',
                                             adDetails:adDetails,
                                             ad_id,
-                                            price: singleCategory.price === 1 ? totalPrice == null  ? adDetails.detailes.price : totalPrice : null,
-                                            space: singleCategory.space === 1 ? space == null  ? adDetails.detailes.space : space : null,
-                                            meter_price: singleCategory.meter_price === 1 ? meter_price == null  ? adDetails.detailes.meter_price : meter_price : null,
-                                            street_view: singleCategory.street_view === 1 ? street_view == null  ? adDetails.detailes.street_view : street_view : null,
+
                                         })}
                                                           style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>

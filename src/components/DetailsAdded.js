@@ -9,7 +9,7 @@ import {
     Vibration,
     KeyboardAvoidingView
 } from "react-native";
-import {Container, Content, CheckBox, Form} from 'native-base'
+import {Container, Content, CheckBox, Form, Item, Label, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,8 +23,7 @@ function DetailsAdded({navigation , route}) {
 
     const featuers = route.params.featuers;
     const editFeatuers = route.params.editFeatuers;
-    const [checkedArr, setCheckedArr] = useState([]);
-    const [checkedArrNames, setCheckedArrNames] = useState([]);
+    const [checkedArrNames, setCheckedArrNames] = useState(featuers);
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
@@ -34,15 +33,7 @@ function DetailsAdded({navigation , route}) {
     const address = route.params ? route.params.address : null;
     const rent_id = route.params ? route.params.rent_id : null;
     const type_id = route.params ? route.params.type_id : null;
-    const hall = route.params ? route.params.hall : null;
-    const floor = route.params ? route.params.floor : null;
-    const rooms = route.params ? route.params.rooms : null;
-    const price = route.params ? route.params.price : null;
-    const space = route.params ? route.params.space : null;
-    const meter_price = route.params ? route.params.meter_price : null;
-    const street_view = route.params ? route.params.street_view : null;
-    const age = route.params ? route.params.age : null;
-    const bathroom = route.params ? route.params.bathroom : null;
+
     const images = route.params ? route.params.images : null;
     const imagesUrl = route.params ? route.params.imagesUrl : null;
     const pathName = route.params ? route.params.pathName : null;
@@ -53,30 +44,33 @@ function DetailsAdded({navigation , route}) {
     useEffect(() => {
 
         editFeatuers ?
-            editFeatuers.map((feat, i) => {
-                checkedArr.push(feat.id)
-                checkedArrNames.push(feat.name)
-                setCheckedArr([...checkedArr])
-                setCheckedArrNames([...checkedArrNames])
-            })
+            setCheckedArrNames(editFeatuers)
             :
             null
 
     }, []);
 
-    function checkArr(id , name){
-        if(!checkedArr.includes(id)){
-            setCheckedArr([...checkedArr,id])
-            setCheckedArrNames([...checkedArrNames,name])
+
+
+    const modifyFeatures = (feature , inputVal) => {
+
+        let newFeatures = checkedArrNames;
+        let newFeature = feature;
+        const index = checkedArrNames.indexOf(feature);
+
+        if(feature.type == 'checkbox'){
+            newFeature.value = !feature.value;
+            newFeatures[index] = newFeature;
+            setCheckedArrNames([...newFeatures])
+
         }else{
-            const index = checkedArr.indexOf(id);
-            if (index > -1) {
-                checkedArr.splice(index, 1)
-                checkedArrNames.splice(index, 1)
-                setCheckedArr([...checkedArr]);
-                setCheckedArrNames([...checkedArrNames])
-            }
+            newFeature.value = inputVal;
+            newFeatures[index] = newFeature;
+            setCheckedArrNames([...newFeatures])
         }
+
+        console.log('newFeature' , newFeature)
+        console.log('newFeatures' , newFeatures)
     }
 
 
@@ -95,18 +89,35 @@ function DetailsAdded({navigation , route}) {
 
                             {
                                 featuers ?
-                                    featuers.map((feat, i) => {
+                                    checkedArrNames.map((feat, i) => {
+
                                             return (
-                                                <TouchableOpacity onPress={() => checkArr(feat.id, feat.name)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
-                                                    {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
-                                                    <CheckBox
-                                                        checked={checkedArr.indexOf(feat.id) !== -1}
-                                                        color={COLORS.midGray}
-                                                        onPress={() => checkArr(feat.id , feat.name)}
-                                                        style={styles.checkbox}
-                                                    />
-                                                </TouchableOpacity>
+                                                feat.type == 'checkbox' ?
+                                                    <TouchableOpacity onPress={() => modifyFeatures(feat)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
+                                                        {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
+                                                        <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
+                                                        <CheckBox
+                                                            checked={feat.value == 1 || feat.value == true}
+                                                            color={COLORS.midGray}
+                                                            // onPress={() => checkArr(feat.id , feat.name)}
+                                                            onPress={() => modifyFeatures(feat)}
+                                                            style={styles.checkbox}
+                                                        />
+                                                    </TouchableOpacity>
+                                                    :
+
+                                                    <Item key={i} style={[styles.item]}>
+                                                        <Label
+                                                            style={[styles.label, styles.textRegular, styles.text_midGray, {backgroundColor: '#fff'}]}>{feat.name}</Label>
+                                                        <Input
+                                                            style={[styles.input, styles.text_midGray, {borderColor: COLORS.midGray}]}
+                                                            multiline={isIOS ? false : true}
+                                                            numberOfLines={isIOS ? null : 1}
+                                                            onChangeText={(featVal) => modifyFeatures(feat, featVal)}
+                                                            keyboardType={ feat.type == 'number' ? 'number-pad' : null}
+                                                            value={feat.value}
+                                                        />
+                                                    </Item>
                                             )
                                         }
                                     )
@@ -117,29 +128,18 @@ function DetailsAdded({navigation , route}) {
                         </View>
 
                         <TouchableOpacity onPress={() => navigation.navigate('basicDetails'  ,{
-                            features : checkedArr,
+                            features : checkedArrNames,
                             category_id,
                             Latitude,
                             Longitude,
                             address,
                             rent_id,
                             type_id,
-                            hall,
-                            floor,
-                            rooms,
-                            price,
-                            space,
-                            meter_price,
-                            street_view,
-                            age,
-                            bathroom,
                             images,
                             imagesUrl,
                             pathName,
                             adDetails,
                             ad_id,
-                            featArr: featuers,
-                            checkedArrNames
                         })} style={[styles.babyblueBtn , styles.Width_85, styles.marginBottom_50 ]}>
                             <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('continue') }</Text>
                         </TouchableOpacity>

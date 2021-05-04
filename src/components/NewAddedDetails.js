@@ -25,15 +25,6 @@ function NewAddedDetails({navigation , route}) {
     const type_id = route.params.type_id;
     const Latitude = route.params.Latitude;
     const Longitude = route.params.Longitude;
-    const rooms = route.params.rooms;
-    const hall = route.params.hall;
-    const bathroom = route.params.bathroom;
-    const floor = route.params.floor;
-    const age = route.params.age;
-    const price = route.params ? route.params.price : null;
-    const space = route.params ? route.params.space : null;
-    const meter_price = route.params ? route.params.meter_price : null;
-    const street_view = route.params ? route.params.street_view : null;
 
 
     const [basicDetails, setBasicDetails] = useState('');
@@ -44,6 +35,7 @@ function NewAddedDetails({navigation , route}) {
     // const features = useSelector(state => state.features.features);
     // const featuresLoader = useSelector(state => state.features.loader);
     const features = route.params.featuers;
+    const [checkedArrNames, setCheckedArrNames] = useState(features);
 
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -65,15 +57,26 @@ function NewAddedDetails({navigation , route}) {
         }
     }
 
-    // useEffect(() => {
-    //     fetchData();
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //         fetchData();
-    //     });
-    //
-    //     return unsubscribe;
-    // }, [navigation , featuresLoader]);
+    const modifyFeatures = (feature , inputVal) => {
 
+        let newFeatures = checkedArrNames;
+        let newFeature = feature;
+        const index = checkedArrNames.indexOf(feature);
+
+        if(feature.type == 'checkbox'){
+            newFeature.value = !feature.value;
+            newFeatures[index] = newFeature;
+            setCheckedArrNames([...newFeatures])
+
+        }else{
+            newFeature.value = inputVal;
+            newFeatures[index] = newFeature;
+            setCheckedArrNames([...newFeatures])
+        }
+
+        console.log('newFeature' , newFeature)
+        console.log('newFeatures' , newFeatures)
+    }
     useEffect(() => {
         setIsSubmitted(false)
     }, [isSubmitted]);
@@ -98,7 +101,7 @@ function NewAddedDetails({navigation , route}) {
     function onConfirm(){
 
         setIsSubmitted(true)
-        dispatch(AddAdOrder(lang , category_id , rent_id , type_id , Latitude , Longitude , rooms , hall , bathroom , floor , age ,basicDetails ,isChecked , checkedArr , token , navigation));
+        dispatch(AddAdOrder(lang , category_id , rent_id , type_id , Latitude , Longitude  ,basicDetails ,isChecked , checkedArrNames , token , navigation));
     }
 
 
@@ -116,20 +119,38 @@ function NewAddedDetails({navigation , route}) {
                     <View style={[styles.Width_85 , styles.flexCenter , styles.directionColumnSpace ,{flex:1}]}>
                         <View style={[styles.Width_100]}>
 
+
                             {
                                 features ?
-                                    features.map((feat, i) => {
+                                    checkedArrNames.map((feat, i) => {
+
                                             return (
-                                                <TouchableOpacity onPress={() => checkArr(feat.id)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
-                                                    {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
-                                                    <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
-                                                    <CheckBox
-                                                        checked={checkedArr.indexOf(feat.id) !== -1}
-                                                        color={COLORS.midGray}
-                                                        onPress={() => checkArr(feat.id)}
-                                                        style={styles.checkbox}
-                                                    />
-                                                </TouchableOpacity>
+                                                feat.type == 'checkbox' ?
+                                                    <TouchableOpacity onPress={() => modifyFeatures(feat)} key={i} style={[styles.inputPicker ,styles.marginBottom_20 ,styles.directionRowSpace , styles.Width_100,styles.SelfCenter,
+                                                        {borderColor:COLORS.midGray,paddingLeft:10,paddingRight:20}]}>
+                                                        <Text style={[styles.textBold , styles.text_midGray , styles.textSize_12]}>{feat.name}</Text>
+                                                        <CheckBox
+                                                            checked={feat.value == 1 || feat.value == true}
+                                                            color={COLORS.midGray}
+                                                            // onPress={() => checkArr(feat.id , feat.name)}
+                                                            onPress={() => modifyFeatures(feat)}
+                                                            style={styles.checkbox}
+                                                        />
+                                                    </TouchableOpacity>
+                                                    :
+
+                                                    <Item key={i} style={[styles.item]}>
+                                                        <Label
+                                                            style={[styles.label, styles.textRegular, styles.text_midGray, {backgroundColor: '#fff'}]}>{feat.name}</Label>
+                                                        <Input
+                                                            style={[styles.input, styles.text_midGray, {borderColor: COLORS.midGray}]}
+                                                            onChangeText={(featVal) => modifyFeatures(feat, featVal)}
+                                                            keyboardType={ feat.type == 'number' ? 'number-pad' : null}
+                                                            multiline={isIOS ? false : true}
+                                                            numberOfLines={isIOS ? null : 1}
+                                                            value={feat.value}
+                                                        />
+                                                    </Item>
                                             )
                                         }
                                     )

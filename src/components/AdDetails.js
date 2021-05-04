@@ -47,7 +47,7 @@ function AdDetails({navigation , route}) {
             url         : CONST.url + 'adDetailes',
             method      : 'POST',
             data        : {lang , ad_id},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getAdDetails', payload: response.data});
             setScreenLoader(false)
@@ -121,8 +121,7 @@ function AdDetails({navigation , route}) {
                                 return (
 
                                     <View key={i} style={[styles.directionRow , styles.marginBottom_10 , {width:'26%'}]}>
-                                        <Text
-                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature.name}</Text>
+
                                         {
                                             feature.icon ?
                                                 <Image source={{uri:feature.icon}}
@@ -132,7 +131,22 @@ function AdDetails({navigation , route}) {
                                         }
 
                                         <Text
-                                            style={[styles.textRegular, styles.text_midGray, styles.textSize_13]}>{feature.number}</Text>
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature.name}</Text>
+
+
+                                        {
+                                            feature.type == 'checkbox' ?
+
+                                                feature.value == 1 ?
+                                                    <Icon type={'AntDesign'} name={'check'} style={{ fontSize: 18, color: COLORS.gray}} />
+                                                    :
+                                                    <Icon type={'AntDesign'} name={'close'} style={{ fontSize: 18, color: COLORS.red}} />
+                                                :
+                                                <Text
+                                                    style={[styles.textRegular, styles.text_midGray, styles.textSize_13]}>{feature.value}</Text>
+                                        }
+
+
                                     </View>
                                 )
                             })
@@ -287,7 +301,7 @@ function AdDetails({navigation , route}) {
                                 <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
                                     <View style={[styles.directionRowSpace]}>
                                         <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.writingDir , {flex:1}]}>{adDetails.detailes.title}</Text>
-                                        <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>
+                                        {/*<Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{adDetails.detailes.price}</Text>*/}
                                     </View>
                                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>{adDetails.detailes.address}</Text>
                                 </Card>

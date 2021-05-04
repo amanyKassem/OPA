@@ -1,5 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
-import {View, Text, Image, TouchableOpacity, Dimensions, Vibration, I18nManager, ActivityIndicator} from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    TouchableOpacity,
+    Dimensions,
+    Vibration,
+    I18nManager,
+    ActivityIndicator,
+    AsyncStorage
+} from "react-native";
 import {Container, Content, Icon, Input} from 'native-base'
 import styles from '../../assets/styles'
 import i18n from "../../locale/i18n";
@@ -11,7 +21,8 @@ import * as Location from 'expo-location';
 import axios from "axios";
 import MapView from 'react-native-maps';
 import COLORS from "../consts/colors";
-import {getHomeAds} from "../actions";
+import {getHomeAds, setLastLocationAction} from "../actions";
+import CONST from "../consts";
 
 const height = Dimensions.get('window').height;
 const isIOS = Platform.OS === 'ios';
@@ -28,9 +39,13 @@ function Home({navigation,route}) {
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
     const homeAds = useSelector(state => state.homeAds.homeAds);
     const homeAdsLoader = useSelector(state => state.homeAds.loader);
+    const {lastLocation} = useSelector(state => state.homeAds);
+
+    console.log("lastLocation", lastLocation)
 
     const dispatch = useDispatch()
     let mapRef = useRef(null);
+
 
     const [city, setCity] = useState('');
 
@@ -52,15 +67,40 @@ function Home({navigation,route}) {
             alert('صلاحيات تحديد موقعك الحالي ملغاه');
         }else {
             const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({});
-            if (route.params && route.params.latitude){
-                userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
-                dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude  , null , token))
-            } else {
-                userLocation = { latitude, longitude , latitudeDelta  , longitudeDelta};
-                dispatch(getHomeAds(lang , latitude ,longitude , null , token))
+            // AsyncStorage.getItem('long').then(long => {
+            //     AsyncStorage.getItem('lat').then(lat => {
+            //         if(Number(long) && Number(lat)){
+            //             setMapRegion({ latitude:  Number(lat), longitude:Number(long) , latitudeDelta , longitudeDelta});
+            //             dispatch(getHomeAds(lang , Number(lat) ,Number(long) , null , token))
+            //         }else{
+            //             if (route.params && route.params.latitude){
+            //                 userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
+            //                 dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude  , null , token))
+            //             } else {
+            //                 userLocation = { latitude, longitude , latitudeDelta  , longitudeDelta};
+            //                 dispatch(getHomeAds(lang , latitude ,longitude , null , token))
+            //             }
+            //             setMapRegion(userLocation);
+            //         }
+            //     });
+            // });
+
+            if(lastLocation){
+                dispatch(getHomeAds(lang , lastLocation.latitude ,lastLocation.longitude , null , token))
+                setMapRegion(lastLocation);
+            }else{
+                if (route.params && route.params.latitude){
+                    userLocation = { latitude: route.params.latitude, longitude:route.params.longitude , latitudeDelta , longitudeDelta};
+                    dispatch(getHomeAds(lang , route.params.latitude ,route.params.longitude  , null , token))
+                } else {
+                    userLocation = { latitude, longitude , latitudeDelta  , longitudeDelta};
+                    dispatch(getHomeAds(lang , latitude ,longitude , null , token))
+                }
+                setMapRegion(userLocation);
+
             }
+
             setInitMap(false);
-            setMapRegion(userLocation);
             isIOS ? mapRef.current.animateToRegion(userLocation, 1000) : false;
         }
         let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
@@ -145,6 +185,40 @@ function Home({navigation,route}) {
         }
     }
 
+    async function _handleMapRegionChange(e){
+
+        // searchRef.current.blur()
+
+        let formattedItem = {
+            latitude: e.latitude,
+            longitude: e.longitude,
+            latitudeDelta,
+            longitudeDelta
+        };
+
+        let getCity = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+        getCity    += e.latitude + ',' + e.longitude;
+        getCity    += '&key=AIzaSyCJTSwkdcdRpIXp2yG7DfSRKFWxKhQdYhQ&language=ar&sensor=true';
+
+        try {
+            const { data } = await axios.get(getCity);
+            formattedItem  = {
+                latitude:   e.latitude,
+                longitude:  e.longitude,
+                latitudeDelta,
+                longitudeDelta
+            };
+            setMapRegion(formattedItem)
+            dispatch(setLastLocationAction(formattedItem))
+            console.log('lat', (e.latitude).toString())
+
+            // AsyncStorage.setItem('lat', (e.latitude).toString());
+            // AsyncStorage.setItem('long', (e.longitude).toString());
+
+            console.log('formattedItem' , formattedItem , 'mapRegion' , mapRegion)
+        } catch (e) { console.log(e); }
+
+    }
 
     return (
         <Container style={[styles.bg_gray]}>
@@ -190,14 +264,15 @@ function Home({navigation,route}) {
                             <MapView
                                 ref={mapRef}
                                 style={{ width: '100%', height: '100%' , flex:1 }}
+                                onRegionChangeComplete={(e) =>  _handleMapRegionChange(e)}
                                 // onRegionChange={() => mapMarkerRef.current.showCallout()}
                                 initialRegion={mapRegion}>
-                                <MapView.Marker
-                                    coordinate={mapRegion}
-                                >
-                                    <Image source={require('../../assets/images/redMarker.png')} resizeMode={'contain'} style={[styles.icon35]}/>
+                                {/*<MapView.Marker*/}
+                                {/*    coordinate={mapRegion}*/}
+                                {/*>*/}
+                                {/*    <Image source={require('../../assets/images/redMarker.png')} resizeMode={'contain'} style={[styles.icon35]}/>*/}
 
-                                </MapView.Marker>
+                                {/*</MapView.Marker>*/}
 
 
                                 {
@@ -227,6 +302,10 @@ function Home({navigation,route}) {
                             </MapView>
                         ) : (<View />)
                     }
+
+                    <View style={{ left: '50%', marginLeft: -24, marginTop: -48, position: 'absolute', top: '50%', zIndex: 9999999, width: 25, height: 25 }}>
+                        <Image style={{width: 35, height: 35}} resizeMode={'contain'} source={require('../../assets/images/redMarker.png')} />
+                    </View>
 
                     {
                         showAd && popInfo?

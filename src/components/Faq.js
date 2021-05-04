@@ -61,9 +61,9 @@ function Faq({navigation}) {
                                 return (
                                     <View key={i}>
                                         <Text
-                                            style={[styles.textRegular, styles.text_gray, styles.textSize_16, styles.marginBottom_5, styles.alignStart]}>-- {f.question}</Text>
+                                            style={[styles.textRegular, styles.text_gray, styles.textSize_16, styles.marginBottom_5, styles.alignStart , styles.writingDir]}>-- {f.question}</Text>
                                         <Text
-                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14, styles.marginBottom_10, styles.alignStart, {lineHeight: 22}]}>
+                                            style={[styles.textRegular, styles.text_light_gray, styles.textSize_14, styles.marginBottom_10, styles.alignStart , styles.writingDir, {lineHeight: 22}]}>
                                             {f.answer}
                                         </Text>
                                     </View>

@@ -8,7 +8,7 @@ export const getAbout = (lang , token) => {
             url         : CONST.url + 'about',
             method      : 'POST',
             data        : { lang },
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getAbout', payload: response.data});
         });

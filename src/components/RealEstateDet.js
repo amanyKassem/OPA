@@ -69,7 +69,7 @@ function RealEstateDet({navigation,route}) {
             url         : CONST.url + 'constructionDetailes',
             method      : 'POST',
             data        : {lang , id},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getConstructionDetailes', payload: response.data});
             let userLocation = { latitude :constructionDetailes.Latitude, longitude : constructionDetailes.Longitude , latitudeDelta , longitudeDelta};

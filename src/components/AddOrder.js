@@ -22,16 +22,8 @@ function AddOrder({navigation,route}) {
     const [cityName, setCityName] = useState('');
     const [buildType, setBuildType] = useState('');
     const [accType, setAccType] = useState('');
-    const [lounges, setLounges] = useState('');
-    const [washrooms, setWashrooms] = useState('');
-    const [rooms, setRooms] = useState('');
-    const [floor, setFloor] = useState('');
-    const [buildAge, setBuildAge] = useState('');
     const [serviceType, setServiceType] = useState('');
-    const [totalPrice, setTotalPrice] = useState('');
-    const [space, setSpace] = useState('');
-    const [meter_price, setMeter_price] = useState('');
-    const [street_view, setStreet_view] = useState('');
+
 
 
     const [mapRegion, setMapRegion] = useState({
@@ -155,7 +147,6 @@ function AddOrder({navigation,route}) {
                             />
                         </View>
 
-
                         {
                             singleCategory ?
                                 <View style={[styles.Width_100]}>
@@ -203,136 +194,6 @@ function AddOrder({navigation,route}) {
                                     }
 
 
-                                    {
-                                        singleCategory.hall === 1 ?
-                                            <Item style={[styles.item]}>
-                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('lounges') }</Label>
-                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                       onChangeText={(lounges) => setLounges(lounges)}
-                                                       keyboardType={'number-pad'}
-                                                       value={lounges}
-                                                />
-                                            </Item>
-                                            :
-                                            null
-                                    }
-
-                                    {
-                                        singleCategory.bathroom === 1 ?
-                                            <Item style={[styles.item]}>
-                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('washrooms') }</Label>
-                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                       onChangeText={(washrooms) => setWashrooms(washrooms)}
-                                                       keyboardType={'number-pad'}
-                                                       value={washrooms}
-                                                />
-                                            </Item>
-                                            :
-                                            null
-                                    }
-
-                                    {
-                                        singleCategory.rooms === 1 ?
-                                            <Item style={[styles.item]}>
-                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('rooms') }</Label>
-                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                       onChangeText={(rooms) => setRooms(rooms)}
-                                                       keyboardType={'number-pad'}
-                                                       value={rooms}
-                                                />
-                                            </Item>
-                                            :
-                                            null
-                                    }
-
-                                    {
-                                        singleCategory.floor === 1 ?
-                                            <Item style={[styles.item]}>
-                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('floor') }</Label>
-                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                       onChangeText={(floor) => setFloor(floor)}
-                                                       keyboardType={'number-pad'}
-                                                       value={floor}
-                                                />
-                                            </Item>
-                                            :
-                                            null
-                                    }
-
-                                    {
-                                        singleCategory.age === 1 ?
-                                            <Item style={[styles.item]}>
-                                                <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('buildAge') }</Label>
-                                                <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}
-                                                       onChangeText={(buildAge) => setBuildAge(buildAge)}
-                                                       keyboardType={'number-pad'}
-                                                       value={buildAge}
-                                                />
-                                            </Item>
-                                            :
-                                            null
-                                    }
-
-                                    {/*{*/}
-                                    {/*    singleCategory.price === 1 ?*/}
-                                    {/*        <Item style={[styles.item]}>*/}
-                                    {/*            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('totalPrice') }</Label>*/}
-                                    {/*            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
-                                    {/*                   onChangeText={(totalPrice) => setTotalPrice(totalPrice)}*/}
-                                    {/*                   value={totalPrice}*/}
-                                    {/*                   keyboardType={'number-pad'}*/}
-                                    {/*            />*/}
-                                    {/*            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_13 , {position:'absolute' , right:10}]}>{ i18n.t('RS') }</Text>*/}
-                                    {/*        </Item>*/}
-                                    {/*        :*/}
-                                    {/*        null*/}
-                                    {/*}*/}
-
-                                    {/*{*/}
-                                    {/*    singleCategory.space === 1 ?*/}
-                                    {/*        <Item style={[styles.item]}>*/}
-                                    {/*            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('space') }</Label>*/}
-                                    {/*            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
-                                    {/*                   onChangeText={(space) => setSpace(space)}*/}
-                                    {/*                   value={space}*/}
-                                    {/*                   keyboardType={'number-pad'}*/}
-                                    {/*            />*/}
-                                    {/*        </Item>*/}
-
-                                    {/*        :*/}
-                                    {/*        null*/}
-                                    {/*}*/}
-
-                                    {/*{*/}
-                                    {/*    singleCategory.meter_price === 1 ?*/}
-                                    {/*        <Item style={[styles.item]}>*/}
-                                    {/*            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('meter_price') }</Label>*/}
-                                    {/*            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
-                                    {/*                   onChangeText={(meter_price) => setMeter_price(meter_price)}*/}
-                                    {/*                   value={meter_price}*/}
-                                    {/*                   keyboardType={'number-pad'}*/}
-                                    {/*            />*/}
-                                    {/*        </Item>*/}
-
-                                    {/*        :*/}
-                                    {/*        null*/}
-                                    {/*}*/}
-
-                                    {/*{*/}
-                                    {/*    singleCategory.street_view === 1 ?*/}
-
-                                    {/*        <Item style={[styles.item]}>*/}
-                                    {/*            <Label style={[styles.label, styles.textRegular ,styles.text_midGray , {backgroundColor:'#fff'}]}>{ i18n.t('street_view') }</Label>*/}
-                                    {/*            <Input style={[styles.input , styles.text_midGray , {borderColor:COLORS.midGray}]}*/}
-                                    {/*                   onChangeText={(street_view) => setStreet_view(street_view)}*/}
-                                    {/*                   value={street_view}*/}
-                                    {/*                   keyboardType={'number-pad'}*/}
-                                    {/*            />*/}
-                                    {/*        </Item>*/}
-
-                                    {/*        :*/}
-                                    {/*        null*/}
-                                    {/*}*/}
 
                                     {
                                         singleCategory.rent_id === 1 ?
@@ -382,6 +243,7 @@ function AddOrder({navigation,route}) {
                                 null
                         }
 
+
                         {
                             buildType ?
                                 <TouchableOpacity onPress={() => navigation.navigate('newAddedDetails' , {
@@ -390,18 +252,8 @@ function AddOrder({navigation,route}) {
                                     type_id:accType,
                                     Latitude:mapRegion.latitude,
                                     Longitude:mapRegion.longitude,
-                                    rooms:rooms,
-                                    hall:lounges,
-                                    bathroom:washrooms,
-                                    floor:floor,
-                                    age:buildAge,
-
-                                    // address:cityName,
+                                    address:cityName,
                                     featuers:singleCategory.featuers,
-                                    // price:totalPrice,
-                                    // space,
-                                    // meter_price,
-                                    // street_view,
                                 })}
                                                   style={[styles.babyblueBtn , styles.flexCenter , styles.Width_100, styles.marginBottom_50 , styles.marginTop_20]}>
                                     <Text style={[styles.textRegular , styles.text_White , styles.textSize_15]}>{ i18n.t('agree') }</Text>

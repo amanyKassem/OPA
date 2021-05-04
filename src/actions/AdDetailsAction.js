@@ -9,7 +9,7 @@ export const getAdDetails = (lang , ad_id ,token) => {
             url         : CONST.url + 'adDetailes',
             method      : 'POST',
             data        : {lang , ad_id},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getAdDetails', payload: response.data});
         });

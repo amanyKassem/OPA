@@ -51,7 +51,7 @@ function ListDetails({navigation , route}) {
             url         : CONST.url + 'adDetailes',
             method      : 'POST',
             data        : {lang , ad_id},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getAdDetails', payload: response.data});
             if(response.data.success){
@@ -304,9 +304,17 @@ function ListDetails({navigation , route}) {
 
                             <View style={[styles.marginTop_7 , styles.paddingHorizontal_7 ]}>
                                 <View style={[styles.directionRow,{position:'absolute',top:0,right:50 , zIndex:1}]}>
-                                    <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
-                                        <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
-                                    </TouchableOpacity>
+
+
+                                    {
+                                        token ?
+                                            <TouchableOpacity onPress = {() => onToggleFavorite(adDetails.detailes.id)} style={[styles.touchBlue]}>
+                                                <Icon style={[isFav ? styles.text_red : styles.text_White, styles.textSize_18]} type="AntDesign" name={ 'heart' } />
+                                            </TouchableOpacity>
+                                            :
+                                            null
+                                    }
+
                                     <TouchableOpacity onPress={() => onShare()} style={[styles.touchBlue, {marginLeft:5}]}>
                                         <Icon style={[styles.text_White,styles.textSize_18]} type="Feather" name={ 'share-2' } />
                                     </TouchableOpacity>

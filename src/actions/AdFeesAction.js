@@ -8,7 +8,7 @@ export const getAdFees = (lang , token) => {
             url         : CONST.url + 'adFees',
             method      : 'POST',
             data        : { lang },
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getAdFees', payload: response.data});
         });

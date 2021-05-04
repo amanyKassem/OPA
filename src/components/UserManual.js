@@ -62,10 +62,10 @@ function UserManual({navigation}) {
                                     <View key={i}>
                                         <Text style={[styles.textRegular , styles.text_gray , styles.textSize_16 , styles.marginBottom_5, styles.alignStart]}>-- {u.title}</Text>
                                         <View style={[styles.directionBasicRow,styles.marginTop_10, styles.Width_100 , styles.marginBottom_10,{flexDirection: i % 2 ===0 ? 'row' : 'row-reverse'}]}>
-                                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart, {lineHeight:22 , flex:1}]}>
+                                            <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart , styles.writingDir, {lineHeight:22 , flex:1}]}>
                                                 {u.description}
                                             </Text>
-                                            <Image source={{uri:u.image}} style={[styles.width_100 , styles.height_160,{marginLeft: i % 2 ===0 ? 10 : 0 , marginRight: i % 2 ===0 ? 0 : 10}]} resizeMode={'cover'} />
+                                            <Image source={{uri:u.image}} style={[styles.width_100 , styles.height_160 , styles.writingDir,{marginLeft: i % 2 ===0 ? 10 : 0 , marginRight: i % 2 ===0 ? 0 : 10}]} resizeMode={'cover'} />
                                         </View>
                                     </View>
                                 )

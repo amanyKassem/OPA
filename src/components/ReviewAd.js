@@ -31,8 +31,6 @@ function ReviewAd({navigation , route}) {
     const lang = useSelector(state => state.lang.lang);
     const token = useSelector(state => state.auth.user ? state.auth.user.data.token : null);
 
-    const featArr = route.params ? route.params.featArr : null;
-    const checkedArrNames = route.params ? route.params.checkedArrNames : null;
     const features = route.params ? route.params.features : null;
     const category_id = route.params ? route.params.category_id : null;
     const Latitude = route.params ? route.params.Latitude : null;
@@ -40,19 +38,12 @@ function ReviewAd({navigation , route}) {
     const address = route.params ? route.params.address : null;
     const rent_id = route.params ? route.params.rent_id : null;
     const type_id = route.params ? route.params.type_id : null;
-    const hall = route.params ? route.params.hall : null;
-    const floor = route.params ? route.params.floor : null;
-    const rooms = route.params ? route.params.rooms : null;
-    const age = route.params ? route.params.age : null;
-    const bathroom = route.params ? route.params.bathroom : null;
+
     const images = route.params ? route.params.images : null;
     const imagesUrl = route.params ? route.params.imagesUrl : [];
     const title_ar = route.params ? route.params.title_ar : null;
     const description_ar = route.params ? route.params.description_ar : null;
-    const price = route.params ? route.params.price : null;
-    const space = route.params ? route.params.space : null;
-    const street_view = route.params ? route.params.street_view : null;
-    const meter_price = route.params ? route.params.meter_price : null;
+
     const pathName = route.params ? route.params.pathName : null;
     const ad_id = route.params ? route.params.ad_id : null;
     const [photos, setPhotos] = useState([]);
@@ -110,15 +101,13 @@ function ReviewAd({navigation , route}) {
         setIsSubmitted(true);
 
         if(pathName === 'editAd'){
-            dispatch(EditAd(lang , ad_id , category_id , null , Latitude , Longitude , address , features,
-                title_ar  , description_ar  , price ,space , rent_id,
-                type_id , hall , floor , rooms ,
-                age , street_view , bathroom , meter_price , 1, images, token , navigation));
+            dispatch(EditAd(lang , ad_id , category_id  , Latitude , Longitude , address , features,
+                title_ar  , description_ar  ,  rent_id,
+                type_id , 1, images, token , navigation));
         } else {
-            dispatch(StoreAd(lang , category_id , null , Latitude , Longitude , address , features,
-                title_ar , description_ar , price ,space , rent_id,
-                type_id , hall , floor , rooms ,
-                age , street_view , bathroom , meter_price , 1, images, token , navigation));
+            dispatch(StoreAd(lang , category_id  , Latitude , Longitude , address , features,
+                title_ar , description_ar ,  rent_id,
+                type_id , 1, images, token , navigation));
         }
 
 
@@ -158,7 +147,7 @@ function ReviewAd({navigation , route}) {
                         <Card style={[styles.Width_80, styles.SelfCenter , styles.Radius_10,{top:-40,padding:10}]}>
                             <View style={[styles.directionRowSpace]}>
                                 <Text style={[styles.textRegular , styles.text_gray , styles.textSize_15 , styles.writingDir , {flex:1}]}>{title_ar}</Text>
-                                <Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{price} { i18n.t('RS') }</Text>
+                                {/*<Text style={[styles.textRegular , styles.text_green , styles.textSize_15 ]}>{price} { i18n.t('RS') }</Text>*/}
                             </View>
                             <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_14, styles.alignStart ]}>{address}</Text>
                         </Card>
@@ -170,71 +159,25 @@ function ReviewAd({navigation , route}) {
                             styles.Width_100,{padding:5 , flexWrap:'wrap'}]}>
 
                             {
-                                rooms && rooms.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('rooms') } : {rooms}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                hall && hall.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('lounges') } : {hall}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                floor && floor.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('floor') } : {floor}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                age && age.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('buildAge') } : {age}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                bathroom && bathroom.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('bathroom') } : {bathroom}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                space && space.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('space') } : {space}</Text>
-                                    :
-                                    null
-                            }
-
-
-                            {
-                                street_view && street_view.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('street_view') } : {street_view}</Text>
-                                    :
-                                    null
-                            }
-
-
-                            {
-                                meter_price && meter_price.length > 0 ?
-                                    <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{ i18n.t('meter_price') } : {meter_price}</Text>
-                                    :
-                                    null
-                            }
-
-                            {
-                                checkedArrNames ?
-                                    checkedArrNames.map((feature, i) => {
+                                features ?
+                                    features.map((feature, i) => {
                                         return (
 
                                             <View key={i} style={[styles.rowGroup , styles.marginBottom_10]}>
-                                                <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 20}]}>{feature}</Text>
+                                                <Text style={[styles.textRegular, styles.text_light_gray, styles.textSize_13, {marginRight: 10}]}>{feature.name}</Text>
+                                                {
+                                                    feature.type == 'checkbox' ?
+
+                                                        feature.value == 1 ?
+                                                            <Icon type={'AntDesign'} name={'check'} style={{ fontSize: 18, color: COLORS.gray , marginRight:15}} />
+                                                            :
+                                                            <Icon type={'AntDesign'} name={'close'} style={{ fontSize: 18, color: COLORS.red , marginRight:15}} />
+                                                        :
+                                                        <Text
+                                                            style={[styles.textRegular, styles.text_midGray, styles.textSize_13 , { marginRight:15}]}>{feature.value}</Text>
+                                                }
                                             </View>
+
                                         )
                                     })
                                     :

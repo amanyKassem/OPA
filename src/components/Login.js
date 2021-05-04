@@ -160,6 +160,10 @@ function Login({navigation}) {
 
                                {renderSubmit()}
 
+                               <TouchableOpacity onPress={() => navigation.navigate('MainStack')} style={[styles.babyblueBtn , styles.Width_100 , styles.marginBottom_5]}>
+                                   <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('loginVisitor') }</Text>
+                               </TouchableOpacity>
+
                                <TouchableOpacity onPress={() => navigation.push('register')} style={[styles.directionRowCenter, styles.marginTop_20]}>
                                    <Text style={[styles.textRegular , styles.text_gray , styles.textSize_14, {marginRight:5}]}>{ i18n.t('haveNoAcc') }</Text>
                                    <Text style={[styles.textRegular , styles.text_babyblue , styles.textSize_14]}>{ i18n.t('createAcc') }</Text>

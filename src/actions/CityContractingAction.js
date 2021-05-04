@@ -8,7 +8,7 @@ export const getCityContracting = (lang , count ,token) => {
             url         : CONST.url + 'cityContractingCategories',
             method      : 'POST',
             data        : {lang , count},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getCityContracting', payload: response.data});
         });

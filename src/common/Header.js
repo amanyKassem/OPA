@@ -18,7 +18,7 @@ function Header({navigation , title , toggleModal , ad_id}) {
     const dispatch = useDispatch()
 
     function fetchData(){
-        dispatch(getNotifications(lang, token))
+        token ? dispatch(getNotifications(lang, token)): null
     }
 
     useEffect(() => {
@@ -50,17 +50,26 @@ function Header({navigation , title , toggleModal , ad_id}) {
 
             {
                 title === i18n.t('home') || title === i18n.t('profile')  || title === i18n.t('add') || title === i18n.t('searchByList') || title === i18n.t('conversations') || title === i18n.t('contracting') ?
+
                     <View style={[styles.directionRow]}>
-                        <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:10}}>
-                            <Image source={notifications && (notifications).length > 0 ? require('../../assets/images/notifcation_active.png') : require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('tabs', {
-                            screen: 'profile'
-                        })}
-                                          style={[styles.borderMstarda , styles.Radius_50, styles.icon40 ,{overflow:'hidden'}]}>
-                            <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
-                        </TouchableOpacity>
+                        {
+                            token?
+                                <>
+                                    <TouchableOpacity onPress={() => navigation.navigate('notifications')} style={{marginRight:10}}>
+                                        <Image source={notifications && (notifications).length > 0 ? require('../../assets/images/notifcation_active.png') : require('../../assets/images/notification.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => navigation.navigate('tabs', {
+                                        screen: 'profile'
+                                    })}
+                                                      style={[styles.borderMstarda , styles.Radius_50, styles.icon40 ,{overflow:'hidden'}]}>
+                                        <Image source={{uri:user.avatar}} style={[styles.Width_100 , styles.heightFull]} resizeMode={'cover'} />
+                                    </TouchableOpacity>
+                                </>
+                                :
+                                null
+                        }
                     </View>
+
                     :
                     title === i18n.t('addOrder') ?
                         <View style={[styles.directionRow]}>
@@ -76,14 +85,20 @@ function Header({navigation , title , toggleModal , ad_id}) {
                         </View>
                         :
                         title === i18n.t('adDetails') ?
-                            <View style={[styles.directionRow]}>
-                                <TouchableOpacity onPress={toggleModal} style={{marginRight:10}}>
-                                    <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('editAd' , {ad_id})} >
-                                    <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
-                                </TouchableOpacity>
-                            </View>
+
+                                token?
+                                    <View style={[styles.directionRow]}>
+                                        <TouchableOpacity onPress={toggleModal} style={{marginRight:10}}>
+                                            <Image source={require('../../assets/images/delete.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => navigation.navigate('editAd' , {ad_id})} >
+                                            <Image source={require('../../assets/images/edit.png')} style={[styles.icon20]} resizeMode={'contain'} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    :
+                                    null
+
+
                             :
 
                             title === i18n.t('orders') ?

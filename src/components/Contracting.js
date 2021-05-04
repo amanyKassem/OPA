@@ -61,12 +61,12 @@ function Contracting({navigation}) {
                     styles.Width_100, styles.paddingTop_30,
                     {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                    <View style={[styles.directionRowSpace]}>
-                        <Text style={[styles.textBold , styles.text_black , styles.textSize_14 ]}>{ i18n.t('contServ') }</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('allContracting')}>
-                            <Text style={[styles.textBold , styles.text_babyblue , styles.textSize_14 , styles.textDecoration ]}>{ i18n.t('all') }</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {/*<View style={[styles.directionRowSpace]}>*/}
+                    {/*    <Text style={[styles.textBold , styles.text_black , styles.textSize_14 ]}>{ i18n.t('contServ') }</Text>*/}
+                    {/*    <TouchableOpacity onPress={() => navigation.navigate('allContracting')}>*/}
+                    {/*        <Text style={[styles.textBold , styles.text_babyblue , styles.textSize_14 , styles.textDecoration ]}>{ i18n.t('all') }</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+                    {/*</View>*/}
 
                     <View style={[styles.rowGroup , styles.marginTop_15, styles.Width_100 , styles.marginBottom_80]}>
                         {

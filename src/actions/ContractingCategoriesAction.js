@@ -8,7 +8,7 @@ export const getContractingCategories = (lang , count ,token) => {
             url         : CONST.url + 'contractingCategories',
             method      : 'POST',
             data        : {lang , count},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getContractingCategories', payload: response.data});
         });

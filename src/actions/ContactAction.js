@@ -8,7 +8,7 @@ export const getContactUs = (lang,token) => {
         axios({
             url         : CONST.url + 'contact',
             method      : 'POST',
-            headers     : { Authorization: token },
+            headers		: token ? { Authorization: token } : null,
             data        : { lang }
         }).then(response => {
             dispatch({type: 'getContactUs', payload: response.data});
@@ -21,7 +21,7 @@ export const sendComplaint = (lang , complaint , name , email , token ) => {
         axios({
             url         : CONST.url + 'sendComplaint',
             method      : 'POST',
-            headers     : { Authorization: token },
+            headers		: token ? { Authorization: token } : null,
             data        : {lang ,complaint , name , email }
         }).then(response => {
             Toast.show({

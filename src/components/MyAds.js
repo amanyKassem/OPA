@@ -44,7 +44,7 @@ function MyAds({navigation}) {
                 <View style={[styles.paddingHorizontal_5,styles.paddingVertical_5, {flex:1}]}>
                     <View style={[styles.directionRowSpace , styles.Width_100]}>
                         <Text style={[styles.textRegular , styles.text_green , styles.textSize_13]}>{ title.substr(0,15) }</Text>
-                        <Text style={[styles.textRegular , styles.text_orange , styles.textSize_12 ]}>{ price }</Text>
+                        {/*<Text style={[styles.textRegular , styles.text_orange , styles.textSize_12 ]}>{ price }</Text>*/}
                     </View>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ space }</Text>
                     <Text style={[styles.textRegular , styles.text_light_gray , styles.textSize_12,styles.alignStart ]}>{ desc.substr(0,30) }..</Text>
@@ -89,9 +89,9 @@ function MyAds({navigation}) {
                         styles.Width_100, styles.paddingTop_30,
                         {borderTopRightRadius:50 , borderTopLeftRadius:50}]}>
 
-                        <TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>
-                            <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>
-                        </TouchableOpacity>
+                        {/*<TouchableOpacity onPress={() => navigation.navigate('addAdTerms')} style={[styles.babyblueBtn , styles.Width_80, styles.SelfCenter ]}>*/}
+                        {/*    <Text style={[styles.textRegular , styles.text_White , styles.textSize_16]}>{ i18n.t('addAd') }</Text>*/}
+                        {/*</TouchableOpacity>*/}
 
                         {
                             authUserAds && (authUserAds).length > 0?

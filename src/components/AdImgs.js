@@ -30,15 +30,6 @@ function AdImgs({navigation , route}) {
     const address = route.params ? route.params.address : null;
     const rent_id = route.params ? route.params.rent_id : null;
     const type_id = route.params ? route.params.type_id : null;
-    const hall = route.params ? route.params.hall : null;
-    const floor = route.params ? route.params.floor : null;
-    const rooms = route.params ? route.params.rooms : null;
-    const price = route.params ? route.params.price : null;
-    const space = route.params ? route.params.space : null;
-    const meter_price = route.params ? route.params.meter_price : null;
-    const street_view = route.params ? route.params.street_view : null;
-    const age = route.params ? route.params.age : null;
-    const bathroom = route.params ? route.params.bathroom : null;
     const pathName = route.params ? route.params.pathName : null;
     const adDetails = route.params ? route.params.adDetails : null;
     const images = route.params ? route.params.images : null;
@@ -190,18 +181,8 @@ function AdImgs({navigation , route}) {
                     address,
                     rent_id,
                     type_id,
-                    hall,
-                    floor,
-                    rooms,
-
-                    age,
-                    bathroom,
                     pathName,
                     adDetails,
-                    price,
-                    space,
-                    meter_price,
-                    street_view,
                     ad_id,
                     images : base64,
                     imagesUrl : photos

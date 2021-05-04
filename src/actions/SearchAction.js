@@ -8,7 +8,7 @@ export const getSearch = (lang , keyword , Latitude , Longitude , category_id , 
             url         : CONST.url + 'filterAds',
             method      : 'POST',
             data        : {lang , keyword , Latitude , Longitude , category_id , rent_id , min_space , max_space , min_price , max_price},
-            headers     : {Authorization: token}
+            headers		: token ? { Authorization: token } : null
         }).then(response => {
             dispatch({type: 'getSearch', payload: response.data});
         });

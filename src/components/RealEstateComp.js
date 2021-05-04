@@ -22,12 +22,15 @@ function RealEstateComp({navigation , route}) {
 
     const categoryConstructions = useSelector(state => state.categoryConstructions.categoryConstructions);
     const categoryConstructionsLoader = useSelector(state => state.categoryConstructions.loader);
+    const {lastLocation} = useSelector(state => state.homeAds);
+
+    console.log("lastLocationnnnnnDEt", lastLocation)
 
 
     const dispatch = useDispatch();
 
     function fetchData(){
-        dispatch(getCategoryConstructions(lang , category_id , type, token));
+        dispatch(getCategoryConstructions(lang , lastLocation.latitude , lastLocation.longitude , category_id , type, token));
     }
 
     useEffect(() => {
@@ -37,7 +40,7 @@ function RealEstateComp({navigation , route}) {
         });
 
         return unsubscribe;
-    }, [navigation , categoryConstructionsLoader ]);
+    }, [navigation , categoryConstructionsLoader]);
 
     function renderLoader(){
         if (categoryConstructionsLoader === false ){

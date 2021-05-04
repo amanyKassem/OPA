@@ -1,6 +1,7 @@
 const en = {
     'startNow'                  : 'Start now',
     'login'                     : 'Login',
+    'loginVisitor'              : 'Login as visitor',
     'loginText'                 : 'Please login to be able to browse the application',
     'phone'                     : 'Phone number',
     'password'                  : 'Password',
@@ -16,7 +17,7 @@ const en = {
     'confirmPass'               : 'confirm password',
     'confirmNewPass'            : 'Confirm new password',
     'register'                  : 'Register',
-    'agreeTo'                   : 'Agreeing to all conditions of application',
+    'agreeTo'                   : 'Agreeing to the terms and conditions',
     'haveAcc'                   : 'Have an account?',
     'loginNow'                  : 'Login now',
     'username'                  : 'Username',
@@ -256,7 +257,7 @@ const en = {
     'newNotification'           : 'new notification',
     'country'                   : 'Country',
     'searchByList'              : 'Search by list',
-    'contracting'               : 'contracting companies',
+    'contracting'               : 'Service companies',
     'conversations'             : 'Conversations',
     'advNum'                    : 'Advertiser number',
     'adsNum'                    : 'Ads number',
@@ -356,6 +357,8 @@ const en = {
     'street_view'               : 'Street view',
     'meter_price'               : 'Meter price',
     'map'                       : 'Map',
+    'year'                      : 'Year',
+    'meter'                     : 'Meter',
 };
 
 export default en;

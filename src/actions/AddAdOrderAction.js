@@ -3,13 +3,13 @@ import CONST from "../consts";
 import {Toast} from "native-base";
 
 
-export const AddAdOrder = (lang , category_id , rent_id , type_id , Latitude , Longitude , rooms , hall , bathroom , floor , age ,detailes ,notify , features , token , navigation) => {
+export const AddAdOrder = (lang , category_id , rent_id , type_id , Latitude , Longitude  ,detailes ,notify , features , token , navigation) => {
     return (dispatch) => {
         axios({
             url         : CONST.url + 'addAdOrder',
             method      : 'POST',
             headers     : { Authorization: token },
-            data        : {lang , category_id , rent_id , type_id , Latitude , Longitude , rooms , hall , bathroom , floor , age ,detailes ,notify , features }
+            data        : {lang , category_id , rent_id , type_id , Latitude , Longitude  ,detailes ,notify , features }
         }).then(response => {
             if (response.data.success) {
 
